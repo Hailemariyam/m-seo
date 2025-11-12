@@ -1,0 +1,40 @@
+# Don't publish source files to npm
+src/
+tests/
+examples/
+docs/
+
+# Git files
+.git/
+.gitignore
+.gitattributes
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build files
+tsconfig.json
+*.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependencies
+node_modules/
+
+# Misc
+*.md
+!README.md
+!LICENSE
+PUBLISHING.md

@@ -1,0 +1,77 @@
+{
+  "name": "m-seo",
+  "version": "1.0.0",
+  "description": "Framework-agnostic SEO library for modern web applications",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./core": {
+      "types": "./dist/core/index.d.ts",
+      "import": "./dist/core/index.js"
+    },
+    "./adapters/*": {
+      "types": "./dist/adapters/*.d.ts",
+      "import": "./dist/adapters/*.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build",
+    "prepack": "npm run build",
+    "test": "node examples/test-vanilla.js"
+  },
+  "keywords": [
+    "seo",
+    "meta-tags",
+    "sitemap",
+    "robots.txt",
+    "structured-data",
+    "schema.org",
+    "json-ld",
+    "open-graph",
+    "twitter-cards",
+    "framework-agnostic",
+    "universal",
+    "typescript",
+    "react",
+    "vue",
+    "angular",
+    "express",
+    "nextjs",
+    "nuxt"
+  ],
+  "author": "Hailemariyam Kebede <hailemariyam3298@gmail.com> (https://yourwebsite.com)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hailemariyam/m-seo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Hailemariyam/m-seo/issues"
+  },
+  "homepage": "https://github.com/Hailemariyam/m-seo#readme",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/react": "^19.2.3",
+    "axios": "^1.11.0",
+    "express": "^5.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
+}
