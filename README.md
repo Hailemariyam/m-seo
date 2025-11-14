@@ -7,6 +7,7 @@ A powerful, zero-dependency SEO toolkit that works **everywhere** - React, Vue, 
 ## 🚀 Features
 
 - ✅ **100% Framework-Agnostic** - Use with any framework or no framework
+- ✅ **React Hooks & Components** - `useSeo`, `useStructuredData`, `<SeoHead>`, `<JsonLd>`
 - ✅ **TypeScript** - Full type safety
 - ✅ **Zero Dependencies** - Lightweight core
 - ✅ **Universal** - Works in Node.js, Deno, Bun, browsers, edge runtimes
@@ -24,6 +25,59 @@ pnpm add m-seo
 ```
 
 ## 🎯 Quick Start
+
+### React (🔥 Recommended for SPAs)
+
+```tsx
+import { useSeo, useStructuredData } from "m-seo/adapters/ReactSPAAdapter";
+
+function HomePage() {
+  // Add SEO meta tags with a simple hook
+  useSeo({
+    title: "Home - My React App",
+    description: "Welcome to my awesome React application",
+    keywords: ["react", "seo", "web"],
+    canonical: "https://example.com",
+    ogImage: "https://example.com/og-image.jpg",
+    themeColor: "#3490dc",
+  });
+
+  // Add structured data for search engines
+  useStructuredData({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "My App",
+    url: "https://example.com",
+  });
+
+  return (
+    <div>
+      <h1>Welcome!</h1>
+    </div>
+  );
+}
+```
+
+📖 **[Complete React Guide](./docs/REACT_GUIDE.md)** - Full hooks, components, examples & best practices
+
+### 🧪 Test React Features Live
+
+Want to see it in action? Run the interactive test app:
+
+```bash
+npm run test:react
+# Open http://localhost:3000
+```
+
+The test app includes:
+
+- 🏠 Basic SEO example
+- 📝 Blog with structured data
+- 🛍️ E-commerce product schema
+- 🔗 Breadcrumbs navigation
+- 🔍 Live SEO inspector showing all tags in real-time
+
+**[Testing Guide](./TESTING.md)** | **[Quick Reference](./QUICK_REFERENCE.txt)**
 
 ### Vanilla JavaScript (Framework-Agnostic)
 
@@ -90,20 +144,66 @@ app.get("/", (req, res) => {
 ### React / Next.js
 
 ```tsx
+// Option 1: Using React Hooks (Recommended)
+import { useSeo, useStructuredData } from "m-seo/adapters/ReactSPAAdapter";
+
+function BlogPost({ post }) {
+  useSeo({
+    title: `${post.title} - Blog`,
+    description: post.excerpt,
+    ogImage: post.image,
+    canonical: `https://example.com/blog/${post.slug}`,
+  });
+
+  useStructuredData({
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    datePublished: post.date,
+    author: { "@type": "Person", name: post.author },
+  });
+
+  return (
+    <article>
+      <h1>{post.title}</h1>
+    </article>
+  );
+}
+
+// Option 2: Using Components
+import { SeoHead, JsonLd } from "m-seo/adapters/ReactSPAAdapter";
+
+function ProductPage({ product }) {
+  return (
+    <div>
+      <SeoHead
+        title={product.name}
+        description={product.description}
+        ogImage={product.image}
+      />
+
+      <JsonLd
+        data={{
+          "@type": "Product",
+          name: product.name,
+          offers: { "@type": "Offer", price: product.price },
+        }}
+      />
+
+      <h1>{product.name}</h1>
+    </div>
+  );
+}
+
+// Option 3: Using Core (Framework-Agnostic)
 import { useEffect } from "react";
 import { SeoEngine } from "m-seo";
 
 function SeoHead({ title, description }) {
   useEffect(() => {
-    const seo = new SeoEngine({
-      title,
-      description,
-      canonical: window.location.href,
-    });
-
+    const seo = new SeoEngine({ title, description });
     document.title = title;
 
-    // Update meta tags
     const metaTags = seo.generateMetaTags();
     metaTags.forEach((tag) => {
       const meta = document.createElement("meta");
@@ -116,16 +216,9 @@ function SeoHead({ title, description }) {
 
   return null;
 }
-
-export function MyPage() {
-  return (
-    <>
-      <SeoHead title="My Page" description="Page description" />
-      <h1>Content</h1>
-    </>
-  );
-}
 ```
+
+📖 **See [React Guide](./docs/REACT_GUIDE.md) for complete documentation**
 
 ## 📖 API Documentation
 
@@ -240,16 +333,27 @@ sd.clear(); // Remove all schemas
 
 ## 🎨 Framework Adapters
 
-While the core is framework-agnostic, you can create thin adapters for your preferred framework.
+While the core is framework-agnostic, we provide official adapters for popular frameworks.
 
-See `/examples` directory for:
+### Official Adapters
 
-- ✅ Vanilla JS
-- ✅ Express.js
-- ✅ React
-- 📝 Next.js (coming soon)
-- 📝 Vue (coming soon)
-- 📝 Angular (coming soon)
+- ✅ **React** - Hooks (`useSeo`, `useStructuredData`, `useBreadcrumbs`) and Components (`<SeoHead>`, `<JsonLd>`)
+- ✅ **Express** - Middleware and helpers
+- ✅ **Vanilla JS** - Direct usage, works everywhere
+
+### Examples in `/examples` Directory
+
+- ✅ [React Usage](./examples/react-usage.tsx) - Complete React examples with hooks
+- ✅ [Express Adapter](./examples/express-adapter.ts) - Server-side SEO
+- ✅ [Vanilla JS](./examples/vanilla-usage.ts) - Framework-agnostic usage
+
+### Coming Soon
+
+- 📝 Next.js (App Router & Pages Router)
+- 📝 Vue 3 Composition API
+- 📝 Angular
+- 📝 Nuxt
+- 📝 SvelteKit
 
 ## 🏗️ Architecture
 
