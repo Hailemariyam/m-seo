@@ -5,11 +5,13 @@
 GitHub is trying to build your site with **Jekyll** (the old default) instead of using your **VitePress + GitHub Actions** workflow.
 
 **Error you're seeing:**
+
 ```
 Liquid syntax error (line 771): Variable '{{ "@type": "Product"...
 ```
 
 This happens because:
+
 1. GitHub Pages is set to "Deploy from a branch" (uses Jekyll)
 2. Jekyll tries to process your markdown files
 3. Jekyll interprets `{{` in code examples as Liquid template syntax
@@ -22,6 +24,7 @@ This happens because:
 **🔗 GO HERE NOW:** https://github.com/Hailemariyam/m-seo/settings/pages
 
 **What to do:**
+
 1. Under **"Build and deployment"**
 2. **Source:** Click dropdown
 3. Select **"GitHub Actions"** (NOT "Deploy from a branch")
@@ -36,6 +39,7 @@ The workflow will automatically run and deploy correctly.
 ## 📊 Visual Guide
 
 ### ❌ WRONG (Current - causes Jekyll errors)
+
 ```
 Source: Deploy from a branch ▼
   ├─ Branch: main / (root)
@@ -43,6 +47,7 @@ Source: Deploy from a branch ▼
 ```
 
 ### ✅ CORRECT (What you need)
+
 ```
 Source: GitHub Actions ▼
   └─ Uses your .github/workflows/deploy-docs.yml
@@ -87,11 +92,13 @@ These prevent Jekyll from interfering, but you MUST still change the Pages sourc
 If you still see Jekyll errors after changing to "GitHub Actions":
 
 1. **Cancel any running workflow:**
+
    - Go to https://github.com/Hailemariyam/m-seo/actions
    - Click the running workflow
    - Click "Cancel workflow"
 
 2. **Re-run the workflow:**
+
    - Go to https://github.com/Hailemariyam/m-seo/actions
    - Click "Deploy Documentation"
    - Click "Run workflow" → Select "haile" → "Run workflow"
