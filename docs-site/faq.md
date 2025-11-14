@@ -37,7 +37,7 @@ m-seo works with:
 - ✅ Zero breaking changes policy
 - ✅ Active maintenance
 
-See [PRODUCTION-READY.md](../PRODUCTION-READY.md) for details.
+See [PRODUCTION-READY.md](https://github.com/Hailemariyam/m-seo/blob/main/PRODUCTION-READY.md) for details.
 
 ---
 
@@ -483,7 +483,7 @@ Open an issue on [GitHub](https://github.com/Hailemariyam/m-seo/issues).
 
 ### Can I contribute?
 
-**Yes!** Contributions are welcome. See [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines.
+**Yes!** Contributions are welcome. See [CONTRIBUTING.md](https://github.com/Hailemariyam/m-seo/blob/main/CONTRIBUTING.md) for guidelines.
 
 ### Where can I get help?
 

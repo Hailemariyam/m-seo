@@ -647,4 +647,4 @@ Each module has a single responsibility:
 
 ---
 
-**Want to contribute?** See [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines.
+**Want to contribute?** See [CONTRIBUTING.md](https://github.com/Hailemariyam/m-seo/blob/main/CONTRIBUTING.md) for guidelines.

@@ -5,6 +5,7 @@ This guide shows you how to deploy your m-seo documentation website.
 ## Quick Links
 
 Once deployed, your documentation will be available at:
+
 - **GitHub Pages:** https://hailemariyam.github.io/m-seo/
 - **Local Dev:** http://localhost:5174 (run `npm run docs:dev`)
 
@@ -17,6 +18,7 @@ Once deployed, your documentation will be available at:
 ### Setup Steps:
 
 1. **Enable GitHub Pages:**
+
    - Go to your GitHub repo: https://github.com/Hailemariyam/m-seo
    - Click **Settings** → **Pages**
    - Under "Build and deployment":
@@ -24,6 +26,7 @@ Once deployed, your documentation will be available at:
    - Click **Save**
 
 2. **Push your code:**
+
    ```bash
    git add .
    git commit -m "Add documentation website"
@@ -31,6 +34,7 @@ Once deployed, your documentation will be available at:
    ```
 
 3. **Wait for deployment:**
+
    - Go to **Actions** tab in GitHub
    - Watch the "Deploy Documentation" workflow
    - Once complete (✅), your docs are live!
@@ -49,11 +53,11 @@ on:
   push:
     branches: [main, haile]
   workflow_dispatch:
-
 # Builds and deploys docs on every push
 ```
 
 **What it does:**
+
 - Installs dependencies
 - Builds the documentation (`npm run docs:build`)
 - Deploys to GitHub Pages automatically
@@ -74,6 +78,7 @@ on:
 Your docs will be live at: `https://your-project.vercel.app`
 
 **Benefits:**
+
 - Instant preview deployments for PRs
 - Custom domain support
 - Edge network (fast globally)
@@ -85,12 +90,15 @@ Your docs will be live at: `https://your-project.vercel.app`
 **Drag-and-drop or Git-based**
 
 ### Method 1: Drag and Drop
+
 ```bash
 npm run docs:build
 ```
+
 Then drag `docs-site/.vitepress/dist` to [Netlify Drop](https://app.netlify.com/drop)
 
 ### Method 2: Git Integration
+
 1. Go to [netlify.com](https://netlify.com)
 2. Connect your GitHub repo
 3. Configure:
@@ -99,6 +107,7 @@ Then drag `docs-site/.vitepress/dist` to [Netlify Drop](https://app.netlify.com/
 4. Deploy
 
 Add `netlify.toml` for configuration:
+
 ```toml
 [build]
   command = "npm run docs:build"
@@ -122,6 +131,7 @@ npm run docs:dev
 ```
 
 **Build locally:**
+
 ```bash
 npm run docs:build
 
@@ -136,11 +146,13 @@ npm run docs:preview
 ### After making changes to docs:
 
 1. **Test locally:**
+
    ```bash
    npm run docs:dev
    ```
 
 2. **Commit and push:**
+
    ```bash
    git add docs-site/
    git commit -m "Update documentation"
@@ -189,7 +201,7 @@ Your README.md now includes these links:
 ```typescript
 // docs-site/.vitepress/config.ts
 export default defineConfig({
-  base: '/', // Change from '/m-seo/' to '/'
+  base: "/", // Change from '/m-seo/' to '/'
   // ... rest of config
 });
 ```
@@ -209,6 +221,7 @@ export default defineConfig({
 ### 404 errors on deployed site?
 
 Check the `base` setting in `docs-site/.vitepress/config.ts`:
+
 ```typescript
 base: '/m-seo/', // Must match your GitHub repo name
 ```
@@ -228,12 +241,13 @@ npm run docs:build
 
 ## Summary
 
-✅ **GitHub Actions workflow created** - Auto-deploys on push  
-✅ **VitePress configured** - Base URL set for GitHub Pages  
-✅ **README updated** - Links to documentation  
-✅ **Multiple deployment options** - GitHub Pages, Vercel, Netlify  
+✅ **GitHub Actions workflow created** - Auto-deploys on push
+✅ **VitePress configured** - Base URL set for GitHub Pages
+✅ **README updated** - Links to documentation
+✅ **Multiple deployment options** - GitHub Pages, Vercel, Netlify
 
 **Next steps:**
+
 1. Enable GitHub Pages in repository settings
 2. Push code to trigger deployment
 3. Visit https://hailemariyam.github.io/m-seo/
