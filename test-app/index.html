@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>M-SEO React Test App</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+      }
+
+      header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 30px;
+        text-align: center;
+      }
+
+      header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+      }
+
+      header p {
+        opacity: 0.9;
+        font-size: 1.1rem;
+      }
+
+      nav {
+        background: #f7fafc;
+        padding: 15px 30px;
+        border-bottom: 1px solid #e2e8f0;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      nav button {
+        background: white;
+        border: 2px solid #667eea;
+        color: #667eea;
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s;
+      }
+
+      nav button:hover {
+        background: #667eea;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+      }
+
+      nav button.active {
+        background: #667eea;
+        color: white;
+      }
+
+      main {
+        padding: 40px;
+        min-height: 400px;
+      }
+
+      .page-content {
+        animation: fadeIn 0.3s;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .seo-inspector {
+        background: #f7fafc;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 20px;
+        margin-top: 30px;
+      }
+
+      .seo-inspector h3 {
+        color: #2d3748;
+        margin-bottom: 15px;
+        font-size: 1.3rem;
+      }
+
+      .seo-tag {
+        background: white;
+        border-left: 4px solid #667eea;
+        padding: 10px 15px;
+        margin: 10px 0;
+        border-radius: 4px;
+        font-family: "Courier New", monospace;
+        font-size: 0.9rem;
+      }
+
+      .seo-tag strong {
+        color: #667eea;
+      }
+
+      .success-badge {
+        display: inline-block;
+        background: #48bb78;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        margin-left: 10px;
+      }
+
+      .warning-badge {
+        display: inline-block;
+        background: #ed8936;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        margin-left: 10px;
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin: 20px 0;
+      }
+
+      .feature-card {
+        background: #f7fafc;
+        padding: 20px;
+        border-radius: 8px;
+        border: 2px solid #e2e8f0;
+      }
+
+      .feature-card h4 {
+        color: #667eea;
+        margin-bottom: 10px;
+      }
+
+      code {
+        background: #2d3748;
+        color: #68d391;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-family: "Courier New", monospace;
+      }
+
+      footer {
+        background: #2d3748;
+        color: white;
+        text-align: center;
+        padding: 20px;
+      }
+
+      .loader {
+        text-align: center;
+        padding: 40px;
+        color: #667eea;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- React and ReactDOM from CDN -->
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+
+    <!-- Babel for JSX transformation -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Our React test app -->
+    <script type="text/babel" src="./app.jsx"></script>
+  </body>
+</html>
