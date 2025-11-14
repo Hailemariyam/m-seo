@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
   "name": "m-seo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Framework-agnostic SEO library for modern web applications",
   "type": "module",
   "main": "./dist/index.js",
@@ -34,7 +34,10 @@
     "prepack": "npm run build",
     "test": "node examples/test-vanilla.js",
     "test:react": "npx serve test-app -p 3000",
-    "serve": "npx serve test-app -p 3000"
+    "serve": "npx serve test-app -p 3000",
+    "docs:dev": "vitepress dev docs-site",
+    "docs:build": "vitepress build docs-site",
+    "docs:preview": "vitepress preview docs-site"
   },
   "keywords": [
     "seo",
@@ -76,5 +79,8 @@
     "express": "^4.19.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "vitepress": "^1.6.4"
   }
 }

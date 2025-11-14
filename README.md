@@ -387,9 +387,13 @@ MIT
 
 ## 🔗 Links
 
-- [GitHub](https://github.com/yourusername/m-seo)
+- [GitHub](https://github.com/Hailemariyam/m-seo)
 - [NPM](https://npmjs.com/package/m-seo)
-- [Documentation](https://github.com/yourusername/m-seo/wiki)
+- [Documentation](https://hailemariyam.github.io/m-seo/) - Full documentation website
+- [Getting Started Guide](./docs-site/getting-started.md)
+- [API Reference](./docs-site/api.md)
+- [Examples](./docs-site/examples.md)
+- [FAQ](./docs-site/faq.md)
 
 ---
 
