@@ -86,6 +86,7 @@ type(scope): subject
 ```
 
 **Types:**
+
 - `feat:` - New feature
 - `fix:` - Bug fix
 - `docs:` - Documentation changes
@@ -189,11 +190,13 @@ generateMetaTags(config: SeoConfig): MetaTag[] {
 Test your changes in multiple scenarios:
 
 1. **React SPA:**
+
    ```bash
    npm run test:react
    ```
 
 2. **Vanilla JS:**
+
    ```bash
    node examples/test-vanilla.js
    ```
@@ -208,6 +211,7 @@ Test your changes in multiple scenarios:
 ### Test Coverage
 
 When adding new features:
+
 - Add examples to `examples/` directory
 - Test in `test-app/` React app
 - Document in `docs-site/`
@@ -255,12 +259,12 @@ useSeo(config: SeoConfig): void
 import { useSeo } from "m-seo/adapters/ReactSPAAdapter";
 
 function HomePage() {
-  useSeo({
-    title: "Home",
-    description: "Welcome to my site"
-  });
+useSeo({
+title: "Home",
+description: "Welcome to my site"
+});
 
-  return <h1>Home</h1>;
+return <h1>Home</h1>;
 }
 \`\`\`
 
@@ -285,6 +289,7 @@ function HomePage() {
 ### PR Description
 
 Include:
+
 - **What:** What does this PR do?
 - **Why:** Why is this change needed?
 - **How:** How does it work?
@@ -297,22 +302,27 @@ Include:
 ## Add useSeo React hook
 
 ### What
+
 Adds a new `useSeo` hook for React SPAs that automatically manages meta tags.
 
 ### Why
+
 Makes it easier to use m-seo in React applications without manual DOM manipulation.
 
 ### How
+
 - Created `ReactSPAAdapter.ts` with `useSeo` hook
 - Hook uses `useEffect` to update meta tags
 - Cleans up tags on unmount
 
 ### Testing
+
 - Tested in test-app React application
 - Verified tags update correctly on route changes
 - Confirmed cleanup on unmount
 
 ### Breaking Changes
+
 None - this is a new feature.
 ```
 
@@ -334,6 +344,7 @@ A clear description of what the bug is.
 
 **To Reproduce**
 Steps to reproduce:
+
 1. Install m-seo
 2. Create SeoEngine with...
 3. Call method...
@@ -351,6 +362,7 @@ What actually happened.
 \`\`\`
 
 **Environment**
+
 - m-seo version: 1.0.1
 - Framework: React 18.2.0
 - Node version: 18.0.0
@@ -396,6 +408,7 @@ Screenshots, links, etc.
 ## 🎁 Recognition
 
 Contributors will be:
+
 - Listed in release notes
 - Added to CONTRIBUTORS.md (if applicable)
 - Credited in relevant documentation
