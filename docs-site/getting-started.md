@@ -36,6 +36,9 @@ import { SeoEngine, createSEO } from "m-seo";
 // React adapter
 import { useSeo, useStructuredData } from "m-seo/adapters/ReactSPAAdapter";
 
+// Vue adapter
+import { useSeo, useStructuredData } from "m-seo/adapters/VueSPAAdapter";
+
 // Express adapter
 import { ExpressAdapter } from "m-seo/adapters/ExpressAdapter";
 ```
@@ -157,6 +160,90 @@ function BlogPost({ post }) {
     </div>
   );
 }
+```
+
+### Vue 3 (Composables)
+
+```vue
+<template>
+  <div>
+    <h1>{{ article.title }}</h1>
+    <p>{{ article.content }}</p>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { reactive } from "vue";
+import { useSeo, useStructuredData } from "m-seo/adapters/VueSPAAdapter";
+
+const article = reactive({
+  title: "Getting Started with Vue SEO",
+  content: "Learn how to implement SEO in Vue applications",
+  author: "John Doe",
+  publishedDate: "2024-01-15",
+});
+
+// Set SEO tags
+useSeo({
+  title: `${article.title} - Blog`,
+  description: article.content,
+  canonical: "https://example.com/blog",
+});
+
+// Add structured data
+useStructuredData({
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: article.title,
+  author: {
+    "@type": "Person",
+    name: article.author,
+  },
+  datePublished: article.publishedDate,
+});
+</script>
+```
+
+### Vue 3 (Components)
+
+```vue
+<template>
+  <div>
+    <SeoHead
+      :title="`${post.title} - Blog`"
+      :description="post.excerpt"
+      :ogImage="post.image"
+    />
+
+    <JsonLd :data="articleSchema" />
+
+    <article>
+      <h1>{{ post.title }}</h1>
+      <p>{{ post.content }}</p>
+    </article>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { reactive } from "vue";
+import { SeoHead, JsonLd } from "m-seo/adapters/VueSPAAdapter";
+
+const post = reactive({
+  title: "Blog Post Title",
+  excerpt: "Post excerpt",
+  content: "Post content",
+  image: "https://example.com/image.jpg",
+  author: "John Doe",
+  date: "2024-01-15",
+});
+
+const articleSchema = {
+  "@type": "BlogPosting",
+  headline: post.title,
+  datePublished: post.date,
+  author: { "@type": "Person", name: post.author },
+};
+</script>
 ```
 
 ### Next.js (App Router)
