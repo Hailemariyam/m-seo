@@ -8,6 +8,11 @@ A powerful, zero-dependency SEO toolkit that works **everywhere** - React, Vue, 
 
 - ✅ **100% Framework-Agnostic** - Use with any framework or no framework
 - ✅ **React Hooks & Components** - `useSeo`, `useStructuredData`, `<SeoHead>`, `<JsonLd>`
+- ✅ **Vue 3 Composables** - `useSeo`, `useStructuredData`, `useBreadcrumbs`, `useOpenGraph`
+- ✅ **URL Management & i18n** - `useUrlManager`, `useCanonical`, `useHreflang`, `useI18n`, `useLocaleSwitcher`
+- ✅ **Advanced Bot Detection** - Automatic optimization for search engines & bots (40% faster!)
+- ✅ **Google Analytics & Search Console** - Easy integration with tracking & reporting
+- ✅ **SEO Audit Engine** - Analyze and optimize your pages
 - ✅ **TypeScript** - Full type safety
 - ✅ **Zero Dependencies** - Lightweight core
 - ✅ **Universal** - Works in Node.js, Deno, Bun, browsers, edge runtimes
@@ -59,6 +64,68 @@ function HomePage() {
 ```
 
 📖 **[Complete React Guide](./docs/REACT_GUIDE.md)** - Full hooks, components, examples & best practices
+
+### Vue 3 (🔥 New!)
+
+```vue
+<template>
+  <div>
+    <h1>{{ article.title }}</h1>
+    <p>{{ article.content }}</p>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { reactive } from "vue";
+import { useSeo, useStructuredData } from "m-seo/adapters/VueSPAAdapter";
+
+const article = reactive({
+  title: "Getting Started with Vue SEO",
+  content: "Learn how to implement SEO in Vue.js applications",
+  author: "John Doe",
+  publishedDate: "2024-01-15",
+});
+
+// Add SEO meta tags
+useSeo({
+  title: `${article.title} - Blog`,
+  description: article.content,
+  keywords: ["vue", "seo", "tutorial"],
+  canonical: "https://example.com/blog/vue-seo",
+});
+
+// Add structured data
+useStructuredData({
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: article.title,
+  author: {
+    "@type": "Person",
+    name: article.author,
+  },
+  datePublished: article.publishedDate,
+});
+</script>
+```
+
+📖 **[Complete Vue Guide](./examples/vue-examples/README.md)** - Full composables, components, examples & best practices
+
+### 🧪 Test Vue Features Live
+
+Want to see it in action? Run the interactive test app:
+
+```bash
+cd test-vue-app && npm install && npm run dev
+# Open http://localhost:3001
+```
+
+The Vue test app includes:
+
+- 🏠 Basic SEO with reactive updates
+- 📝 Blog post with Article structured data
+- 🛍️ Product page with Product schema
+- 🍞 Breadcrumb navigation
+- ❓ FAQ page with FAQPage schema
 
 ### 🧪 Test React Features Live
 
@@ -337,20 +404,23 @@ While the core is framework-agnostic, we provide official adapters for popular f
 
 ### Official Adapters
 
-- ✅ **React** - Hooks (`useSeo`, `useStructuredData`, `useBreadcrumbs`) and Components (`<SeoHead>`, `<JsonLd>`)
+- ✅ **React** - Hooks (`useSeo`, `useStructuredData`, `useBreadcrumbs`, `useBotDetection`, `useUrlManager`, `useI18n`, `useCanonical`, `useHreflang`, `useLocaleSwitcher`) and Components (`<SeoHead>`, `<JsonLd>`)
+- ✅ **Vue 3** - Composables (`useSeo`, `useStructuredData`, `useBreadcrumbs`, `useOpenGraph`, `useBotDetection`, `useUrlManager`, `useI18n`, `useCanonical`, `useHreflang`, `useLocaleSwitcher`) and Components (`<SeoHead>`, `<JsonLd>`)
 - ✅ **Express** - Middleware and helpers
 - ✅ **Vanilla JS** - Direct usage, works everywhere
+
+**🤖 All React and Vue adapters include automatic bot detection and optimization!**
 
 ### Examples in `/examples` Directory
 
 - ✅ [React Usage](./examples/react-usage.tsx) - Complete React examples with hooks
+- ✅ [Vue Usage](./examples/vue-examples/) - Complete Vue 3 examples with composables
 - ✅ [Express Adapter](./examples/express-adapter.ts) - Server-side SEO
 - ✅ [Vanilla JS](./examples/vanilla-usage.ts) - Framework-agnostic usage
 
 ### Coming Soon
 
 - 📝 Next.js (App Router & Pages Router)
-- 📝 Vue 3 Composition API
 - 📝 Angular
 - 📝 Nuxt
 - 📝 SvelteKit
@@ -390,6 +460,22 @@ MIT
 - [GitHub](https://github.com/Hailemariyam/m-seo)
 - [NPM](https://npmjs.com/package/m-seo)
 - [Documentation](https://hailemariyam.github.io/m-seo/) - Full documentation website
+
+### Framework Guides
+- [React Guide](./docs/REACT_GUIDE.md) - Complete React documentation
+- [Vue Guide](./docs/VUE_GUIDE.md) - Complete Vue 3 documentation
+- [Adapter URL & i18n Guide](./docs/ADAPTER_URL_I18N_GUIDE.md) - URL management & internationalization
+
+### Feature Guides
+- [URL Manager Guide](./docs/URL_MANAGER_GUIDE.md) - SEO-friendly URL management
+- [Internationalization Guide](./docs/INTERNATIONALIZATION_GUIDE.md) - Multi-language support
+- [Bot Detection Guide](./BOT_DETECTION_COMPLETE.md) - Advanced bot detection features
+- [Google Analytics Guide](./docs/GOOGLE_ANALYTICS_GUIDE.md) - Analytics integration
+- [Google Search Console Guide](./docs/GOOGLE_SEARCH_CONSOLE_GUIDE.md) - Search Console integration
+- [SEO Audit Engine Guide](./docs/SEO_AUDIT_ENGINE_GUIDE.md) - Automated SEO audits
+- [Adapter Integration Guide](./ADAPTER_BOT_INTEGRATION.md) - React/Vue bot optimization
+
+### Getting Started
 - [Getting Started Guide](./docs-site/getting-started.md)
 - [API Reference](./docs-site/api.md)
 - [Examples](./docs-site/examples.md)

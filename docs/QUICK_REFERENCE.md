@@ -155,6 +155,67 @@ sd.clear();
 
 ## Usage Patterns
 
+### Vue 3 Composables
+
+```vue
+<script setup lang="ts">
+import { reactive } from "vue";
+import {
+  useSeo,
+  useStructuredData,
+  useBreadcrumbs,
+  useOpenGraph,
+} from "m-seo/adapters/VueSPAAdapter";
+
+// SEO Meta Tags
+const seoConfig = reactive({
+  title: "Page Title",
+  description: "Page description",
+  keywords: ["vue", "seo"],
+});
+
+useSeo(seoConfig);
+
+// Open Graph
+useOpenGraph({
+  type: "article",
+  title: "Article Title",
+  image: "https://example.com/image.jpg",
+});
+
+// Structured Data
+useStructuredData({
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: "Article Title",
+});
+
+// Breadcrumbs
+const breadcrumbs = reactive([
+  { name: "Home", url: "/" },
+  { name: "Blog", url: "/blog" },
+]);
+
+useBreadcrumbs(breadcrumbs);
+</script>
+```
+
+### Vue Router Integration
+
+```typescript
+import { createRouter } from "vue-router";
+import { setupSeoRouter } from "m-seo/adapters/VueSPAAdapter";
+
+const router = createRouter({
+  // ... config
+});
+
+setupSeoRouter(router, (route) => ({
+  title: (route.meta.title as string) || "Default",
+  description: (route.meta.description as string) || "Default description",
+}));
+```
+
 ### Express.js
 
 ```typescript
