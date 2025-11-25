@@ -871,7 +871,7 @@ export class ReactSPAAdapter {
 /**
  * React hook for URL management
  * Provides URL utilities for SEO optimization
- * 
+ *
  * @example
  * ```tsx
  * function ProductPage({ productName }) {
@@ -879,10 +879,10 @@ export class ReactSPAAdapter {
  *     baseUrl: 'https://example.com',
  *     trailingSlash: true
  *   });
- *   
+ *
  *   const slug = createSlug(productName);
  *   const canonical = getCanonical(`/products/${slug}`);
- *   
+ *
  *   return (
  *     <head>
  *       <link rel="canonical" href={canonical} />
@@ -894,14 +894,14 @@ export class ReactSPAAdapter {
 export function useUrlManager(config: UrlConfig): UrlManager {
   const React = getReact();
   const { useMemo } = React;
-  
+
   return useMemo(() => createUrlManager(config), [JSON.stringify(config)]);
 }
 
 /**
  * React hook for canonical URL
  * Automatically adds canonical link tag to document head
- * 
+ *
  * @example
  * ```tsx
  * function ProductPage() {
@@ -909,7 +909,7 @@ export function useUrlManager(config: UrlConfig): UrlManager {
  *     baseUrl: 'https://example.com',
  *     locale: 'en'
  *   });
- *   
+ *
  *   return <div>Product content</div>;
  * }
  * ```
@@ -920,41 +920,41 @@ export function useCanonical(
 ): string {
   const React = getReact();
   const { useEffect, useMemo } = React;
-  
+
   const urlManager = useMemo(() => createUrlManager(config), [JSON.stringify(config)]);
   const canonical = useMemo(
     () => urlManager.getCanonical(path, { locale: config.locale }),
     [path, config.locale, urlManager]
   );
-  
+
   useEffect(() => {
     if (!BotDetection.shouldRenderClientSide()) {
       return;
     }
-    
+
     // Remove existing canonical
     const existing = document.querySelector('link[rel="canonical"][data-mseo]');
     if (existing) existing.remove();
-    
+
     // Add new canonical
     const link = document.createElement('link');
     link.rel = 'canonical';
     link.href = canonical;
     link.setAttribute('data-mseo', 'true');
     document.head.appendChild(link);
-    
+
     return () => {
       link.remove();
     };
   }, [canonical]);
-  
+
   return canonical;
 }
 
 /**
  * React hook for hreflang tags
  * Automatically adds hreflang link tags to document head
- * 
+ *
  * @example
  * ```tsx
  * function ProductPage() {
@@ -962,7 +962,7 @@ export function useCanonical(
  *     locales: ['en', 'es', 'fr'],
  *     includeDefault: true
  *   });
- *   
+ *
  *   return <div>Product content</div>;
  * }
  * ```
@@ -978,7 +978,7 @@ export function useHreflang(
 ): HreflangTag[] {
   const React = getReact();
   const { useEffect, useMemo } = React;
-  
+
   const urlManager = useMemo(
     () => createUrlManager({
       baseUrl,
@@ -987,22 +987,22 @@ export function useHreflang(
     }),
     [baseUrl, options.urlStrategy, options.locales[0]]
   );
-  
+
   const hreflangTags = useMemo(
     () => urlManager.generateAlternates(path, options.locales, {
       includeDefault: options.includeDefault
     }),
     [path, options.locales, options.includeDefault, urlManager]
   );
-  
+
   useEffect(() => {
     if (!BotDetection.shouldRenderClientSide()) {
       return;
     }
-    
+
     // Remove existing hreflang tags
     document.querySelectorAll('link[rel="alternate"][hreflang][data-mseo]').forEach(el => el.remove());
-    
+
     // Add new hreflang tags
     const links: HTMLLinkElement[] = [];
     hreflangTags.forEach((tag: HreflangTag) => {
@@ -1014,12 +1014,12 @@ export function useHreflang(
       document.head.appendChild(link);
       links.push(link);
     });
-    
+
     return () => {
       links.forEach(link => link.remove());
     };
   }, [hreflangTags]);
-  
+
   return hreflangTags;
 }
 
@@ -1030,7 +1030,7 @@ export function useHreflang(
 /**
  * React hook for internationalization
  * Provides i18n utilities and manages locale state
- * 
+ *
  * @example
  * ```tsx
  * function App() {
@@ -1038,7 +1038,7 @@ export function useHreflang(
  *     defaultLocale: 'en',
  *     supportedLocales: ['en', 'es', 'fr']
  *   });
- *   
+ *
  *   return (
  *     <div>
  *       <h1>{t('welcome.message')}</h1>
@@ -1064,35 +1064,35 @@ export function useI18n(config: I18nConfig): {
 } {
   const React = getReact();
   const { useState, useMemo, useCallback } = React;
-  
+
   const i18n = useMemo(() => createI18n(config), [JSON.stringify(config)]);
   const [locale, setLocaleState] = useState(i18n.getLocale());
-  
+
   const setLocale = useCallback((newLocale: string) => {
     i18n.setLocale(newLocale);
     setLocaleState(newLocale);
   }, [i18n]);
-  
+
   const t = useCallback((key: string, params?: Record<string, any>) => {
     return i18n.translate(key, params);
   }, [i18n, locale]);
-  
+
   const formatDate = useCallback((date: Date, options?: Intl.DateTimeFormatOptions) => {
     return i18n.formatDate(date, options);
   }, [i18n, locale]);
-  
+
   const formatNumber = useCallback((num: number, options?: Intl.NumberFormatOptions) => {
     return i18n.formatNumber(num, options);
   }, [i18n, locale]);
-  
+
   const formatCurrency = useCallback((amount: number, currency?: string) => {
     return i18n.formatCurrency(amount, currency);
   }, [i18n, locale]);
-  
+
   const formatRelativeTime = useCallback((date: Date) => {
     return i18n.formatRelativeTime(date);
   }, [i18n, locale]);
-  
+
   return {
     i18n,
     locale,
@@ -1108,7 +1108,7 @@ export function useI18n(config: I18nConfig): {
 /**
  * React hook for locale detection
  * Automatically detects and sets the appropriate locale
- * 
+ *
  * @example
  * ```tsx
  * function App() {
@@ -1117,7 +1117,7 @@ export function useI18n(config: I18nConfig): {
  *     supportedLocales: ['en', 'es', 'fr'],
  *     detectLocale: true
  *   });
- *   
+ *
  *   return <div>Current locale: {locale}</div>;
  * }
  * ```
@@ -1125,23 +1125,23 @@ export function useI18n(config: I18nConfig): {
 export function useLocaleDetection(config: I18nConfig): string {
   const React = getReact();
   const { useState, useEffect, useMemo } = React;
-  
+
   const i18n = useMemo(() => createI18n(config), [JSON.stringify(config)]);
   const [locale, setLocale] = useState(i18n.getLocale());
-  
+
   useEffect(() => {
     const detected = i18n.detectLocale();
     i18n.setLocale(detected);
     setLocale(detected);
   }, [i18n]);
-  
+
   return locale;
 }
 
 /**
  * React hook for locale switcher
  * Provides data for rendering language switcher UI
- * 
+ *
  * @example
  * ```tsx
  * function LanguageSwitcher() {
@@ -1150,7 +1150,7 @@ export function useLocaleDetection(config: I18nConfig): string {
  *     supportedLocales: ['en', 'es', 'fr'],
  *     baseUrl: 'https://example.com'
  *   });
- *   
+ *
  *   return (
  *     <select value={currentLocale} onChange={(e) => switchLocale(e.target.value)}>
  *       {locales.map(loc => (
@@ -1172,34 +1172,33 @@ export function useLocaleSwitcher(
 } {
   const React = getReact();
   const { useState, useMemo, useCallback } = React;
-  
+
   const i18n = useMemo(() => createI18n(config), [JSON.stringify(config)]);
   const [currentLocale, setCurrentLocale] = useState(i18n.getLocale());
-  
+
   const getCurrentPath = () => {
     if (typeof window === 'undefined') return '/';
     return window.location.pathname;
   };
-  
+
   const locales = useMemo(() => {
     return i18n.getLocaleSwitcherData(getCurrentPath(), config.baseUrl);
   }, [i18n, currentLocale, config.baseUrl]);
-  
+
   const switchLocale = useCallback((newLocale: string) => {
     i18n.setLocale(newLocale);
     setCurrentLocale(newLocale);
-    
+
     // Navigate to localized URL
     const localeUrl = i18n.getLocalizedUrl(getCurrentPath(), newLocale, config.baseUrl);
     if (typeof window !== 'undefined') {
       window.location.href = localeUrl;
     }
   }, [i18n, config.baseUrl]);
-  
+
   return {
     locales,
     currentLocale,
     switchLocale
   };
 }
-

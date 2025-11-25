@@ -44,11 +44,13 @@ The m-seo adapters provide framework-native integration for URL management and i
 Creates a memoized UrlManager instance for generating SEO-friendly URLs.
 
 **Signature:**
+
 ```typescript
 useUrlManager(config: UrlConfig): UrlManager
 ```
 
 **Parameters:**
+
 - `config`: UrlConfig object
   - `baseUrl`: Base URL for the site
   - `trailingSlash?`: Add trailing slashes (default: false)
@@ -57,6 +59,7 @@ useUrlManager(config: UrlConfig): UrlManager
   - `defaultLocale?`: Default locale code
 
 **Returns:** UrlManager instance with methods:
+
 - `createSlug(text, options?)`: Create URL-safe slugs
 - `getCanonical(path, options?)`: Generate canonical URLs
 - `generatePaginationUrls(basePath, current, total)`: Pagination URLs
@@ -64,17 +67,18 @@ useUrlManager(config: UrlConfig): UrlManager
 - And more...
 
 **Example:**
+
 ```tsx
 function ProductPage({ productName }: { productName: string }) {
   const urlManager = useUrlManager({
-    baseUrl: 'https://example.com',
+    baseUrl: "https://example.com",
     trailingSlash: true,
-    forceLowerCase: true
+    forceLowerCase: true,
   });
-  
+
   const slug = urlManager.createSlug(productName, { removeDiacritics: true });
   const canonical = urlManager.getCanonical(`/products/${slug}`);
-  
+
   return (
     <div>
       <h1>{productName}</h1>
@@ -91,6 +95,7 @@ function ProductPage({ productName }: { productName: string }) {
 Generates a canonical URL and automatically adds the canonical link tag to the document head.
 
 **Signature:**
+
 ```typescript
 useCanonical(
   path: string,
@@ -99,25 +104,28 @@ useCanonical(
 ```
 
 **Parameters:**
+
 - `path`: URL path (e.g., '/products/shoes')
 - `config`: UrlConfig with optional locale
 
 **Returns:** Canonical URL as a string
 
 **Features:**
+
 - Automatically adds `<link rel="canonical" href="...">` to document.head
 - Bot-aware: skips DOM updates for crawlers (they read from HTML directly)
 - Removes the tag on component unmount
 - Updates the tag when path or config changes
 
 **Example:**
+
 ```tsx
 function BlogPost({ slug }: { slug: string }) {
   const canonical = useCanonical(`/blog/${slug}`, {
-    baseUrl: 'https://blog.example.com',
-    locale: 'en'
+    baseUrl: "https://blog.example.com",
+    locale: "en",
   });
-  
+
   return (
     <article>
       <h1>Blog Post</h1>
@@ -135,6 +143,7 @@ function BlogPost({ slug }: { slug: string }) {
 Generates hreflang alternate URLs and automatically adds hreflang link tags to the document head.
 
 **Signature:**
+
 ```typescript
 useHreflang(
   path: string,
@@ -148,6 +157,7 @@ useHreflang(
 ```
 
 **Parameters:**
+
 - `path`: Current page path
 - `baseUrl`: Base URL
 - `options`:
@@ -156,14 +166,16 @@ useHreflang(
   - `includeDefault`: Include x-default tag (default: false)
 
 **Returns:** Array of HreflangTag objects:
+
 ```typescript
 interface HreflangTag {
-  hreflang: string;  // Locale code or 'x-default'
-  href: string;      // Full URL
+  hreflang: string; // Locale code or 'x-default'
+  href: string; // Full URL
 }
 ```
 
 **Features:**
+
 - Automatically adds `<link rel="alternate" hreflang="..." href="...">` tags
 - Supports multiple URL strategies (path, subdomain, domain, query)
 - Optional x-default for language fallback
@@ -171,20 +183,25 @@ interface HreflangTag {
 - Bot-aware
 
 **Example:**
+
 ```tsx
 function ProductPage({ productId }: { productId: string }) {
-  const hreflangTags = useHreflang(`/products/${productId}`, 'https://example.com', {
-    locales: ['en', 'es', 'fr', 'de'],
-    urlStrategy: 'path',
-    includeDefault: true
-  });
-  
+  const hreflangTags = useHreflang(
+    `/products/${productId}`,
+    "https://example.com",
+    {
+      locales: ["en", "es", "fr", "de"],
+      urlStrategy: "path",
+      includeDefault: true,
+    }
+  );
+
   return (
     <div>
       <h2>Available in {hreflangTags.length} languages</h2>
       {/* Hreflang tags are automatically added to <head> */}
       <ul>
-        {hreflangTags.map(tag => (
+        {hreflangTags.map((tag) => (
           <li key={tag.hreflang}>
             {tag.hreflang}: {tag.href}
           </li>
@@ -202,6 +219,7 @@ function ProductPage({ productId }: { productId: string }) {
 Provides full internationalization state management with React hooks.
 
 **Signature:**
+
 ```typescript
 useI18n(config: I18nConfig): {
   i18n: Internationalization;
@@ -216,6 +234,7 @@ useI18n(config: I18nConfig): {
 ```
 
 **Parameters:**
+
 - `config`: I18nConfig object
   - `defaultLocale`: Default locale code
   - `supportedLocales`: Array of supported locale codes
@@ -225,6 +244,7 @@ useI18n(config: I18nConfig): {
   - `storageKey?`: LocalStorage key for persistence
 
 **Returns:** Object with:
+
 - `i18n`: Full Internationalization instance
 - `locale`: Current locale (reactive state)
 - `setLocale`: Function to change locale
@@ -232,29 +252,30 @@ useI18n(config: I18nConfig): {
 - `formatDate`, `formatNumber`, `formatCurrency`, `formatRelativeTime`: Formatting utilities
 
 **Example:**
+
 ```tsx
 function WelcomePage() {
   const { t, locale, setLocale, formatCurrency, i18n } = useI18n({
-    defaultLocale: 'en',
-    supportedLocales: ['en', 'es', 'fr'],
-    fallbackLocale: 'en'
+    defaultLocale: "en",
+    supportedLocales: ["en", "es", "fr"],
+    fallbackLocale: "en",
   });
-  
+
   useEffect(() => {
-    i18n.loadTranslations('en', {
-      welcome: { title: 'Welcome', message: 'Hello, {{name}}!' }
+    i18n.loadTranslations("en", {
+      welcome: { title: "Welcome", message: "Hello, {{name}}!" },
     });
-    i18n.loadTranslations('es', {
-      welcome: { title: 'Bienvenido', message: '¡Hola, {{name}}!' }
+    i18n.loadTranslations("es", {
+      welcome: { title: "Bienvenido", message: "¡Hola, {{name}}!" },
     });
   }, [i18n]);
-  
+
   return (
     <div>
-      <h1>{t('welcome.title')}</h1>
-      <p>{t('welcome.message', { name: 'John' })}</p>
-      <p>Price: {formatCurrency(99.99, 'USD')}</p>
-      
+      <h1>{t("welcome.title")}</h1>
+      <p>{t("welcome.message", { name: "John" })}</p>
+      <p>Price: {formatCurrency(99.99, "USD")}</p>
+
       <select value={locale} onChange={(e) => setLocale(e.target.value)}>
         <option value="en">English</option>
         <option value="es">Español</option>
@@ -272,16 +293,19 @@ function WelcomePage() {
 Automatically detects the user's preferred locale from URL, localStorage, cookies, or browser settings.
 
 **Signature:**
+
 ```typescript
 useLocaleDetection(config: I18nConfig): string
 ```
 
 **Parameters:**
+
 - `config`: I18nConfig (same as useI18n)
 
 **Returns:** Detected locale code as a string
 
 **Features:**
+
 - Checks URL path, subdomain, domain, or query parameter
 - Checks localStorage (persisted preference)
 - Checks cookies
@@ -289,16 +313,17 @@ useLocaleDetection(config: I18nConfig): string
 - Sets the locale automatically on mount
 
 **Example:**
+
 ```tsx
 function App() {
   const locale = useLocaleDetection({
-    defaultLocale: 'en',
-    supportedLocales: ['en', 'es', 'fr', 'de', 'ja'],
+    defaultLocale: "en",
+    supportedLocales: ["en", "es", "fr", "de", "ja"],
     detectLocale: true,
-    urlStrategy: 'path',
-    storageKey: 'user-locale'
+    urlStrategy: "path",
+    storageKey: "user-locale",
   });
-  
+
   return (
     <div>
       <h1>Welcome!</h1>
@@ -315,6 +340,7 @@ function App() {
 Provides data and functionality for building a language switcher UI.
 
 **Signature:**
+
 ```typescript
 useLocaleSwitcher(config: I18nConfig & { baseUrl: string }): {
   locales: Array<{
@@ -330,43 +356,49 @@ useLocaleSwitcher(config: I18nConfig & { baseUrl: string }): {
 ```
 
 **Parameters:**
+
 - `config`: I18nConfig with additional `baseUrl` property
 
 **Returns:** Object with:
+
 - `locales`: Array of locale objects with URLs
 - `currentLocale`: Current active locale
 - `switchLocale`: Function to navigate to a different locale
 
 **Example:**
+
 ```tsx
 function LanguageSwitcher() {
   const { locales, currentLocale, switchLocale } = useLocaleSwitcher({
-    defaultLocale: 'en',
-    supportedLocales: ['en', 'es', 'fr', 'de'],
-    baseUrl: 'https://example.com',
-    urlStrategy: 'path'
+    defaultLocale: "en",
+    supportedLocales: ["en", "es", "fr", "de"],
+    baseUrl: "https://example.com",
+    urlStrategy: "path",
   });
-  
+
   return (
     <div className="language-switcher">
       <h3>Choose Language</h3>
-      
+
       {/* As a dropdown */}
-      <select value={currentLocale} onChange={(e) => switchLocale(e.target.value)}>
-        {locales.map(loc => (
+      <select
+        value={currentLocale}
+        onChange={(e) => switchLocale(e.target.value)}
+      >
+        {locales.map((loc) => (
           <option key={loc.code} value={loc.code}>
-            {loc.nativeName} {loc.active ? '✓' : ''}
+            {loc.nativeName} {loc.active ? "✓" : ""}
           </option>
         ))}
       </select>
-      
+
       {/* As links */}
       <div className="language-links">
-        {locales.map(loc => (
+        {locales.map((loc) => (
           <a
             key={loc.code}
             href={loc.url}
-            className={loc.active ? 'active' : ''}
+            className={loc.active ? "active" : ""}
             onClick={(e) => {
               e.preventDefault();
               switchLocale(loc.code);
@@ -392,34 +424,37 @@ All Vue composables support **reactive props** using Vue 3's `Ref<T>` and `compu
 Creates a reactive UrlManager instance.
 
 **Signature:**
+
 ```typescript
 useUrlManager(config: UrlConfig | Ref<UrlConfig>): UrlManager
 ```
 
 **Parameters:**
+
 - `config`: UrlConfig or Ref<UrlConfig> (reactive)
 
 **Returns:** Computed UrlManager instance
 
 **Example:**
+
 ```vue
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { useUrlManager } from 'm-seo/adapters/VueSPAAdapter';
+import { ref, computed } from "vue";
+import { useUrlManager } from "m-seo/adapters/VueSPAAdapter";
 
-const productName = ref('Premium Leather Shoes');
+const productName = ref("Premium Leather Shoes");
 
 const urlManager = useUrlManager({
-  baseUrl: 'https://example.com',
+  baseUrl: "https://example.com",
   trailingSlash: true,
-  forceLowerCase: true
+  forceLowerCase: true,
 });
 
-const slug = computed(() => 
+const slug = computed(() =>
   urlManager.createSlug(productName.value, { removeDiacritics: true })
 );
 
-const canonical = computed(() => 
+const canonical = computed(() =>
   urlManager.getCanonical(`/products/${slug.value}`)
 );
 </script>
@@ -440,6 +475,7 @@ const canonical = computed(() =>
 Generates a reactive canonical URL and automatically manages the canonical link tag.
 
 **Signature:**
+
 ```typescript
 useCanonical(
   path: string | Ref<string>,
@@ -448,29 +484,32 @@ useCanonical(
 ```
 
 **Parameters:**
+
 - `path`: URL path (can be reactive)
 - `config`: UrlConfig with optional locale
 
 **Returns:** Ref<string> - reactive canonical URL
 
 **Features:**
+
 - **Reactive**: Watches path changes and updates DOM
 - Automatically adds/updates `<link rel="canonical">`
 - Removes tag on unmount
 - Bot-aware
 
 **Example:**
+
 ```vue
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { useUrlManager, useCanonical } from 'm-seo/adapters/VueSPAAdapter';
+import { ref, computed } from "vue";
+import { useUrlManager, useCanonical } from "m-seo/adapters/VueSPAAdapter";
 
 const props = defineProps<{
   postTitle: string;
 }>();
 
 const urlManager = useUrlManager({
-  baseUrl: 'https://blog.example.com'
+  baseUrl: "https://blog.example.com",
 });
 
 const slug = computed(() => urlManager.createSlug(props.postTitle));
@@ -478,7 +517,7 @@ const slug = computed(() => urlManager.createSlug(props.postTitle));
 // Canonical updates automatically when slug changes
 const canonical = useCanonical(
   computed(() => `/blog/${slug.value}`),
-  { baseUrl: 'https://blog.example.com' }
+  { baseUrl: "https://blog.example.com" }
 );
 </script>
 
@@ -497,6 +536,7 @@ const canonical = useCanonical(
 Generates reactive hreflang tags and automatically manages them in the document head.
 
 **Signature:**
+
 ```typescript
 useHreflang(
   path: string | Ref<string>,
@@ -510,6 +550,7 @@ useHreflang(
 ```
 
 **Parameters:**
+
 - `path`: Current page path (can be reactive)
 - `baseUrl`: Base URL
 - `options`: Same as React version
@@ -517,26 +558,32 @@ useHreflang(
 **Returns:** Ref<HreflangTag[]> - reactive array of hreflang tags
 
 **Features:**
+
 - **Reactive**: Watches path changes and updates DOM
 - Automatically adds/updates hreflang tags
 - Removes tags on unmount
 - Bot-aware
 
 **Example:**
+
 ```vue
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useHreflang } from 'm-seo/adapters/VueSPAAdapter';
+import { ref } from "vue";
+import { useHreflang } from "m-seo/adapters/VueSPAAdapter";
 
 const props = defineProps<{
   productId: string;
 }>();
 
-const hreflangTags = useHreflang(`/products/${props.productId}`, 'https://example.com', {
-  locales: ['en', 'es', 'fr', 'de'],
-  urlStrategy: 'path',
-  includeDefault: true
-});
+const hreflangTags = useHreflang(
+  `/products/${props.productId}`,
+  "https://example.com",
+  {
+    locales: ["en", "es", "fr", "de"],
+    urlStrategy: "path",
+    includeDefault: true,
+  }
+);
 </script>
 
 <template>
@@ -558,6 +605,7 @@ const hreflangTags = useHreflang(`/products/${props.productId}`, 'https://exampl
 Provides full internationalization with Vue 3 reactivity.
 
 **Signature:**
+
 ```typescript
 useI18n(config: I18nConfig | Ref<I18nConfig>): {
   i18n: Internationalization;
@@ -572,40 +620,43 @@ useI18n(config: I18nConfig | Ref<I18nConfig>): {
 ```
 
 **Parameters:**
+
 - `config`: I18nConfig or Ref<I18nConfig>
 
 **Returns:** Object with:
+
 - `locale`: **Ref<string>** (reactive, can use v-model)
 - Other properties same as React version
 
 **Example:**
+
 ```vue
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import { useI18n } from 'm-seo/adapters/VueSPAAdapter';
+import { onMounted } from "vue";
+import { useI18n } from "m-seo/adapters/VueSPAAdapter";
 
 const { t, locale, setLocale, formatCurrency, i18n } = useI18n({
-  defaultLocale: 'en',
-  supportedLocales: ['en', 'es', 'fr'],
-  fallbackLocale: 'en'
+  defaultLocale: "en",
+  supportedLocales: ["en", "es", "fr"],
+  fallbackLocale: "en",
 });
 
 onMounted(async () => {
-  await i18n.loadTranslations('en', {
-    welcome: { title: 'Welcome', message: 'Hello, {{name}}!' }
+  await i18n.loadTranslations("en", {
+    welcome: { title: "Welcome", message: "Hello, {{name}}!" },
   });
-  await i18n.loadTranslations('es', {
-    welcome: { title: 'Bienvenido', message: '¡Hola, {{name}}!' }
+  await i18n.loadTranslations("es", {
+    welcome: { title: "Bienvenido", message: "¡Hola, {{name}}!" },
   });
 });
 </script>
 
 <template>
   <div>
-    <h1>{{ t('welcome.title') }}</h1>
-    <p>{{ t('welcome.message', { name: 'John' }) }}</p>
-    <p>Price: {{ formatCurrency(99.99, 'USD') }}</p>
-    
+    <h1>{{ t("welcome.title") }}</h1>
+    <p>{{ t("welcome.message", { name: "John" }) }}</p>
+    <p>Price: {{ formatCurrency(99.99, "USD") }}</p>
+
     <!-- v-model works because locale is a Ref -->
     <select v-model="locale" @change="setLocale(locale)">
       <option value="en">English</option>
@@ -623,25 +674,28 @@ onMounted(async () => {
 Automatically detects user's locale and returns it as a reactive ref.
 
 **Signature:**
+
 ```typescript
 useLocaleDetection(config: I18nConfig | Ref<I18nConfig>): Ref<string>
 ```
 
 **Parameters:**
+
 - `config`: I18nConfig or Ref<I18nConfig>
 
 **Returns:** Ref<string> - detected locale
 
 **Example:**
+
 ```vue
 <script setup lang="ts">
-import { useLocaleDetection } from 'm-seo/adapters/VueSPAAdapter';
+import { useLocaleDetection } from "m-seo/adapters/VueSPAAdapter";
 
 const locale = useLocaleDetection({
-  defaultLocale: 'en',
-  supportedLocales: ['en', 'es', 'fr', 'de'],
+  defaultLocale: "en",
+  supportedLocales: ["en", "es", "fr", "de"],
   detectLocale: true,
-  urlStrategy: 'path'
+  urlStrategy: "path",
 });
 </script>
 
@@ -660,6 +714,7 @@ const locale = useLocaleDetection({
 Provides reactive language switcher data.
 
 **Signature:**
+
 ```typescript
 useLocaleSwitcher(config: I18nConfig & { baseUrl: string }): {
   locales: Ref<Array<LocaleInfo>>;
@@ -669,34 +724,36 @@ useLocaleSwitcher(config: I18nConfig & { baseUrl: string }): {
 ```
 
 **Parameters:**
+
 - `config`: I18nConfig with `baseUrl`
 
 **Returns:** Object with reactive refs
 
 **Example:**
+
 ```vue
 <script setup lang="ts">
-import { useLocaleSwitcher } from 'm-seo/adapters/VueSPAAdapter';
+import { useLocaleSwitcher } from "m-seo/adapters/VueSPAAdapter";
 
 const { locales, currentLocale, switchLocale } = useLocaleSwitcher({
-  defaultLocale: 'en',
-  supportedLocales: ['en', 'es', 'fr', 'de'],
-  baseUrl: 'https://example.com',
-  urlStrategy: 'path'
+  defaultLocale: "en",
+  supportedLocales: ["en", "es", "fr", "de"],
+  baseUrl: "https://example.com",
+  urlStrategy: "path",
 });
 </script>
 
 <template>
   <div class="language-switcher">
     <h3>Choose Language</h3>
-    
+
     <!-- As a dropdown -->
     <select :value="currentLocale" @change="switchLocale($event.target.value)">
       <option v-for="loc in locales" :key="loc.code" :value="loc.code">
-        {{ loc.nativeName }} {{ loc.active ? '✓' : '' }}
+        {{ loc.nativeName }} {{ loc.active ? "✓" : "" }}
       </option>
     </select>
-    
+
     <!-- As links -->
     <div class="language-links">
       <a
@@ -738,6 +795,7 @@ All DOM updates check `BotDetection.shouldRenderClientSide()` to skip unnecessar
 ### ✅ Automatic Cleanup
 
 All hooks and composables clean up after themselves:
+
 - Remove DOM elements on unmount
 - Clear watchers and effects
 - Prevent memory leaks
@@ -758,6 +816,7 @@ Full type safety with TypeScript interfaces and type inference.
 See these files for complete working examples:
 
 - **React**: `/examples/react-url-i18n-examples.tsx`
+
   - Basic URL Manager usage
   - Auto canonical tags
   - Multi-language products with hreflang
@@ -781,35 +840,37 @@ See these files for complete working examples:
 ### From Manual URL Management
 
 **Before:**
+
 ```tsx
 function ProductPage({ productId }: { productId: string }) {
-  const slug = productId.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  const slug = productId.toLowerCase().replace(/[^a-z0-9]+/g, "-");
   const canonicalUrl = `https://example.com/products/${slug}`;
-  
+
   useEffect(() => {
-    const link = document.createElement('link');
-    link.rel = 'canonical';
+    const link = document.createElement("link");
+    link.rel = "canonical";
     link.href = canonicalUrl;
     document.head.appendChild(link);
-    
+
     return () => {
       document.head.removeChild(link);
     };
   }, [canonicalUrl]);
-  
+
   return <div>...</div>;
 }
 ```
 
 **After:**
+
 ```tsx
 function ProductPage({ productId }: { productId: string }) {
-  const urlManager = useUrlManager({ baseUrl: 'https://example.com' });
+  const urlManager = useUrlManager({ baseUrl: "https://example.com" });
   const slug = urlManager.createSlug(productId);
   const canonical = useCanonical(`/products/${slug}`, {
-    baseUrl: 'https://example.com'
+    baseUrl: "https://example.com",
   });
-  
+
   return <div>...</div>;
 }
 ```
@@ -817,38 +878,40 @@ function ProductPage({ productId }: { productId: string }) {
 ### From Manual i18n
 
 **Before:**
+
 ```tsx
 function WelcomePage() {
-  const [locale, setLocale] = useState('en');
+  const [locale, setLocale] = useState("en");
   const [translations, setTranslations] = useState({});
-  
+
   useEffect(() => {
     fetch(`/translations/${locale}.json`)
-      .then(r => r.json())
+      .then((r) => r.json())
       .then(setTranslations);
   }, [locale]);
-  
+
   const t = (key: string) => {
-    return key.split('.').reduce((obj, k) => obj?.[k], translations) || key;
+    return key.split(".").reduce((obj, k) => obj?.[k], translations) || key;
   };
-  
-  return <div>{t('welcome.title')}</div>;
+
+  return <div>{t("welcome.title")}</div>;
 }
 ```
 
 **After:**
+
 ```tsx
 function WelcomePage() {
   const { t, locale, setLocale, i18n } = useI18n({
-    defaultLocale: 'en',
-    supportedLocales: ['en', 'es', 'fr']
+    defaultLocale: "en",
+    supportedLocales: ["en", "es", "fr"],
   });
-  
+
   useEffect(() => {
-    i18n.loadTranslations('en', { welcome: { title: 'Welcome' } });
+    i18n.loadTranslations("en", { welcome: { title: "Welcome" } });
   }, [i18n]);
-  
-  return <div>{t('welcome.title')}</div>;
+
+  return <div>{t("welcome.title")}</div>;
 }
 ```
 

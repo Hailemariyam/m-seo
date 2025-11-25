@@ -1072,20 +1072,20 @@ export function usePerformanceSummary(
 /**
  * Vue 3 composable for URL management
  * Provides URL utilities for SEO optimization
- * 
+ *
  * @example
  * ```vue
  * <script setup>
  * import { useUrlManager } from 'm-seo/adapters/VueSPAAdapter';
  * import { ref, computed } from 'vue';
- * 
+ *
  * const productName = ref('Premium Shoes');
- * 
+ *
  * const { createSlug, getCanonical } = useUrlManager({
  *   baseUrl: 'https://example.com',
  *   trailingSlash: true
  * });
- * 
+ *
  * const slug = computed(() => createSlug(productName.value));
  * const canonical = computed(() => getCanonical(`/products/${slug.value}`));
  * </script>
@@ -1096,22 +1096,22 @@ export function useUrlManager(config: UrlConfig | Ref<UrlConfig>): UrlManager {
     const cfg = isRef(config) ? config.value : config;
     return createUrlManager(cfg);
   });
-  
+
   return urlManager.value;
 }
 
 /**
  * Vue 3 composable for canonical URL
  * Automatically adds canonical link tag to document head
- * 
+ *
  * @example
  * ```vue
  * <script setup>
  * import { useCanonical } from 'm-seo/adapters/VueSPAAdapter';
  * import { ref } from 'vue';
- * 
+ *
  * const productSlug = ref('premium-shoes');
- * 
+ *
  * const canonical = useCanonical(
  *   computed(() => `/products/${productSlug.value}`),
  *   { baseUrl: 'https://example.com', locale: 'en' }
@@ -1124,22 +1124,22 @@ export function useCanonical(
   config: UrlConfig & { locale?: string } = { baseUrl: '' }
 ): Ref<string> {
   const urlManager = createUrlManager(config);
-  
+
   const canonical = computed(() => {
     const p = isRef(path) ? path.value : path;
     return urlManager.getCanonical(p, { locale: config.locale });
   });
-  
+
   // Apply to document
   watch(canonical, (newCanonical) => {
     if (!BotDetection.shouldRenderClientSide()) {
       return;
     }
-    
+
     // Remove existing canonical
     const existing = document.querySelector('link[rel="canonical"][data-mseo]');
     if (existing) existing.remove();
-    
+
     // Add new canonical
     const link = document.createElement('link');
     link.rel = 'canonical';
@@ -1147,24 +1147,24 @@ export function useCanonical(
     link.setAttribute('data-mseo', 'true');
     document.head.appendChild(link);
   }, { immediate: true });
-  
+
   onUnmounted(() => {
     const link = document.querySelector('link[rel="canonical"][data-mseo]');
     if (link) link.remove();
   });
-  
+
   return canonical;
 }
 
 /**
  * Vue 3 composable for hreflang tags
  * Automatically adds hreflang link tags to document head
- * 
+ *
  * @example
  * ```vue
  * <script setup>
  * import { useHreflang } from 'm-seo/adapters/VueSPAAdapter';
- * 
+ *
  * const hreflangTags = useHreflang('/products', 'https://example.com', {
  *   locales: ['en', 'es', 'fr'],
  *   includeDefault: true
@@ -1186,23 +1186,23 @@ export function useHreflang(
     localePrefix: (options.urlStrategy === 'query' ? 'none' : options.urlStrategy) || 'path',
     defaultLocale: options.locales[0]
   });
-  
+
   const hreflangTags = computed(() => {
     const p = isRef(path) ? path.value : path;
     return urlManager.generateAlternates(p, options.locales, {
       includeDefault: options.includeDefault
     });
   });
-  
+
   // Apply to document
   watch(hreflangTags, (tags) => {
     if (!BotDetection.shouldRenderClientSide()) {
       return;
     }
-    
+
     // Remove existing hreflang tags
     document.querySelectorAll('link[rel="alternate"][hreflang][data-mseo]').forEach(el => el.remove());
-    
+
     // Add new hreflang tags
     tags.forEach((tag: HreflangTag) => {
       const link = document.createElement('link');
@@ -1213,11 +1213,11 @@ export function useHreflang(
       document.head.appendChild(link);
     });
   }, { immediate: true });
-  
+
   onUnmounted(() => {
     document.querySelectorAll('link[rel="alternate"][hreflang][data-mseo]').forEach(el => el.remove());
   });
-  
+
   return hreflangTags;
 }
 
@@ -1228,23 +1228,23 @@ export function useHreflang(
 /**
  * Vue 3 composable for internationalization
  * Provides i18n utilities and manages locale state
- * 
+ *
  * @example
  * ```vue
  * <script setup>
  * import { useI18n } from 'm-seo/adapters/VueSPAAdapter';
- * 
+ *
  * const { t, locale, setLocale, formatDate, formatCurrency } = useI18n({
  *   defaultLocale: 'en',
  *   supportedLocales: ['en', 'es', 'fr']
  * });
- * 
+ *
  * // Load translations
  * await i18n.loadTranslations('en', {
  *   welcome: 'Hello, {{name}}!'
  * });
  * </script>
- * 
+ *
  * <template>
  *   <div>
  *     <h1>{{ t('welcome', { name: 'John' }) }}</h1>
@@ -1270,32 +1270,32 @@ export function useI18n(config: I18nConfig | Ref<I18nConfig>): {
   const cfg = isRef(config) ? config.value : config;
   const i18n = createI18n(cfg);
   const locale = ref(i18n.getLocale());
-  
+
   const setLocale = (newLocale: string) => {
     i18n.setLocale(newLocale);
     locale.value = newLocale;
   };
-  
+
   const t = (key: string, params?: Record<string, any>) => {
     return i18n.translate(key, params);
   };
-  
+
   const formatDate = (date: Date, options?: Intl.DateTimeFormatOptions) => {
     return i18n.formatDate(date, options);
   };
-  
+
   const formatNumber = (num: number, options?: Intl.NumberFormatOptions) => {
     return i18n.formatNumber(num, options);
   };
-  
+
   const formatCurrency = (amount: number, currency?: string) => {
     return i18n.formatCurrency(amount, currency);
   };
-  
+
   const formatRelativeTime = (date: Date) => {
     return i18n.formatRelativeTime(date);
   };
-  
+
   return {
     i18n,
     locale,
@@ -1311,19 +1311,19 @@ export function useI18n(config: I18nConfig | Ref<I18nConfig>): {
 /**
  * Vue 3 composable for locale detection
  * Automatically detects and sets the appropriate locale
- * 
+ *
  * @example
  * ```vue
  * <script setup>
  * import { useLocaleDetection } from 'm-seo/adapters/VueSPAAdapter';
- * 
+ *
  * const locale = useLocaleDetection({
  *   defaultLocale: 'en',
  *   supportedLocales: ['en', 'es', 'fr'],
  *   detectLocale: true
  * });
  * </script>
- * 
+ *
  * <template>
  *   <div>Current locale: {{ locale }}</div>
  * </template>
@@ -1333,31 +1333,31 @@ export function useLocaleDetection(config: I18nConfig | Ref<I18nConfig>): Ref<st
   const cfg = isRef(config) ? config.value : config;
   const i18n = createI18n(cfg);
   const locale = ref(i18n.getLocale());
-  
+
   // Auto-detect on mount
   const detected = i18n.detectLocale();
   i18n.setLocale(detected);
   locale.value = detected;
-  
+
   return locale;
 }
 
 /**
  * Vue 3 composable for locale switcher
  * Provides data for rendering language switcher UI
- * 
+ *
  * @example
  * ```vue
  * <script setup>
  * import { useLocaleSwitcher } from 'm-seo/adapters/VueSPAAdapter';
- * 
+ *
  * const { locales, currentLocale, switchLocale } = useLocaleSwitcher({
  *   defaultLocale: 'en',
  *   supportedLocales: ['en', 'es', 'fr'],
  *   baseUrl: 'https://example.com'
  * });
  * </script>
- * 
+ *
  * <template>
  *   <select :value="currentLocale" @change="switchLocale($event.target.value)">
  *     <option v-for="loc in locales" :key="loc.code" :value="loc.code">
@@ -1377,31 +1377,30 @@ export function useLocaleSwitcher(
   const cfg = isRef(config) ? config.value : config;
   const i18n = createI18n(cfg);
   const currentLocale = ref(i18n.getLocale());
-  
+
   const getCurrentPath = () => {
     if (typeof window === 'undefined') return '/';
     return window.location.pathname;
   };
-  
+
   const locales = computed(() => {
     return i18n.getLocaleSwitcherData(getCurrentPath(), cfg.baseUrl);
   });
-  
+
   const switchLocale = (newLocale: string) => {
     i18n.setLocale(newLocale);
     currentLocale.value = newLocale;
-    
+
     // Navigate to localized URL
     const localeUrl = i18n.getLocalizedUrl(getCurrentPath(), newLocale, cfg.baseUrl);
     if (typeof window !== 'undefined') {
       window.location.href = localeUrl;
     }
   };
-  
+
   return {
     locales,
     currentLocale,
     switchLocale
   };
 }
-
