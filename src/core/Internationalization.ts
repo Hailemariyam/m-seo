@@ -2,7 +2,7 @@
 
 /**
  * Internationalization (i18n) Manager
- * 
+ *
  * Advanced internationalization features for SEO:
  * - Multi-language content management
  * - Hreflang tag generation
@@ -14,7 +14,7 @@
  * - Pluralization rules
  * - Language fallbacks
  * - SEO metadata per locale
- * 
+ *
  * @example
  * ```typescript
  * const i18n = new Internationalization({
@@ -22,7 +22,7 @@
  *   supportedLocales: ['en', 'es', 'fr', 'de'],
  *   fallbackLocale: 'en'
  * });
- * 
+ *
  * const translated = i18n.translate('welcome.message', { name: 'John' });
  * const hreflangTags = i18n.generateHreflangTags('/products');
  * ```
@@ -229,10 +229,10 @@ export class Internationalization {
     if (typeof window !== 'undefined') {
       localStorage.setItem(this.config.localStorageKey, locale);
       document.cookie = `${this.config.cookieName}=${locale}; path=/; max-age=31536000`;
-      
+
       // Update HTML lang attribute
       document.documentElement.lang = locale;
-      
+
       // Update dir attribute for RTL
       const direction = this.getDirection(locale);
       document.documentElement.dir = direction;
@@ -399,9 +399,9 @@ export class Internationalization {
   pluralize(key: string, count: number, params?: Record<string, any>): string {
     const pluralKey = this.getPluralKey(count);
     const fullKey = `${key}.${pluralKey}`;
-    
+
     const translation = this.getTranslation(fullKey, this.currentLocale);
-    
+
     if (translation) {
       return this.interpolate(translation, { count, ...params });
     }
@@ -467,7 +467,7 @@ export class Internationalization {
     const targetLocale = locale || this.currentLocale;
     const now = new Date();
     const diff = now.getTime() - date.getTime();
-    
+
     const seconds = Math.floor(diff / 1000);
     const minutes = Math.floor(seconds / 60);
     const hours = Math.floor(minutes / 60);
@@ -516,7 +516,7 @@ export class Internationalization {
   getLocalizedUrl(path: string, locale: string, baseUrl: string): string {
     // Remove trailing slash from baseUrl
     const cleanBaseUrl = baseUrl.replace(/\/$/, '');
-    
+
     switch (this.config.urlStrategy) {
       case 'path':
         // Only add locale prefix if not default locale
@@ -592,10 +592,10 @@ export class Internationalization {
     const targetLocale = locale || this.currentLocale;
     const localeMetadata = metadata[targetLocale];
     const fallbackMetadata = metadata[this.config.defaultLocale];
-    
+
     if (localeMetadata) return localeMetadata;
     if (fallbackMetadata) return fallbackMetadata;
-    
+
     // Return empty metadata as last resort
     return {
       title: '',
@@ -634,7 +634,7 @@ export class Internationalization {
     }
 
     const browserLang = navigator.language || this.config.defaultLocale;
-    
+
     // Try exact match first
     if (this.config.supportedLocales.includes(browserLang)) {
       return browserLang;

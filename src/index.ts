@@ -94,6 +94,19 @@ export {
   type ReportFormat
 } from './analytics/SeoReportGenerator.js';
 
+// Adapters
+export {
+  NextAdapter,
+  createNextAdapter,
+  generateBreadcrumbJsonLd,
+  generateArticleJsonLd,
+  generateProductJsonLd,
+  generateFaqJsonLd,
+  type NextSeoConfig,
+  type NextAppSeoConfig,
+  type NextAdapterOptions
+} from './adapters/NextAdapter.js';
+
 // You can use these modules in ANY environment:
 // - Node.js (Express, Fastify, Koa)
 // - Deno

@@ -1,7 +1,7 @@
 // examples/react-url-i18n-examples.tsx
 /**
  * React examples for URL Manager and Internationalization
- * 
+ *
  * These examples demonstrate how to use the new hooks in React applications
  */
 
@@ -21,16 +21,16 @@ import {
 
 export function ProductPage() {
   const [productName] = useState('Premium Leather Shoes');
-  
+
   const urlManager = useUrlManager({
     baseUrl: 'https://example.com',
     trailingSlash: true,
     forceLowerCase: true
   });
-  
+
   const slug = urlManager.createSlug(productName, { removeDiacritics: true });
   const canonical = urlManager.getCanonical(`/products/${slug}`);
-  
+
   return (
     <div>
       <h1>{productName}</h1>
@@ -49,14 +49,14 @@ export function BlogPost({ postId, postTitle }: { postId: string; postTitle: str
     baseUrl: 'https://blog.example.com',
     trailingSlash: false
   });
-  
+
   const slug = urlManager.createSlug(postTitle);
-  
+
   // Automatically adds canonical link tag to document head
   const canonical = useCanonical(`/blog/${slug}`, {
     baseUrl: 'https://blog.example.com'
   });
-  
+
   return (
     <article>
       <h1>{postTitle}</h1>
@@ -77,7 +77,7 @@ export function MultiLanguageProduct({ productId }: { productId: string }) {
     urlStrategy: 'path',
     includeDefault: true
   });
-  
+
   return (
     <div>
       <h2>Multi-language Product</h2>
@@ -103,7 +103,7 @@ export function WelcomePage() {
     supportedLocales: ['en', 'es', 'fr'],
     fallbackLocale: 'en'
   });
-  
+
   // Load translations on mount
   useEffect(() => {
     i18n.loadTranslations('en', {
@@ -113,7 +113,7 @@ export function WelcomePage() {
         description: 'This is a multi-language website'
       }
     });
-    
+
     i18n.loadTranslations('es', {
       welcome: {
         title: 'Bienvenido a Nuestro Sitio',
@@ -121,7 +121,7 @@ export function WelcomePage() {
         description: 'Este es un sitio web multilingüe'
       }
     });
-    
+
     i18n.loadTranslations('fr', {
       welcome: {
         title: 'Bienvenue sur Notre Site',
@@ -130,18 +130,18 @@ export function WelcomePage() {
       }
     });
   }, [i18n]);
-  
+
   return (
     <div>
       <h1>{t('welcome.title')}</h1>
       <p>{t('welcome.message', { name: 'John' })}</p>
       <p>{t('welcome.description')}</p>
-      
+
       <div>
         <p>Today: {formatDate(new Date())}</p>
         <p>Price: {formatCurrency(99.99, 'USD')}</p>
       </div>
-      
+
       <select value={locale} onChange={(e) => setLocale(e.target.value)}>
         <option value="en">English</option>
         <option value="es">Español</option>
@@ -162,7 +162,7 @@ export function AutoDetectApp() {
     detectLocale: true,
     urlStrategy: 'path'
   });
-  
+
   return (
     <div>
       <h2>Auto-Detected Locale</h2>
@@ -183,12 +183,12 @@ export function LanguageSwitcher() {
     baseUrl: 'https://example.com',
     urlStrategy: 'path'
   });
-  
+
   return (
     <div className="language-switcher">
       <h3>Choose Language</h3>
-      <select 
-        value={currentLocale} 
+      <select
+        value={currentLocale}
         onChange={(e) => switchLocale(e.target.value)}
       >
         {locales.map(loc => (
@@ -197,7 +197,7 @@ export function LanguageSwitcher() {
           </option>
         ))}
       </select>
-      
+
       {/* Or as links */}
       <div className="language-links">
         {locales.map(loc => (
@@ -235,14 +235,14 @@ export function EcommerceProduct({ product }: { product: Product }) {
     supportedLocales: ['en', 'es', 'fr'],
     urlStrategy: 'path'
   });
-  
+
   const urlManager = useUrlManager({
     baseUrl: 'https://shop.example.com',
     trailingSlash: true,
     localePrefix: 'path',
     defaultLocale: 'en'
   });
-  
+
   // Load product translations
   useEffect(() => {
     i18n.loadTranslations('en', {
@@ -253,7 +253,7 @@ export function EcommerceProduct({ product }: { product: Product }) {
         shipping: 'Free Shipping'
       }
     });
-    
+
     i18n.loadTranslations('es', {
       product: {
         addToCart: 'Agregar al Carrito',
@@ -263,24 +263,24 @@ export function EcommerceProduct({ product }: { product: Product }) {
       }
     });
   }, [i18n]);
-  
+
   const productName = product.names[locale] || product.names['en'];
   const productSlug = urlManager.createSlug(productName, { removeDiacritics: true });
-  
+
   // Auto-add canonical and hreflang tags
   const canonical = useCanonical(`/products/${productSlug}`, {
     baseUrl: 'https://shop.example.com',
     locale
   });
-  
+
   const hreflangTags = useHreflang(`/products/${productSlug}`, 'https://shop.example.com', {
     locales: ['en', 'es', 'fr'],
     urlStrategy: 'path',
     includeDefault: true
   });
-  
+
   const currency = locale === 'en' ? 'USD' : 'EUR';
-  
+
   return (
     <div className="product">
       <h1>{productName}</h1>
@@ -288,7 +288,7 @@ export function EcommerceProduct({ product }: { product: Product }) {
       <p className="price">{formatCurrency(product.price, currency)}</p>
       <p className="shipping">{t('product.shipping')}</p>
       <button>{t('product.addToCart')}</button>
-      
+
       <div className="seo-info">
         <small>Canonical: {canonical}</small>
         <small>Languages: {hreflangTags.length}</small>
@@ -308,13 +308,13 @@ export function MultiLanguageShop() {
     fallbackLocale: 'en',
     urlStrategy: 'path'
   });
-  
+
   const urlManager = useUrlManager({
     baseUrl: 'https://shop.example.com',
     trailingSlash: true,
     forceLowerCase: true
   });
-  
+
   const [products] = useState([
     {
       id: 'prod-1',
@@ -337,7 +337,7 @@ export function MultiLanguageShop() {
       price: 129.99
     }
   ]);
-  
+
   useEffect(() => {
     // Load all translations
     i18n.loadTranslations('en', {
@@ -347,7 +347,7 @@ export function MultiLanguageShop() {
         cart: 'Shopping Cart'
       }
     });
-    
+
     i18n.loadTranslations('es', {
       shop: {
         title: 'Nuestros Productos',
@@ -356,20 +356,20 @@ export function MultiLanguageShop() {
       }
     });
   }, [i18n]);
-  
+
   return (
     <div>
       <header>
         <h1>{t('shop.title')}</h1>
         <LanguageSwitcher />
       </header>
-      
+
       <div className="products-grid">
         {products.map(product => {
           const name = product.names[locale as keyof typeof product.names] || product.names.en;
           const slug = urlManager.createSlug(name);
           const url = urlManager.getCanonical(`/products/${slug}`, { locale });
-          
+
           return (
             <div key={product.id} className="product-card">
               <h3>{name}</h3>
@@ -392,14 +392,14 @@ export function ProductListing({ currentPage, totalPages }: { currentPage: numbe
     defaultLocale: 'en',
     supportedLocales: ['en', 'es', 'fr']
   });
-  
+
   const urlManager = useUrlManager({
     baseUrl: 'https://example.com',
     trailingSlash: true
   });
-  
+
   const pagination = urlManager.generatePaginationUrls('/products', currentPage, totalPages);
-  
+
   useEffect(() => {
     i18n.loadTranslations('en', {
       pagination: {
@@ -408,7 +408,7 @@ export function ProductListing({ currentPage, totalPages }: { currentPage: numbe
         page: 'Page {{current}} of {{total}}'
       }
     });
-    
+
     i18n.loadTranslations('es', {
       pagination: {
         previous: 'Anterior',
@@ -417,15 +417,15 @@ export function ProductListing({ currentPage, totalPages }: { currentPage: numbe
       }
     });
   }, [i18n]);
-  
+
   return (
     <div className="pagination">
       <p>{t('pagination.page', { current: currentPage, total: totalPages })}</p>
-      
+
       {pagination.prev && (
         <a href={pagination.prev}>{t('pagination.previous')}</a>
       )}
-      
+
       {pagination.next && (
         <a href={pagination.next}>{t('pagination.next')}</a>
       )}
@@ -442,14 +442,14 @@ export function FormattingDemo() {
     defaultLocale: 'en',
     supportedLocales: ['en', 'es', 'fr', 'de', 'ja']
   });
-  
+
   const now = new Date();
   const yesterday = new Date(Date.now() - 86400000);
-  
+
   return (
     <div>
       <h1>Formatting Demo</h1>
-      
+
       <select value={locale} onChange={(e) => setLocale(e.target.value)}>
         <option value="en">English</option>
         <option value="es">Español</option>
@@ -457,27 +457,27 @@ export function FormattingDemo() {
         <option value="de">Deutsch</option>
         <option value="ja">日本語</option>
       </select>
-      
+
       <div>
         <h3>Date Formatting</h3>
         <p>Full: {formatDate(now, { dateStyle: 'full' })}</p>
         <p>Long: {formatDate(now, { dateStyle: 'long' })}</p>
         <p>Short: {formatDate(now, { dateStyle: 'short' })}</p>
       </div>
-      
+
       <div>
         <h3>Number Formatting</h3>
         <p>Decimal: {formatNumber(1234567.89)}</p>
         <p>Percentage: {formatNumber(0.45, { style: 'percent' })}</p>
       </div>
-      
+
       <div>
         <h3>Currency Formatting</h3>
         <p>USD: {formatCurrency(99.99, 'USD')}</p>
         <p>EUR: {formatCurrency(99.99, 'EUR')}</p>
         <p>JPY: {formatCurrency(99.99, 'JPY')}</p>
       </div>
-      
+
       <div>
         <h3>Relative Time</h3>
         <p>Now: {formatRelativeTime(now)}</p>

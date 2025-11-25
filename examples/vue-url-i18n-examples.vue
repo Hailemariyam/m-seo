@@ -5,15 +5,15 @@ These examples demonstrate how to use the new composables in Vue 3 applications
 -->
 
 <script setup lang="ts">
-import { ref, computed, onMounted, defineProps, defineComponent } from 'vue';
+import { ref, computed, onMounted, defineProps, defineComponent } from "vue";
 import {
   useUrlManager,
   useCanonical,
   useHreflang,
   useI18n,
   useLocaleDetection,
-  useLocaleSwitcher
-} from 'm-seo/adapters/VueSPAAdapter';
+  useLocaleSwitcher,
+} from "m-seo/adapters/VueSPAAdapter";
 
 interface Product {
   id: string;
@@ -25,14 +25,18 @@ interface Product {
 // Example 1 Component
 const Example1 = defineComponent({
   setup() {
-    const productName = ref('Premium Leather Shoes');
+    const productName = ref("Premium Leather Shoes");
     const urlManager = useUrlManager({
-      baseUrl: 'https://example.com',
+      baseUrl: "https://example.com",
       trailingSlash: true,
-      forceLowerCase: true
+      forceLowerCase: true,
     });
-    const slug = computed(() => urlManager.createSlug(productName.value, { removeDiacritics: true }));
-    const canonical = computed(() => urlManager.getCanonical(`/products/${slug.value}`));
+    const slug = computed(() =>
+      urlManager.createSlug(productName.value, { removeDiacritics: true })
+    );
+    const canonical = computed(() =>
+      urlManager.getCanonical(`/products/${slug.value}`)
+    );
     return { productName, slug, canonical };
   },
   template: `
@@ -41,22 +45,25 @@ const Example1 = defineComponent({
       <p>Product URL: {{ canonical }}</p>
       <p>Slug: {{ slug }}</p>
     </div>
-  `
+  `,
 });
 
 // Example 2 Component
 const Example2 = defineComponent({
   props: {
     postId: { type: String, required: true },
-    postTitle: { type: String, required: true }
+    postTitle: { type: String, required: true },
   },
   setup(props) {
     const urlManager = useUrlManager({
-      baseUrl: 'https://blog.example.com',
-      trailingSlash: false
+      baseUrl: "https://blog.example.com",
+      trailingSlash: false,
     });
     const slug = computed(() => urlManager.createSlug(props.postTitle));
-    const canonical = useCanonical(computed(() => `/blog/${slug.value}`), { baseUrl: 'https://blog.example.com' });
+    const canonical = useCanonical(
+      computed(() => `/blog/${slug.value}`),
+      { baseUrl: "https://blog.example.com" }
+    );
     return { slug, canonical };
   },
   template: `
@@ -65,20 +72,24 @@ const Example2 = defineComponent({
       <p>Canonical URL: {{ canonical }}</p>
       <div>Blog content...</div>
     </article>
-  `
+  `,
 });
 
 // Example 3 Component
 const Example3 = defineComponent({
   props: {
-    productId: { type: String, required: true }
+    productId: { type: String, required: true },
   },
   setup(props) {
-    const hreflangTags = useHreflang(`/products/${props.productId}`, 'https://example.com', {
-      locales: ['en', 'es', 'fr', 'de'],
-      urlStrategy: 'path',
-      includeDefault: true
-    });
+    const hreflangTags = useHreflang(
+      `/products/${props.productId}`,
+      "https://example.com",
+      {
+        locales: ["en", "es", "fr", "de"],
+        urlStrategy: "path",
+        includeDefault: true,
+      }
+    );
     return { hreflangTags };
   },
   template: `
@@ -91,22 +102,40 @@ const Example3 = defineComponent({
         </li>
       </ul>
     </div>
-  `
+  `,
 });
 
 // Example 4 Component
 const Example4 = defineComponent({
   setup() {
     const { t, locale, setLocale, formatDate, formatCurrency, i18n } = useI18n({
-      defaultLocale: 'en',
-      supportedLocales: ['en', 'es', 'fr'],
-      fallbackLocale: 'en'
+      defaultLocale: "en",
+      supportedLocales: ["en", "es", "fr"],
+      fallbackLocale: "en",
     });
 
     onMounted(async () => {
-      await i18n.loadTranslations('en', { welcome: { title: 'Welcome to Our Site', message: 'Hello, {{name}}!', description: 'This is a multi-language website' } });
-      await i18n.loadTranslations('es', { welcome: { title: 'Bienvenido a Nuestro Sitio', message: '¡Hola, {{name}}!', description: 'Este es un sitio web multilingüe' } });
-      await i18n.loadTranslations('fr', { welcome: { title: 'Bienvenue sur Notre Site', message: 'Bonjour, {{name}}!', description: 'Ceci est un site web multilingue' } });
+      await i18n.loadTranslations("en", {
+        welcome: {
+          title: "Welcome to Our Site",
+          message: "Hello, {{name}}!",
+          description: "This is a multi-language website",
+        },
+      });
+      await i18n.loadTranslations("es", {
+        welcome: {
+          title: "Bienvenido a Nuestro Sitio",
+          message: "¡Hola, {{name}}!",
+          description: "Este es un sitio web multilingüe",
+        },
+      });
+      await i18n.loadTranslations("fr", {
+        welcome: {
+          title: "Bienvenue sur Notre Site",
+          message: "Bonjour, {{name}}!",
+          description: "Ceci est un site web multilingue",
+        },
+      });
     });
 
     return { t, locale, setLocale, formatDate, formatCurrency };
@@ -126,17 +155,17 @@ const Example4 = defineComponent({
         <option value="fr">Français</option>
       </select>
     </div>
-  `
+  `,
 });
 
 // Example 5 Component
 const Example5 = defineComponent({
   setup() {
     const locale = useLocaleDetection({
-      defaultLocale: 'en',
-      supportedLocales: ['en', 'es', 'fr', 'de', 'ja'],
+      defaultLocale: "en",
+      supportedLocales: ["en", "es", "fr", "de", "ja"],
       detectLocale: true,
-      urlStrategy: 'path'
+      urlStrategy: "path",
     });
     return { locale };
   },
@@ -146,17 +175,17 @@ const Example5 = defineComponent({
       <p>Your locale: {{ locale }}</p>
       <p>We automatically detected your preferred language!</p>
     </div>
-  `
+  `,
 });
 
 // Example 6 Component
 const Example6 = defineComponent({
   setup() {
     const { locales, currentLocale, switchLocale } = useLocaleSwitcher({
-      defaultLocale: 'en',
-      supportedLocales: ['en', 'es', 'fr', 'de'],
-      baseUrl: 'https://example.com',
-      urlStrategy: 'path'
+      defaultLocale: "en",
+      supportedLocales: ["en", "es", "fr", "de"],
+      baseUrl: "https://example.com",
+      urlStrategy: "path",
     });
     return { locales, currentLocale, switchLocale };
   },
@@ -174,36 +203,69 @@ const Example6 = defineComponent({
         </a>
       </div>
     </div>
-  `
+  `,
 });
 
 // Example 7 Component
 const Example7 = defineComponent({
   props: {
-    product: { type: Object as () => Product, required: true }
+    product: { type: Object as () => Product, required: true },
   },
   setup(props) {
     const { t, locale, formatCurrency, i18n } = useI18n({
-      defaultLocale: 'en',
-      supportedLocales: ['en', 'es', 'fr'],
-      urlStrategy: 'path'
+      defaultLocale: "en",
+      supportedLocales: ["en", "es", "fr"],
+      urlStrategy: "path",
     });
     const urlManager = useUrlManager({
-      baseUrl: 'https://shop.example.com',
+      baseUrl: "https://shop.example.com",
       trailingSlash: true,
-      localePrefix: 'path',
-      defaultLocale: 'en'
+      localePrefix: "path",
+      defaultLocale: "en",
     });
     onMounted(async () => {
-      await i18n.loadTranslations('en', { product: { addToCart: 'Add to Cart', inStock: 'In Stock', outOfStock: 'Out of Stock', shipping: 'Free Shipping' } });
-      await i18n.loadTranslations('es', { product: { addToCart: 'Agregar al Carrito', inStock: 'En Stock', outOfStock: 'Agotado', shipping: 'Envío Gratis' } });
+      await i18n.loadTranslations("en", {
+        product: {
+          addToCart: "Add to Cart",
+          inStock: "In Stock",
+          outOfStock: "Out of Stock",
+          shipping: "Free Shipping",
+        },
+      });
+      await i18n.loadTranslations("es", {
+        product: {
+          addToCart: "Agregar al Carrito",
+          inStock: "En Stock",
+          outOfStock: "Agotado",
+          shipping: "Envío Gratis",
+        },
+      });
     });
-    const productName = computed(() => props.product.names[locale.value] || props.product.names['en']);
-    const productSlug = computed(() => urlManager.createSlug(productName.value, { removeDiacritics: true }));
-    const canonical = useCanonical(computed(() => `/products/${productSlug.value}`), { baseUrl: 'https://shop.example.com', locale: locale.value });
-    const hreflangTags = useHreflang(computed(() => `/products/${productSlug.value}`), 'https://shop.example.com', { locales: ['en', 'es', 'fr'], urlStrategy: 'path', includeDefault: true });
-    const currency = computed(() => locale.value === 'en' ? 'USD' : 'EUR');
-    return { t, locale, formatCurrency, productName, canonical, hreflangTags, currency };
+    const productName = computed(
+      () => props.product.names[locale.value] || props.product.names["en"]
+    );
+    const productSlug = computed(() =>
+      urlManager.createSlug(productName.value, { removeDiacritics: true })
+    );
+    const canonical = useCanonical(
+      computed(() => `/products/${productSlug.value}`),
+      { baseUrl: "https://shop.example.com", locale: locale.value }
+    );
+    const hreflangTags = useHreflang(
+      computed(() => `/products/${productSlug.value}`),
+      "https://shop.example.com",
+      { locales: ["en", "es", "fr"], urlStrategy: "path", includeDefault: true }
+    );
+    const currency = computed(() => (locale.value === "en" ? "USD" : "EUR"));
+    return {
+      t,
+      locale,
+      formatCurrency,
+      productName,
+      canonical,
+      hreflangTags,
+      currency,
+    };
   },
   template: `
     <div class="product">
@@ -217,37 +279,73 @@ const Example7 = defineComponent({
         <small>Languages: {{ hreflangTags.length }}</small>
       </div>
     </div>
-  `
+  `,
 });
 
 // Example 8 Component
 const Example8 = defineComponent({
   setup() {
     const { t, locale, setLocale, formatCurrency, i18n } = useI18n({
-      defaultLocale: 'en',
-      supportedLocales: ['en', 'es', 'fr', 'de'],
-      fallbackLocale: 'en',
-      urlStrategy: 'path'
+      defaultLocale: "en",
+      supportedLocales: ["en", "es", "fr", "de"],
+      fallbackLocale: "en",
+      urlStrategy: "path",
     });
     const urlManager = useUrlManager({
-      baseUrl: 'https://shop.example.com',
+      baseUrl: "https://shop.example.com",
       trailingSlash: true,
-      forceLowerCase: true
+      forceLowerCase: true,
     });
     const products = ref([
-      { id: 'prod-1', names: { en: 'Premium Leather Shoes', es: 'Zapatos de Cuero Premium', fr: 'Chaussures en Cuir Premium', de: 'Premium Lederschuhe' }, price: 159.99 },
-      { id: 'prod-2', names: { en: 'Classic Oxford', es: 'Oxford Clásico', fr: 'Oxford Classique', de: 'Klassischer Oxford' }, price: 129.99 }
+      {
+        id: "prod-1",
+        names: {
+          en: "Premium Leather Shoes",
+          es: "Zapatos de Cuero Premium",
+          fr: "Chaussures en Cuir Premium",
+          de: "Premium Lederschuhe",
+        },
+        price: 159.99,
+      },
+      {
+        id: "prod-2",
+        names: {
+          en: "Classic Oxford",
+          es: "Oxford Clásico",
+          fr: "Oxford Classique",
+          de: "Klassischer Oxford",
+        },
+        price: 129.99,
+      },
     ]);
     onMounted(async () => {
-      await i18n.loadTranslations('en', { shop: { title: 'Our Products', viewProduct: 'View Product', cart: 'Shopping Cart' } });
-      await i18n.loadTranslations('es', { shop: { title: 'Nuestros Productos', viewProduct: 'Ver Producto', cart: 'Carrito de Compras' } });
+      await i18n.loadTranslations("en", {
+        shop: {
+          title: "Our Products",
+          viewProduct: "View Product",
+          cart: "Shopping Cart",
+        },
+      });
+      await i18n.loadTranslations("es", {
+        shop: {
+          title: "Nuestros Productos",
+          viewProduct: "Ver Producto",
+          cart: "Carrito de Compras",
+        },
+      });
     });
-    const productCards = computed(() => products.value.map(product => {
-      const name = product.names[locale.value as keyof typeof product.names] || product.names.en;
-      const slug = urlManager.createSlug(name);
-      const url = urlManager.getCanonical(`/products/${slug}`, { locale: locale.value });
-      return { ...product, name, slug, url };
-    }));
+    const productCards = computed(() =>
+      products.value.map((product) => {
+        const name =
+          product.names[locale.value as keyof typeof product.names] ||
+          product.names.en;
+        const slug = urlManager.createSlug(name);
+        const url = urlManager.getCanonical(`/products/${slug}`, {
+          locale: locale.value,
+        });
+        return { ...product, name, slug, url };
+      })
+    );
     return { t, locale, formatCurrency, productCards };
   },
   template: `
@@ -264,28 +362,46 @@ const Example8 = defineComponent({
         </div>
       </div>
     </div>
-  `
+  `,
 });
 
 // Example 9 Component
 const Example9 = defineComponent({
   props: {
     currentPage: { type: Number, required: true },
-    totalPages: { type: Number, required: true }
+    totalPages: { type: Number, required: true },
   },
   setup(props) {
     const { t, i18n } = useI18n({
-      defaultLocale: 'en',
-      supportedLocales: ['en', 'es', 'fr']
+      defaultLocale: "en",
+      supportedLocales: ["en", "es", "fr"],
     });
     const urlManager = useUrlManager({
-      baseUrl: 'https://example.com',
-      trailingSlash: true
+      baseUrl: "https://example.com",
+      trailingSlash: true,
     });
-    const pagination = computed(() => urlManager.generatePaginationUrls('/products', props.currentPage, props.totalPages));
+    const pagination = computed(() =>
+      urlManager.generatePaginationUrls(
+        "/products",
+        props.currentPage,
+        props.totalPages
+      )
+    );
     onMounted(async () => {
-      await i18n.loadTranslations('en', { pagination: { previous: 'Previous', next: 'Next', page: 'Page {{current}} of {{total}}' } });
-      await i18n.loadTranslations('es', { pagination: { previous: 'Anterior', next: 'Siguiente', page: 'Página {{current}} de {{total}}' } });
+      await i18n.loadTranslations("en", {
+        pagination: {
+          previous: "Previous",
+          next: "Next",
+          page: "Page {{current}} of {{total}}",
+        },
+      });
+      await i18n.loadTranslations("es", {
+        pagination: {
+          previous: "Anterior",
+          next: "Siguiente",
+          page: "Página {{current}} de {{total}}",
+        },
+      });
     });
     return { t, pagination };
   },
@@ -295,7 +411,7 @@ const Example9 = defineComponent({
       <a v-if="pagination.prev" :href="pagination.prev">{{ t('pagination.previous') }}</a>
       <a v-if="pagination.next" :href="pagination.next">{{ t('pagination.next') }}</a>
     </div>
-  `
+  `,
 });
 
 // Example 10 Component
@@ -304,13 +420,15 @@ const Example10 = defineComponent({
     const trailingSlash = ref(true);
     const forceLowerCase = ref(true);
     const config = computed(() => ({
-      baseUrl: 'https://example.com',
+      baseUrl: "https://example.com",
       trailingSlash: trailingSlash.value,
-      forceLowerCase: forceLowerCase.value
+      forceLowerCase: forceLowerCase.value,
     }));
     const urlManager = useUrlManager(config);
-    const testPath = ref('/Products/Shoes');
-    const generatedUrl = computed(() => urlManager.getCanonical(testPath.value));
+    const testPath = ref("/Products/Shoes");
+    const generatedUrl = computed(() =>
+      urlManager.getCanonical(testPath.value)
+    );
     return { trailingSlash, forceLowerCase, testPath, generatedUrl };
   },
   template: `
@@ -325,24 +443,23 @@ const Example10 = defineComponent({
         <p>Generated: {{ generatedUrl }}</p>
       </div>
     </div>
-  `
+  `,
 });
 
 const dummyProduct: Product = {
-  id: 'prod-123',
+  id: "prod-123",
   names: {
-    en: 'Awesome Gadget',
-    es: 'Dispositivo Impresionante',
-    fr: 'Gadget Génial'
+    en: "Awesome Gadget",
+    es: "Dispositivo Impresionante",
+    fr: "Gadget Génial",
   },
   descriptions: {
-    en: 'An awesome gadget for your daily needs.',
-    es: 'Un dispositivo impresionante para sus necesidades diarias.',
-    fr: 'Un gadget génial pour vos besoins quotidiens.'
+    en: "An awesome gadget for your daily needs.",
+    es: "Un dispositivo impresionante para sus necesidades diarias.",
+    fr: "Un gadget génial pour vos besoins quotidiens.",
   },
-  price: 49.99
+  price: 49.99,
 };
-
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 // examples/url-internationalization-examples.ts
 /**
  * Complete examples for URL Manager and Internationalization
- * 
+ *
  * These examples demonstrate real-world usage of both modules
  * working together for international SEO optimization.
  */
@@ -381,10 +381,10 @@ const dates = {
 Object.entries(dates).forEach(([label, date]) => {
   i18n.setLocale('en');
   const en = i18n.formatRelativeTime(date);
-  
+
   i18n.setLocale('es');
   const es = i18n.formatRelativeTime(date);
-  
+
   console.log(`${label}: EN="${en}", ES="${es}"`);
 });
 console.log('');
@@ -493,7 +493,7 @@ const metadata = {
   i18n.setLocale(locale);
   const meta = i18n.getLocalizedMetadata(metadata);
   const canonical = multiLangUrlManager.getCanonical('/products/shoes', { locale });
-  
+
   console.log(`${locale.toUpperCase()}:`);
   console.log(`  Title: ${meta.title}`);
   console.log(`  Canonical: ${canonical}`);
@@ -545,22 +545,22 @@ const product: Product = {
 
 function generateProductPage(product: Product, locale: string) {
   i18n.setLocale(locale);
-  
+
   const productName = product.names[locale] || product.names['en'];
   const productSlug = slug(productName, { removeDiacritics: true });
   const url = multiLangUrlManager.getCanonical(`/products/${productSlug}`, { locale });
   const hreflang = i18n.generateHreflangTags(`/products/${productSlug}`, 'https://example.com');
-  
+
   const meta = {
     title: productName,
     description: product.descriptions[locale],
     canonical: url,
     hreflang: hreflang
   };
-  
+
   const localeCurrency = locale === 'en' ? 'USD' : 'EUR';
   const formattedPrice = i18n.formatCurrency(product.price, localeCurrency);
-  
+
   return {
     url,
     meta,

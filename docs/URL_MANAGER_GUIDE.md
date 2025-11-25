@@ -37,26 +37,28 @@ npm install m-seo
 ## Quick Start
 
 ```typescript
-import { createUrlManager } from 'm-seo';
+import { createUrlManager } from "m-seo";
 
 // Create URL manager instance
 const urlManager = createUrlManager({
-  baseUrl: 'https://example.com',
+  baseUrl: "https://example.com",
   trailingSlash: true,
   forceHttps: true,
-  forceLowerCase: true
+  forceLowerCase: true,
 });
 
 // Generate canonical URL
-const canonical = urlManager.getCanonical('/products/my-product');
+const canonical = urlManager.getCanonical("/products/my-product");
 // Result: https://example.com/products/my-product/
 
 // Create SEO-friendly slug
-const slug = urlManager.createSlug('Hello World - 2024!');
+const slug = urlManager.createSlug("Hello World - 2024!");
 // Result: hello-world-2024
 
 // Normalize URL
-const normalized = urlManager.normalize('HTTP://EXAMPLE.COM/Path?utm_source=google');
+const normalized = urlManager.normalize(
+  "HTTP://EXAMPLE.COM/Path?utm_source=google"
+);
 // Result: https://example.com/path/
 ```
 
@@ -68,31 +70,31 @@ const normalized = urlManager.normalize('HTTP://EXAMPLE.COM/Path?utm_source=goog
 interface UrlConfig {
   // Base site URL (required)
   baseUrl: string;
-  
+
   // Add/remove trailing slashes
   trailingSlash?: boolean;
-  
+
   // Force HTTPS protocol
   forceHttps?: boolean;
-  
+
   // Convert URLs to lowercase
   forceLowerCase?: boolean;
-  
+
   // Remove www subdomain
   removeWww?: boolean;
-  
+
   // Default language/locale
   defaultLocale?: string;
-  
+
   // Locale URL strategy
-  localePrefix?: 'path' | 'subdomain' | 'domain' | 'none';
-  
+  localePrefix?: "path" | "subdomain" | "domain" | "none";
+
   // Whitelist query parameters
   allowedQueryParams?: string[];
-  
+
   // Blacklist query parameters (e.g., UTM params)
   ignoreQueryParams?: string[];
-  
+
   // Slug generation options
   slugOptions?: SlugOptions;
 }
@@ -104,22 +106,22 @@ interface UrlConfig {
 interface SlugOptions {
   // Separator character (default: '-')
   separator?: string;
-  
+
   // Convert to lowercase
   lowercase?: boolean;
-  
+
   // Remove accents/diacritics
   removeDiacritics?: boolean;
-  
+
   // Maximum length
   truncate?: number;
-  
+
   // Allowed characters regex
   allowedChars?: RegExp;
-  
+
   // Preserve original case
   preserveCase?: boolean;
-  
+
   // Custom character replacements
   customReplacements?: Record<string, string>;
 }
@@ -133,23 +135,23 @@ Generate canonical URLs for SEO:
 
 ```typescript
 const urlManager = createUrlManager({
-  baseUrl: 'https://example.com',
-  trailingSlash: true
+  baseUrl: "https://example.com",
+  trailingSlash: true,
 });
 
 // Basic canonical URL
-const canonical = urlManager.getCanonical('/products/shoes');
+const canonical = urlManager.getCanonical("/products/shoes");
 // Result: https://example.com/products/shoes/
 
 // With locale
-const localizedCanonical = urlManager.getCanonical('/products/shoes', {
-  locale: 'es'
+const localizedCanonical = urlManager.getCanonical("/products/shoes", {
+  locale: "es",
 });
 // Result: https://example.com/es/products/shoes/
 
 // Strip query parameters
-const cleanCanonical = urlManager.getCanonical('/products?utm_source=google', {
-  stripQuery: true
+const cleanCanonical = urlManager.getCanonical("/products?utm_source=google", {
+  stripQuery: true,
 });
 // Result: https://example.com/products/
 ```
@@ -160,14 +162,16 @@ Ensure consistent URL formatting:
 
 ```typescript
 const urlManager = createUrlManager({
-  baseUrl: 'https://example.com',
+  baseUrl: "https://example.com",
   trailingSlash: true,
   forceHttps: true,
   forceLowerCase: true,
-  removeWww: true
+  removeWww: true,
 });
 
-const normalized = urlManager.normalize('HTTP://WWW.EXAMPLE.COM/Products/Shoes');
+const normalized = urlManager.normalize(
+  "HTTP://WWW.EXAMPLE.COM/Products/Shoes"
+);
 // Result: https://example.com/products/shoes/
 ```
 
@@ -176,33 +180,33 @@ const normalized = urlManager.normalize('HTTP://WWW.EXAMPLE.COM/Products/Shoes')
 Create URL-safe slugs from text:
 
 ```typescript
-const urlManager = createUrlManager({ baseUrl: 'https://example.com' });
+const urlManager = createUrlManager({ baseUrl: "https://example.com" });
 
 // Basic slug
-const slug1 = urlManager.createSlug('Hello World!');
+const slug1 = urlManager.createSlug("Hello World!");
 // Result: hello-world
 
 // With diacritics removal
-const slug2 = urlManager.createSlug('Café résumé', {
-  removeDiacritics: true
+const slug2 = urlManager.createSlug("Café résumé", {
+  removeDiacritics: true,
 });
 // Result: cafe-resume
 
 // Custom separator
-const slug3 = urlManager.createSlug('Hello World', {
-  separator: '_'
+const slug3 = urlManager.createSlug("Hello World", {
+  separator: "_",
 });
 // Result: hello_world
 
 // Truncate
-const slug4 = urlManager.createSlug('This is a very long title', {
-  truncate: 20
+const slug4 = urlManager.createSlug("This is a very long title", {
+  truncate: 20,
 });
 // Result: this-is-a-very-long
 
 // Custom replacements
-const slug5 = urlManager.createSlug('C++ Programming', {
-  customReplacements: { '++': 'plus-plus' }
+const slug5 = urlManager.createSlug("C++ Programming", {
+  customReplacements: { "++": "plus-plus" },
 });
 // Result: c-plus-plus-programming
 ```
@@ -212,24 +216,24 @@ const slug5 = urlManager.createSlug('C++ Programming', {
 Manage HTTP redirects:
 
 ```typescript
-const urlManager = createUrlManager({ baseUrl: 'https://example.com' });
+const urlManager = createUrlManager({ baseUrl: "https://example.com" });
 
 // Add 301 redirect
 urlManager.addRedirect({
-  from: '/old-page',
-  to: '/new-page',
-  statusCode: 301
+  from: "/old-page",
+  to: "/new-page",
+  statusCode: 301,
 });
 
 // Add redirect with regex
 urlManager.addRedirect({
   from: /^\/blog\/(\d+)$/,
-  to: '/articles/$1',
-  statusCode: 301
+  to: "/articles/$1",
+  statusCode: 301,
 });
 
 // Check for redirect
-const redirect = urlManager.getRedirect('/old-page');
+const redirect = urlManager.getRedirect("/old-page");
 if (redirect) {
   console.log(redirect.to); // '/new-page'
   console.log(redirect.statusCode); // 301
@@ -237,10 +241,10 @@ if (redirect) {
 
 // Preserve query string
 urlManager.addRedirect({
-  from: '/old',
-  to: '/new',
+  from: "/old",
+  to: "/new",
   statusCode: 301,
-  preserveQuery: true
+  preserveQuery: true,
 });
 ```
 
@@ -249,19 +253,19 @@ urlManager.addRedirect({
 Generate pagination links for SEO:
 
 ```typescript
-const urlManager = createUrlManager({ baseUrl: 'https://example.com' });
+const urlManager = createUrlManager({ baseUrl: "https://example.com" });
 
-const pagination = urlManager.generatePaginationUrls('/products', 3, 10);
+const pagination = urlManager.generatePaginationUrls("/products", 3, 10);
 
-console.log(pagination.first);    // https://example.com/products
-console.log(pagination.prev);     // https://example.com/products?page=2
-console.log(pagination.current);  // https://example.com/products?page=3
-console.log(pagination.next);     // https://example.com/products?page=4
-console.log(pagination.last);     // https://example.com/products?page=10
+console.log(pagination.first); // https://example.com/products
+console.log(pagination.prev); // https://example.com/products?page=2
+console.log(pagination.current); // https://example.com/products?page=3
+console.log(pagination.next); // https://example.com/products?page=4
+console.log(pagination.last); // https://example.com/products?page=10
 
 // Path-based pagination
-const pathPagination = urlManager.generatePaginationUrls('/products', 2, 5, {
-  usePath: true
+const pathPagination = urlManager.generatePaginationUrls("/products", 2, 5, {
+  usePath: true,
 });
 console.log(pathPagination.current); // https://example.com/products/page/2
 ```
@@ -272,12 +276,16 @@ Generate hreflang alternate URLs for international SEO:
 
 ```typescript
 const urlManager = createUrlManager({
-  baseUrl: 'https://example.com',
-  localePrefix: 'path',
-  defaultLocale: 'en'
+  baseUrl: "https://example.com",
+  localePrefix: "path",
+  defaultLocale: "en",
 });
 
-const alternates = urlManager.generateAlternates('/products', ['en', 'es', 'fr']);
+const alternates = urlManager.generateAlternates("/products", [
+  "en",
+  "es",
+  "fr",
+]);
 
 console.log(alternates);
 // [
@@ -287,10 +295,14 @@ console.log(alternates);
 // ]
 
 // With x-default
-const alternatesWithDefault = urlManager.generateAlternates('/products', ['en', 'es'], {
-  includeXDefault: true,
-  xDefaultLocale: 'en'
-});
+const alternatesWithDefault = urlManager.generateAlternates(
+  "/products",
+  ["en", "es"],
+  {
+    includeXDefault: true,
+    xDefaultLocale: "en",
+  }
+);
 ```
 
 ### 7. URL Validation
@@ -298,9 +310,9 @@ const alternatesWithDefault = urlManager.generateAlternates('/products', ['en', 
 Validate URLs for security and format:
 
 ```typescript
-const urlManager = createUrlManager({ baseUrl: 'https://example.com' });
+const urlManager = createUrlManager({ baseUrl: "https://example.com" });
 
-const result1 = urlManager.validateUrl('https://example.com/products');
+const result1 = urlManager.validateUrl("https://example.com/products");
 console.log(result1.valid); // true
 console.log(result1.issues); // []
 
@@ -308,7 +320,7 @@ const result2 = urlManager.validateUrl('javascript:alert("XSS")');
 console.log(result2.valid); // false
 console.log(result2.issues); // ['Dangerous protocol: javascript']
 
-const result3 = urlManager.validateUrl('/../../etc/passwd');
+const result3 = urlManager.validateUrl("/../../etc/passwd");
 console.log(result3.valid); // false
 console.log(result3.issues); // ['Path traversal detected']
 ```
@@ -318,26 +330,26 @@ console.log(result3.issues); // ['Path traversal detected']
 Generate mobile-specific URL variants:
 
 ```typescript
-const urlManager = createUrlManager({ baseUrl: 'https://example.com' });
+const urlManager = createUrlManager({ baseUrl: "https://example.com" });
 
 // Subdomain strategy
 const mobileSubdomain = urlManager.generateMobileUrl(
-  'https://example.com/products',
-  'subdomain'
+  "https://example.com/products",
+  "subdomain"
 );
 // Result: https://m.example.com/products
 
 // Parameter strategy
 const mobileParam = urlManager.generateMobileUrl(
-  'https://example.com/products',
-  'parameter'
+  "https://example.com/products",
+  "parameter"
 );
 // Result: https://example.com/products?mobile=true
 
 // Separate path strategy
 const mobilePath = urlManager.generateMobileUrl(
-  'https://example.com/products',
-  'separate'
+  "https://example.com/products",
+  "separate"
 );
 // Result: https://example.com/mobile/products
 ```
@@ -348,28 +360,33 @@ Filter and manage query parameters:
 
 ```typescript
 const urlManager = createUrlManager({
-  baseUrl: 'https://example.com',
-  ignoreQueryParams: ['utm_source', 'utm_medium', 'utm_campaign']
+  baseUrl: "https://example.com",
+  ignoreQueryParams: ["utm_source", "utm_medium", "utm_campaign"],
 });
 
 // Clean tracking parameters
 const cleaned = urlManager.cleanQueryParams(
-  'https://example.com/products?id=123&utm_source=google'
+  "https://example.com/products?id=123&utm_source=google"
 );
 // Result: https://example.com/products?id=123
 
 // Get query parameters
-const params = urlManager.getQueryParams('https://example.com/products?id=123&color=red');
+const params = urlManager.getQueryParams(
+  "https://example.com/products?id=123&color=red"
+);
 console.log(params); // { id: '123', color: 'red' }
 
 // Add query parameters
-const withParams = urlManager.addQueryParams('/products', { sort: 'price', order: 'asc' });
+const withParams = urlManager.addQueryParams("/products", {
+  sort: "price",
+  order: "asc",
+});
 // Result: /products?sort=price&order=asc
 
 // Remove query parameters
 const withoutParams = urlManager.removeQueryParams(
-  '/products?id=123&color=red&size=large',
-  ['color', 'size']
+  "/products?id=123&color=red&size=large",
+  ["color", "size"]
 );
 // Result: /products?id=123
 ```
@@ -379,9 +396,11 @@ const withoutParams = urlManager.removeQueryParams(
 Generate breadcrumb navigation:
 
 ```typescript
-const urlManager = createUrlManager({ baseUrl: 'https://example.com' });
+const urlManager = createUrlManager({ baseUrl: "https://example.com" });
 
-const breadcrumbs = urlManager.generateBreadcrumbs('/products/electronics/phones');
+const breadcrumbs = urlManager.generateBreadcrumbs(
+  "/products/electronics/phones"
+);
 
 console.log(breadcrumbs);
 // [
@@ -396,50 +415,62 @@ console.log(breadcrumbs);
 ### Core Methods
 
 #### `getCanonical(path, options?)`
+
 Generate canonical URL for a path.
 
 **Parameters:**
+
 - `path: string` - URL path
 - `options?: { locale?: string; stripQuery?: boolean }` - Options
 
 **Returns:** `string` - Canonical URL
 
 #### `normalize(url, options?)`
+
 Normalize URL according to configuration.
 
 **Parameters:**
+
 - `url: string` - URL to normalize
 - `options?: { stripQuery?: boolean; forceLowerCase?: boolean }` - Override options
 
 **Returns:** `string` - Normalized URL
 
 #### `createSlug(text, options?)`
+
 Create SEO-friendly slug from text.
 
 **Parameters:**
+
 - `text: string` - Text to slugify
 - `options?: SlugOptions` - Slug options
 
 **Returns:** `string` - URL-safe slug
 
 #### `addRedirect(rule)`
+
 Add redirect rule.
 
 **Parameters:**
+
 - `rule: RedirectRule` - Redirect configuration
 
 #### `getRedirect(url)`
+
 Check if URL has a redirect.
 
 **Parameters:**
+
 - `url: string` - URL to check
 
 **Returns:** `RedirectRule | null` - Redirect rule or null
 
 #### `generateAlternates(path, locales, options?)`
+
 Generate hreflang alternate URLs.
 
 **Parameters:**
+
 - `path: string` - URL path
 - `locales: string[]` - Supported locales
 - `options?: { includeXDefault?: boolean; xDefaultLocale?: string }` - Options
@@ -447,9 +478,11 @@ Generate hreflang alternate URLs.
 **Returns:** `AlternateUrl[]` - Array of alternate URLs
 
 #### `generatePaginationUrls(basePath, currentPage, totalPages, options?)`
+
 Generate pagination URLs.
 
 **Parameters:**
+
 - `basePath: string` - Base path
 - `currentPage: number` - Current page number
 - `totalPages: number` - Total number of pages
@@ -458,9 +491,11 @@ Generate pagination URLs.
 **Returns:** `PaginationUrls` - Pagination URLs object
 
 #### `validateUrl(url)`
+
 Validate URL for security and format.
 
 **Parameters:**
+
 - `url: string` - URL to validate
 
 **Returns:** `{ valid: boolean; issues: string[] }` - Validation result
@@ -468,12 +503,15 @@ Validate URL for security and format.
 ### Helper Functions
 
 #### `createUrlManager(config)`
+
 Factory function to create URL manager instance.
 
 #### `slug(text, options?)`
+
 Quick slug generator function.
 
 #### `normalizeUrl(url, baseUrl, options?)`
+
 Quick URL normalizer function.
 
 ## Examples
@@ -505,8 +543,14 @@ Remove tracking parameters from canonical URLs:
 
 ```typescript
 const urlManager = createUrlManager({
-  baseUrl: 'https://example.com',
-  ignoreQueryParams: ['utm_source', 'utm_medium', 'utm_campaign', 'fbclid', 'gclid']
+  baseUrl: "https://example.com",
+  ignoreQueryParams: [
+    "utm_source",
+    "utm_medium",
+    "utm_campaign",
+    "fbclid",
+    "gclid",
+  ],
 });
 ```
 
@@ -516,9 +560,9 @@ Use permanent (301) redirects for moved pages:
 
 ```typescript
 urlManager.addRedirect({
-  from: '/old-page',
-  to: '/new-page',
-  statusCode: 301
+  from: "/old-page",
+  to: "/new-page",
+  statusCode: 301,
 });
 ```
 
@@ -538,7 +582,7 @@ Always validate URLs from user input:
 ```typescript
 const validation = urlManager.validateUrl(userUrl);
 if (!validation.valid) {
-  console.error('Invalid URL:', validation.issues);
+  console.error("Invalid URL:", validation.issues);
 }
 ```
 
@@ -559,12 +603,12 @@ Use consistent slug generation across your site:
 
 ```typescript
 const urlManager = createUrlManager({
-  baseUrl: 'https://example.com',
+  baseUrl: "https://example.com",
   slugOptions: {
     lowercase: true,
     removeDiacritics: true,
-    separator: '-'
-  }
+    separator: "-",
+  },
 });
 ```
 
@@ -573,34 +617,34 @@ const urlManager = createUrlManager({
 ### Express.js
 
 ```typescript
-import express from 'express';
-import { createUrlManager } from 'm-seo';
+import express from "express";
+import { createUrlManager } from "m-seo";
 
 const app = express();
 const urlManager = createUrlManager({
-  baseUrl: 'https://example.com',
-  trailingSlash: true
+  baseUrl: "https://example.com",
+  trailingSlash: true,
 });
 
-app.get('/products/:slug', (req, res) => {
+app.get("/products/:slug", (req, res) => {
   const canonical = urlManager.getCanonical(req.path);
-  res.render('product', { canonical });
+  res.render("product", { canonical });
 });
 ```
 
 ### Next.js
 
 ```typescript
-import { createUrlManager } from 'm-seo';
+import { createUrlManager } from "m-seo";
 
 const urlManager = createUrlManager({
   baseUrl: process.env.NEXT_PUBLIC_BASE_URL!,
-  trailingSlash: true
+  trailingSlash: true,
 });
 
 export default function ProductPage({ params }) {
   const canonical = urlManager.getCanonical(`/products/${params.slug}`);
-  
+
   return (
     <Head>
       <link rel="canonical" href={canonical} />
@@ -612,28 +656,28 @@ export default function ProductPage({ params }) {
 ### React
 
 ```typescript
-import { useEffect } from 'react';
-import { createUrlManager } from 'm-seo';
+import { useEffect } from "react";
+import { createUrlManager } from "m-seo";
 
 const urlManager = createUrlManager({
-  baseUrl: 'https://example.com'
+  baseUrl: "https://example.com",
 });
 
 function ProductPage() {
   useEffect(() => {
     const canonical = urlManager.getCanonical(window.location.pathname);
-    
+
     // Add canonical link
-    const link = document.createElement('link');
-    link.rel = 'canonical';
+    const link = document.createElement("link");
+    link.rel = "canonical";
     link.href = canonical;
     document.head.appendChild(link);
-    
+
     return () => {
       document.head.removeChild(link);
     };
   }, []);
-  
+
   return <div>Product</div>;
 }
 ```

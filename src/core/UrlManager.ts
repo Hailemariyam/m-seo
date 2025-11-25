@@ -2,7 +2,7 @@
 
 /**
  * URL Manager
- * 
+ *
  * Advanced URL management for SEO optimization:
  * - Canonical URL generation
  * - URL normalization and cleaning
@@ -14,7 +14,7 @@
  * - Pretty URL creation
  * - Pagination URL handling
  * - Mobile URL variants
- * 
+ *
  * @example
  * ```typescript
  * const urlManager = new UrlManager({
@@ -22,7 +22,7 @@
  *   trailingSlash: true,
  *   forceHttps: true
  * });
- * 
+ *
  * const canonical = urlManager.getCanonical('/blog/post-title');
  * const slug = urlManager.createSlug('My Blog Post Title!');
  * ```
@@ -150,7 +150,7 @@ export class UrlManager {
 
       // Handle full URLs vs paths
       const isFullUrl = url.startsWith('http://') || url.startsWith('https://');
-      
+
       if (isFullUrl) {
         const urlObj = new URL(url);
         normalized = urlObj.pathname + (options?.preserveQuery ? urlObj.search : '');
@@ -203,7 +203,7 @@ export class UrlManager {
     const parts = url.split('?');
     const path = parts[0];
     const query = parts[1];
-    
+
     if (!query) return path || '';
 
     const params = new URLSearchParams(query);
@@ -389,7 +389,7 @@ export class UrlManager {
 
     locales.forEach(locale => {
       const href = this.getCanonical(path, { locale });
-      
+
       alternates.push({
         href,
         hreflang: locale
@@ -433,8 +433,8 @@ export class UrlManager {
 
     const urls: PaginationUrls = {
       current: buildPageUrl(currentPage),
-      canonical: currentPage === 1 
-        ? buildPageUrl(1) 
+      canonical: currentPage === 1
+        ? buildPageUrl(1)
         : buildPageUrl(currentPage)
     };
 
@@ -533,7 +533,7 @@ export class UrlManager {
 
     const params: Record<string, string> = {};
     const urlParams = new URLSearchParams(query);
-    
+
     urlParams.forEach((value, key) => {
       params[key] = value;
     });
@@ -565,11 +565,11 @@ export class UrlManager {
     const parts = url.split('?');
     const path = parts[0];
     const query = parts[1];
-    
+
     if (!query) return path || '';
 
     const urlParams = new URLSearchParams(query);
-    
+
     params.forEach(param => {
       urlParams.delete(param);
     });

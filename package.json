@@ -90,6 +90,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
+    "next": "^16.0.4",
     "vitepress": "^1.6.4",
     "vue-router": "^4.6.3"
   }
