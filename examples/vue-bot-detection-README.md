@@ -7,6 +7,7 @@ This directory contains comprehensive examples of using the `useBotDetection()` 
 The file `vue-bot-detection.vue` is a **multi-example showcase file** containing 10+ different component examples in a single file. This is for documentation purposes only.
 
 **TypeScript will show errors** in this file because:
+
 - Multiple `<script setup>` blocks exist in one file
 - Variables from one example aren't available in other examples' templates
 - This is a limitation of Vue SFC structure (only one script block per file is valid)
@@ -26,9 +27,7 @@ Each example is clearly marked with comments like:
 ...
 </script>
 
-<template>
-...
-</template>
+<template>...</template>
 ```
 
 **Copy each example to its own separate `.vue` file** and use it in your project.
@@ -64,7 +63,7 @@ Create a new file `MyComponent.vue`:
 
 ```vue
 <script setup lang="ts">
-import { useBotDetection } from 'm-seo/adapters/VueSPAAdapter';
+import { useBotDetection } from "m-seo/adapters/VueSPAAdapter";
 
 const {
   isBot,
@@ -74,16 +73,16 @@ const {
   isSEOTool,
   botName,
   botType,
-  shouldRenderClientSide
+  shouldRenderClientSide,
 } = useBotDetection();
 </script>
 
 <template>
   <div v-if="isBot">
     <h1>Bot-Optimized Content</h1>
-    <p>Detected: {{ botName || 'Unknown Bot' }}</p>
+    <p>Detected: {{ botName || "Unknown Bot" }}</p>
   </div>
-  
+
   <div v-else>
     <h1>Full User Experience</h1>
     <ComplexFeatures />
@@ -114,6 +113,7 @@ The `useBotDetection()` composable returns:
 ## 📖 Full Documentation
 
 For complete documentation, see:
+
 - [Bot Detection Guide](../docs/BOT_DETECTION_COMPLETE.md)
 - [Vue Adapter Guide](../docs/VUE_GUIDE.md)
 - [Architecture Overview](../docs/ARCHITECTURE.md)
@@ -125,13 +125,15 @@ For complete documentation, see:
 This error appears in the multi-example showcase file only. If you see it in your own component:
 
 1. Make sure you're destructuring from `useBotDetection()`:
+
    ```typescript
    const { isAIBot } = useBotDetection();
    ```
 
 2. Check your import:
+
    ```typescript
-   import { useBotDetection } from 'm-seo/adapters/VueSPAAdapter';
+   import { useBotDetection } from "m-seo/adapters/VueSPAAdapter";
    ```
 
 3. Restart your TypeScript server (VS Code: Cmd/Ctrl + Shift + P → "Restart TS Server")

@@ -13,35 +13,40 @@ Both React and Vue adapters now include comprehensive URL management and interna
 Added **6 new hooks** (~350 lines of code):
 
 1. **useUrlManager**
+
    - Returns memoized UrlManager instance
    - Full URL utilities (createSlug, getCanonical, etc.)
    - Updates when config changes
-   
+
 2. **useCanonical**
+
    - Generates canonical URL
    - Auto-adds `<link rel="canonical">` to document.head
    - Bot-aware (skips DOM updates for crawlers)
    - Removes tag on unmount
-   
+
 3. **useHreflang**
+
    - Generates hreflang alternate URLs
    - Auto-adds `<link rel="alternate" hreflang="...">` tags
    - Supports path/subdomain/domain/query strategies
    - Optional x-default locale
    - Removes tags on unmount
-   
+
 4. **useI18n**
+
    - Full i18n state management with React hooks
    - Reactive locale changes
    - Translation function (t)
    - Date/number/currency/relative time formatting
    - Returns both instance and utility functions
-   
+
 5. **useLocaleDetection**
+
    - Auto-detects from URL/localStorage/cookie/browser
    - Sets locale automatically on mount
    - Returns detected locale string
-   
+
 6. **useLocaleSwitcher**
    - Generates language switcher data
    - Each locale includes: code, name, nativeName, url, active
@@ -53,33 +58,38 @@ Added **6 new hooks** (~350 lines of code):
 Added **6 new composables** (~350 lines of code):
 
 1. **useUrlManager**
+
    - Supports reactive config (Ref<UrlConfig>)
    - Returns computed UrlManager instance
    - Auto-updates when config changes
-   
+
 2. **useCanonical**
+
    - Supports reactive path (string | Ref<string>)
    - Returns Ref<string> (reactive canonical URL)
    - watch() updates DOM when canonical changes
    - onUnmounted() cleanup
-   
+
 3. **useHreflang**
+
    - Supports reactive path
    - Returns Ref<HreflangTag[]>
    - watch() updates DOM automatically
    - onUnmounted() cleanup
-   
+
 4. **useI18n**
+
    - Supports reactive config
    - locale is Ref<string> for v-model binding
    - All utilities return reactive values
    - Full Vue 3 composition API integration
-   
+
 5. **useLocaleDetection**
+
    - Supports reactive config
    - Returns Ref<string>
    - Auto-detects on initialization
-   
+
 6. **useLocaleSwitcher**
    - All data reactive (computed/ref)
    - locales computed from current state
@@ -88,36 +98,42 @@ Added **6 new composables** (~350 lines of code):
 ## Key Features
 
 ### ✅ Automatic SEO Tag Management
+
 - Hooks/composables automatically add and remove SEO tags
 - No manual DOM manipulation required
 - Tags update automatically with reactive changes (Vue)
 - Clean up on component unmount
 
 ### ✅ Bot Detection Integration
+
 - All DOM updates check `BotDetection.shouldRenderClientSide()`
 - Skips unnecessary DOM updates for search engine crawlers
 - Bots read initial HTML, so client-side updates are redundant
 - Improves performance for SEO crawlers
 
 ### ✅ Framework-Native Patterns
+
 - **React**: useMemo, useCallback, useEffect for optimization
 - **Vue**: computed, ref, watch, onUnmounted for reactivity
 - Follows best practices for each framework
 - Feels natural to framework developers
 
 ### ✅ Automatic Cleanup
+
 - All hooks/composables clean up after themselves
 - Remove DOM elements on unmount
 - Clear watchers and effects
 - Prevent memory leaks
 
 ### ✅ TypeScript Support
+
 - Full type safety with TypeScript interfaces
 - Type inference for all hooks/composables
 - Proper typing for reactive refs (Vue)
 - IntelliSense support
 
 ### ✅ Performance Optimized
+
 - React: Memoized instances, stable callbacks
 - Vue: Computed values, efficient watchers
 - Minimal re-renders/re-computations
@@ -134,26 +150,26 @@ export function useCanonical(
   config: UrlConfig & { locale?: string }
 ): string {
   const urlManager = useUrlManager(config);
-  const canonical = useMemo(() => 
-    urlManager.getCanonical(path, { locale: config.locale }),
+  const canonical = useMemo(
+    () => urlManager.getCanonical(path, { locale: config.locale }),
     [urlManager, path, config.locale]
   );
-  
+
   useEffect(() => {
     if (!BotDetection.shouldRenderClientSide()) return;
-    
-    const link = document.createElement('link');
-    link.rel = 'canonical';
+
+    const link = document.createElement("link");
+    link.rel = "canonical";
     link.href = canonical;
     document.head.appendChild(link);
-    
+
     return () => {
       if (document.head.contains(link)) {
         document.head.removeChild(link);
       }
     };
   }, [canonical]);
-  
+
   return canonical;
 }
 ```
@@ -167,33 +183,37 @@ export function useCanonical(
   config: UrlConfig & { locale?: string }
 ): Ref<string> {
   const urlManager = useUrlManager(config);
-  
+
   const canonical = computed(() => {
     const p = isRef(path) ? path.value : path;
     return urlManager.getCanonical(p, { locale: config.locale });
   });
-  
+
   let currentLink: HTMLLinkElement | null = null;
-  
-  watch(canonical, (newCanonical) => {
-    if (!BotDetection.shouldRenderClientSide()) return;
-    
-    if (currentLink) {
-      document.head.removeChild(currentLink);
-    }
-    
-    currentLink = document.createElement('link');
-    currentLink.rel = 'canonical';
-    currentLink.href = newCanonical;
-    document.head.appendChild(currentLink);
-  }, { immediate: true });
-  
+
+  watch(
+    canonical,
+    (newCanonical) => {
+      if (!BotDetection.shouldRenderClientSide()) return;
+
+      if (currentLink) {
+        document.head.removeChild(currentLink);
+      }
+
+      currentLink = document.createElement("link");
+      currentLink.rel = "canonical";
+      currentLink.href = newCanonical;
+      document.head.appendChild(currentLink);
+    },
+    { immediate: true }
+  );
+
   onUnmounted(() => {
     if (currentLink && document.head.contains(currentLink)) {
       document.head.removeChild(currentLink);
     }
   });
-  
+
   return canonical;
 }
 ```
@@ -203,39 +223,48 @@ export function useCanonical(
 ### React Example: Multi-language E-commerce Product
 
 ```tsx
-import { useI18n, useUrlManager, useCanonical, useHreflang } from 'm-seo/adapters/ReactSPAAdapter';
+import {
+  useI18n,
+  useUrlManager,
+  useCanonical,
+  useHreflang,
+} from "m-seo/adapters/ReactSPAAdapter";
 
 function ProductPage({ product }) {
   const { t, locale, formatCurrency, i18n } = useI18n({
-    defaultLocale: 'en',
-    supportedLocales: ['en', 'es', 'fr'],
-    urlStrategy: 'path'
+    defaultLocale: "en",
+    supportedLocales: ["en", "es", "fr"],
+    urlStrategy: "path",
   });
-  
+
   const urlManager = useUrlManager({
-    baseUrl: 'https://shop.example.com',
-    trailingSlash: true
+    baseUrl: "https://shop.example.com",
+    trailingSlash: true,
   });
-  
+
   const productSlug = urlManager.createSlug(product.names[locale]);
-  
+
   // Auto-add canonical and hreflang tags
   const canonical = useCanonical(`/products/${productSlug}`, {
-    baseUrl: 'https://shop.example.com',
-    locale
+    baseUrl: "https://shop.example.com",
+    locale,
   });
-  
-  const hreflangTags = useHreflang(`/products/${productSlug}`, 'https://shop.example.com', {
-    locales: ['en', 'es', 'fr'],
-    urlStrategy: 'path',
-    includeDefault: true
-  });
-  
+
+  const hreflangTags = useHreflang(
+    `/products/${productSlug}`,
+    "https://shop.example.com",
+    {
+      locales: ["en", "es", "fr"],
+      urlStrategy: "path",
+      includeDefault: true,
+    }
+  );
+
   return (
     <div>
       <h1>{product.names[locale]}</h1>
-      <p>{formatCurrency(product.price, 'USD')}</p>
-      <button>{t('product.addToCart')}</button>
+      <p>{formatCurrency(product.price, "USD")}</p>
+      <button>{t("product.addToCart")}</button>
     </div>
   );
 }
@@ -245,8 +274,13 @@ function ProductPage({ product }) {
 
 ```vue
 <script setup lang="ts">
-import { computed, onMounted } from 'vue';
-import { useI18n, useUrlManager, useCanonical, useHreflang } from 'm-seo/adapters/VueSPAAdapter';
+import { computed, onMounted } from "vue";
+import {
+  useI18n,
+  useUrlManager,
+  useCanonical,
+  useHreflang,
+} from "m-seo/adapters/VueSPAAdapter";
 
 const props = defineProps<{
   post: {
@@ -256,14 +290,14 @@ const props = defineProps<{
 }>();
 
 const { t, locale, formatDate, i18n } = useI18n({
-  defaultLocale: 'en',
-  supportedLocales: ['en', 'es', 'fr'],
-  urlStrategy: 'path'
+  defaultLocale: "en",
+  supportedLocales: ["en", "es", "fr"],
+  urlStrategy: "path",
 });
 
 const urlManager = useUrlManager({
-  baseUrl: 'https://blog.example.com',
-  trailingSlash: false
+  baseUrl: "https://blog.example.com",
+  trailingSlash: false,
 });
 
 const postSlug = computed(() => props.post.slugs[locale.value]);
@@ -271,17 +305,17 @@ const postSlug = computed(() => props.post.slugs[locale.value]);
 // Auto-add canonical (reactive - updates when locale/slug changes)
 const canonical = useCanonical(
   computed(() => `/blog/${postSlug.value}`),
-  { baseUrl: 'https://blog.example.com' }
+  { baseUrl: "https://blog.example.com" }
 );
 
 // Auto-add hreflang tags (reactive)
 const hreflangTags = useHreflang(
   computed(() => `/blog/${postSlug.value}`),
-  'https://blog.example.com',
+  "https://blog.example.com",
   {
-    locales: ['en', 'es', 'fr'],
-    urlStrategy: 'path',
-    includeDefault: true
+    locales: ["en", "es", "fr"],
+    urlStrategy: "path",
+    includeDefault: true,
   }
 );
 </script>
@@ -289,7 +323,7 @@ const hreflangTags = useHreflang(
 <template>
   <article>
     <h1>{{ post.titles[locale] }}</h1>
-    <p>{{ t('blog.readTime', { minutes: 5 }) }}</p>
+    <p>{{ t("blog.readTime", { minutes: 5 }) }}</p>
   </article>
 </template>
 ```
@@ -307,13 +341,13 @@ Both React and Vue implementations provide the same **6 core features**:
 
 The APIs are nearly identical, with only framework-specific differences:
 
-| Feature | React | Vue |
-|---------|-------|-----|
-| Return type | Direct values | Reactive Refs |
-| Reactivity | useState, useMemo | ref, computed |
-| Effects | useEffect | watch |
-| Cleanup | useEffect return | onUnmounted |
-| Props | Static | Can be Ref<T> |
+| Feature     | React             | Vue           |
+| ----------- | ----------------- | ------------- |
+| Return type | Direct values     | Reactive Refs |
+| Reactivity  | useState, useMemo | ref, computed |
+| Effects     | useEffect         | watch         |
+| Cleanup     | useEffect return  | onUnmounted   |
+| Props       | Static            | Can be Ref<T> |
 
 ## Documentation
 
@@ -328,6 +362,7 @@ Complete documentation available at:
 ## Benefits for Users
 
 ### For React Developers
+
 - Framework-native hooks following React best practices
 - Automatic SEO tag management (no manual DOM manipulation)
 - Type-safe APIs with full TypeScript support
@@ -335,6 +370,7 @@ Complete documentation available at:
 - Clean component code without SEO boilerplate
 
 ### For Vue Developers
+
 - Composition API composables following Vue 3 patterns
 - Reactive SEO tags that update automatically
 - Support for reactive props (Ref<T>)
@@ -342,6 +378,7 @@ Complete documentation available at:
 - v-model compatibility for locale management
 
 ### For Both
+
 - **No manual DOM manipulation** - hooks/composables handle everything
 - **Bot detection built-in** - automatic optimization for SEO crawlers
 - **Automatic cleanup** - no memory leaks
@@ -351,21 +388,25 @@ Complete documentation available at:
 ## Technical Details
 
 ### Files Modified
+
 - `src/adapters/ReactSPAAdapter.ts` - Added ~350 lines (6 hooks)
 - `src/adapters/VueSPAAdapter.ts` - Added ~350 lines (6 composables)
 
 ### Total Lines Added
+
 - ~700 lines of production code
 - ~200 lines of JSDoc comments
 - Comprehensive type definitions
 
 ### TypeScript Compilation
+
 - ✅ Zero errors
 - ✅ Full type safety maintained
 - ✅ Proper type inference
 - ✅ Build passing
 
 ### Dependencies
+
 - No new dependencies added
 - Uses existing UrlManager and Internationalization modules
 - Framework adapters use framework-specific patterns
@@ -373,17 +414,21 @@ Complete documentation available at:
 ## Next Steps
 
 ### Potential Enhancements
+
 1. **Server-Side Rendering (SSR)**
+
    - Add SSR support for Next.js
    - Add SSR support for Nuxt
    - Hydration-safe tag management
 
 2. **Additional Hooks/Composables**
+
    - usePageMetadata (combined SEO + i18n)
    - useLocalizedRouting (route translation)
    - useCurrencyFormatter (locale-aware pricing)
 
 3. **Testing**
+
    - Unit tests for all hooks/composables
    - Integration tests with React/Vue
    - E2E tests for DOM management
@@ -398,6 +443,7 @@ Complete documentation available at:
 The adapter integration is **complete and production-ready**. Both React and Vue developers can now use URL management and internationalization features with framework-native APIs that handle all the complexity of SEO tag management automatically.
 
 Key achievements:
+
 - ✅ 6 hooks for React
 - ✅ 6 composables for Vue
 - ✅ Automatic SEO tag management
@@ -412,8 +458,8 @@ The integration significantly enhances the developer experience for building mul
 
 ---
 
-**Status**: ✅ **COMPLETE**  
-**Date**: 2024  
-**Lines Added**: ~700 (350 React + 350 Vue)  
-**Build Status**: ✅ PASSING  
+**Status**: ✅ **COMPLETE**
+**Date**: 2024
+**Lines Added**: ~700 (350 React + 350 Vue)
+**Build Status**: ✅ PASSING
 **TypeScript Errors**: 0
