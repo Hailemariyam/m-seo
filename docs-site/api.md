@@ -2,6 +2,454 @@
 
 Complete API documentation for **m-seo**.
 
+## Table of Contents
+
+- [Core API](#core-api) - createSEO(), SeoEngine
+- [CMS Integration API](#cms-integration-api) - CMSPlugins (NEW v1.1.1)
+- [AI Content Analysis API](#ai-content-analysis-api) - AIContentAnalysis (NEW v1.1.1)
+- [Framework Adapters](#framework-adapters) - React, Vue, Next.js, Express
+- [Utilities](#utilities) - UrlManager, Sitemap, Robots
+
+---
+
+## CMS Integration API (NEW v1.1.1)
+
+### CMSPlugins
+
+Multi-platform CMS integration for WordPress, Ghost, Drupal, Joomla, Contentful, and Strapi.
+
+#### Constructor
+
+```typescript
+import { CMSPlugins, CMSConfig } from "m-seo";
+
+interface CMSConfig {
+  platform: "wordpress" | "ghost" | "drupal" | "joomla" | "contentful" | "strapi" | "custom";
+  baseUrl: string;
+  credentials?: {
+    username?: string;
+    password?: string;
+    apiKey?: string;
+    token?: string;
+  };
+  options?: {
+    cacheEnabled?: boolean;
+    cacheTTL?: number; // milliseconds
+    rateLimitPerMinute?: number;
+    timeout?: number;
+  };
+}
+
+const cms = new CMSPlugins(config);
+```
+
+#### Methods
+
+**fetchContent()**
+```typescript
+async fetchContent(options: { id: string; type?: string }): Promise<CMSContent>
+
+interface CMSContent {
+  id: string;
+  title: string;
+  content: string;
+  excerpt?: string;
+  author?: string;
+  publishedDate?: string;
+  modifiedDate?: string;
+  featuredImage?: string;
+  categories?: string[];
+  tags?: string[];
+  metadata?: Record<string, any>;
+}
+```
+
+**generateSeoData()**
+```typescript
+async generateSeoData(config: CMSConfig, content: CMSContent): Promise<SeoData>
+
+interface SeoData {
+  title: string;
+  description: string;
+  keywords: string[];
+  canonical?: string;
+  ogImage?: string;
+  structuredData?: object;
+}
+```
+
+**batchProcess()**
+```typescript
+async batchProcess(options: BatchOptions): Promise<BatchResult[]>
+
+interface BatchOptions {
+  operations: BatchOperation[];
+  config: CMSConfig;
+  maxConcurrency?: number;
+}
+
+interface BatchOperation {
+  type: "fetch" | "generate-seo" | "sync";
+  id?: string;
+  content?: CMSContent;
+  seo?: SeoData;
+}
+```
+
+**exportContent()**
+```typescript
+async exportContent(
+  contents: CMSContent[],
+  options: { format: "json" | "csv" | "xml" | "markdown" }
+): Promise<string>
+```
+
+**importContent()**
+```typescript
+async importContent(
+  data: string,
+  format: "json" | "csv" | "xml" | "markdown",
+  config: CMSConfig
+): Promise<CMSContent[]>
+```
+
+---
+
+## AI Content Analysis API (NEW v1.1.1)
+
+### AIContentAnalysis
+
+AI-powered content analysis for SEO optimization.
+
+#### analyzeContent()
+
+```typescript
+static async analyzeContent(
+  content: string,
+  config: AIContentConfig
+): Promise<AdvancedContentAnalysisResult>
+
+interface AIContentConfig {
+  provider: "openai" | "claude" | "huggingface";
+  apiKey: string;
+  model?: string;
+  enableReadability?: boolean;
+  enableSentiment?: boolean;
+  enableToneAnalysis?: boolean;
+  enableKeywordAnalysis?: boolean;
+  enablePlagiarismCheck?: boolean;
+  targetKeywords?: string[];
+  language?: string;
+}
+
+interface AdvancedContentAnalysisResult {
+  scores: ContentQualityMetrics;
+  readability: ReadabilityScores;
+  sentiment: SentimentAnalysis;
+  tone: ToneAnalysis;
+  keywords: KeywordAnalysis[];
+  recommendations: SEORecommendation[];
+  plagiarism?: PlagiarismResult;
+  metadata: {
+    analyzedAt: string;
+    wordCount: number;
+    characterCount: number;
+    sentenceCount: number;
+    paragraphCount: number;
+  };
+}
+```
+
+#### Readability Scores
+
+```typescript
+interface ReadabilityScores {
+  fleschReadingEase: number; // 0-100, higher is easier
+  gunningFog: number; // Grade level
+  smog: number; // Grade level
+  colemanLiau: number; // Grade level
+  automatedReadability: number; // Grade level
+  daleChall: number; // Grade level
+  grade: string; // "Easy", "Medium", "Hard"
+  readingTime: number; // minutes
+}
+```
+
+#### Sentiment & Tone
+
+```typescript
+interface SentimentAnalysis {
+  type: "positive" | "negative" | "neutral" | "mixed";
+  score: number; // -1 to 1
+  confidence: number; // 0 to 1
+  emotions?: {
+    joy?: number;
+    sadness?: number;
+    anger?: number;
+    fear?: number;
+    surprise?: number;
+  };
+}
+
+interface ToneAnalysis {
+  primary: string; // "professional", "casual", "formal", etc.
+  secondary?: string[];
+  confidence: number;
+  attributes: {
+    formality: number; // 0-1
+    complexity: number;
+    enthusiasm: number;
+  };
+}
+```
+
+#### Keyword Analysis
+
+```typescript
+interface KeywordAnalysis {
+  word: string;
+  frequency: number;
+  density: number; // percentage
+  prominence: number; // 0-1
+  relevance: number; // 0-100
+  context: string[];
+}
+```
+
+#### Batch Analysis
+
+```typescript
+static async batchAnalyze(options: {
+  requests: BatchAnalysisRequest[];
+  globalConfig?: Partial<AIContentConfig>;
+  maxConcurrency?: number;
+}): Promise<BatchAnalysisResult[]>
+
+interface BatchAnalysisRequest {
+  content: string;
+  config?: Partial<AIContentConfig>;
+}
+```
+
+#### Export Analysis
+
+```typescript
+static async exportAnalysis(
+  result: AdvancedContentAnalysisResult,
+  options: ExportOptions
+): Promise<string>
+
+interface ExportOptions {
+  format: "json" | "markdown" | "html" | "pdf";
+  includeCharts?: boolean;
+  includeSuggestions?: boolean;
+  includeHistory?: boolean;
+}
+```
+
+---
+
+## Image Optimization API (NEW v1.1.1)
+
+### ImageOptimizer
+
+Optimize images for SEO and performance with AI-powered features.
+
+#### analyzeImage()
+
+```typescript
+static async analyzeImage(src: string, alt?: string): Promise<ImageAnalysisResult>
+
+interface ImageAnalysisResult {
+  src: string;
+  originalFormat: string;
+  originalSize: { width: number; height: number; fileSize: number };
+  aspectRatio: string;
+  hasAlt: boolean;
+  altText: string;
+  altQuality: number; // 0-100
+  altScore: number; // 0-100
+  isOptimized: boolean;
+  canBeOptimized: boolean;
+  potentialSavings: number; // bytes
+  format: string;
+  recommendations: string[];
+}
+```
+
+#### optimizeImage()
+
+```typescript
+static async optimizeImage(config: ImageOptimizationConfig): Promise<OptimizedImage>
+
+interface ImageOptimizationConfig {
+  src: string;
+  alt?: string;
+  title?: string;
+  format?: 'webp' | 'avif' | 'jpeg' | 'png' | 'auto';
+  quality?: number; // 1-100
+  maxWidth?: number;
+  maxHeight?: number;
+  responsive?: boolean;
+  breakpoints?: number[]; // [320, 640, 768, 1024, 1280, 1536]
+  sizes?: string; // "(max-width: 768px) 100vw, 50vw"
+  loading?: 'lazy' | 'eager' | 'auto';
+  fetchPriority?: 'high' | 'low' | 'auto';
+  decoding?: 'async' | 'sync' | 'auto';
+  generateAlt?: boolean; // AI-generated alt text
+  altLanguage?: string;
+  keywords?: string[];
+}
+
+interface OptimizedImage {
+  src: string;
+  srcset?: string;
+  sizes?: string;
+  alt: string;
+  loading: string;
+  html: string; // Complete <picture> or <img> tag
+}
+```
+
+---
+
+## Video SEO API (NEW v1.1.1)
+
+### VideoSeo
+
+Optimize video content for search engines.
+
+#### optimizeVideo()
+
+```typescript
+static optimizeVideo(config: VideoSeoConfig, pageUrl: string): VideoOptimizationResult
+
+interface VideoSeoConfig {
+  name: string;
+  description: string;
+  thumbnailUrl: string;
+  uploadDate: string; // ISO 8601 date
+  duration: string; // ISO 8601 duration (PT1H30M)
+  contentUrl?: string;
+  embedUrl?: string;
+  transcript?: string;
+  captions?: Array<{ language: string; url: string }>;
+  category?: string;
+  tags?: string[];
+  rating?: number; // 1-5
+  viewCount?: number;
+  familyFriendly?: boolean;
+  requiresSubscription?: boolean;
+  videoQuality?: 'hd' | 'sd';
+  width?: number;
+  height?: number;
+  publisher?: { name: string; logo: string };
+}
+
+interface VideoOptimizationResult {
+  schema: VideoSchemaMarkup; // JSON-LD object
+  schemaJson: string; // JSON-LD as string
+  sitemapEntry: string; // XML sitemap entry
+  embedCode: string; // Optimized iframe code
+  recommendations: string[];
+  seoScore: number; // 0-100
+}
+```
+
+#### generateVideoSitemap()
+
+```typescript
+static generateVideoSitemap(videos: VideoSeoConfig[]): string
+// Returns complete XML video sitemap
+```
+
+---
+
+## Social Preview API (NEW v1.1.1)
+
+### SocialPreviewGenerator
+
+Generate and validate social media preview cards.
+
+#### generatePreview()
+
+```typescript
+static generatePreview(
+  platform: 'facebook' | 'twitter' | 'linkedin' | 'pinterest',
+  config: SocialPreviewConfig
+): SocialPreviewResult
+
+interface SocialPreviewConfig {
+  og?: OpenGraphData;
+  twitter?: TwitterCardData;
+}
+
+interface OpenGraphData {
+  title: string;
+  description: string;
+  image: string;
+  url: string;
+  type?: 'website' | 'article' | 'video' | 'music' | 'book' | 'profile';
+  siteName?: string;
+  locale?: string;
+  imageWidth?: number;
+  imageHeight?: number;
+}
+
+interface TwitterCardData {
+  card: 'summary' | 'summary_large_image' | 'app' | 'player';
+  site?: string; // @username
+  creator?: string; // @username
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+interface SocialPreviewResult {
+  platform: string;
+  title: string;
+  description: string;
+  image: string;
+  url: string;
+  preview: string; // HTML preview render
+  validation: PreviewValidation;
+  meta: {
+    titleLength: number;
+    descriptionLength: number;
+    imageAspectRatio?: string;
+    imageDimensions?: { width: number; height: number };
+  };
+}
+
+interface PreviewValidation {
+  isValid: boolean;
+  errors: string[];
+  warnings: string[];
+  suggestions: string[];
+  requiredTags: string[];
+  optionalTags: string[];
+  score: number; // 0-100
+}
+```
+
+#### validatePreview()
+
+```typescript
+static validatePreview(
+  platform: string,
+  data: { og?: Partial<OpenGraphData>; twitter?: Partial<TwitterCardData> }
+): PreviewValidation
+```
+
+#### generateMetaTags()
+
+```typescript
+static generateMetaTags(config: SocialPreviewConfig): string
+// Returns complete Open Graph and Twitter Card meta tags as HTML string
+```
+
+---
+
 ## Core API
 
 ### createSEO()

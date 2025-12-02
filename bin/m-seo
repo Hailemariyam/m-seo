@@ -1,0 +1,216 @@
+#!/usr/bin/env node
+
+/**
+ * M-SEO CLI Executable
+ * Command-line interface for SEO operations
+ *
+ * Usage:
+ *   m-seo <command> [options]
+ *
+ * Commands:
+ *   meta        Generate meta tags
+ *   sitemap     Generate XML sitemap
+ *   robots      Generate robots.txt
+ *   audit       Run SEO audit
+ *   audit-batch Audit multiple URLs
+ *   schema      Generate structured data
+ *   bot-check   Check if user agent is a bot
+ *   validate    Validate existing SEO
+ *   watch       Watch URLs for SEO changes
+ *   server      Start REST API server
+ *
+ * Examples:
+ *   m-seo meta -t "My Page" -d "Description" -u "https://example.com"
+ *   m-seo sitemap -u urls.txt -o sitemap.xml
+ *   m-seo audit -u https://example.com -o report.html -f html
+ *   m-seo server --port 3100 --api-key your_key
+ */
+
+import { CliInterface } from '../dist/service/CliInterface.js';
+import { RestApiServer } from '../dist/service/RestApiServer.js';
+
+const args = process.argv.slice(2);
+
+if (args.length === 0 || args[0] === '--help' || args[0] === '-h') {
+  showHelp();
+  process.exit(0);
+}
+
+if (args[0] === '--version' || args[0] === '-v') {
+  console.log('m-seo version 1.1.1');
+  process.exit(0);
+}
+
+// Handle server command separately
+if (args[0] === 'server') {
+  startServer(args.slice(1));
+} else {
+  // Handle CLI commands
+  const cli = new CliInterface();
+  cli.execute(args).catch(error => {
+    console.error('Error:', error.message);
+    process.exit(1);
+  });
+}
+
+/**
+ * Start REST API server
+ */
+async function startServer(args) {
+  const port = getArg(args, '--port', '-p') || 3100;
+  const host = getArg(args, '--host', '-h') || '0.0.0.0';
+  const apiKey = getArg(args, '--api-key', '-k');
+
+  const server = new RestApiServer({
+    port: parseInt(port),
+    host,
+    apiKey,
+    rateLimit: {
+      windowMs: 60000,
+      max: 100,
+    },
+    cache: {
+      enabled: true,
+      ttl: 300000,
+    },
+  });
+
+  await server.start();
+}
+
+/**
+ * Show help message
+ */
+function showHelp() {
+  console.log(`
+╔═══════════════════════════════════════════════════════════════╗
+║                    M-SEO CLI v1.1.1                          ║
+║            Enterprise SEO Command Line Tool                   ║
+╚═══════════════════════════════════════════════════════════════╝
+
+USAGE:
+  m-seo <command> [options]
+
+COMMANDS:
+
+  📝 META TAGS
+    meta                Generate SEO meta tags
+      -t, --title       Page title (required)
+      -d, --description Page description (required)
+      -u, --url         Canonical URL (required)
+      -k, --keywords    Keywords (comma-separated)
+      -i, --image       OG image URL
+      -o, --output      Output file path
+      -f, --format      Output format (html|json)
+
+  🗺️  SITEMAP
+    sitemap             Generate XML sitemap
+      -u, --urls        URLs file or JSON array (required)
+      -o, --output      Output file (default: sitemap.xml)
+      --changefreq      Change frequency (default: weekly)
+      --priority        Default priority (default: 0.8)
+      -c, --compress    Compress to .gz
+
+  🤖 ROBOTS.TXT
+    robots              Generate robots.txt
+      -s, --sitemap     Sitemap URL (required)
+      -o, --output      Output file (default: robots.txt)
+      -d, --disallow    Paths to disallow (comma-separated)
+      -u, --user-agent  User agent (default: *)
+
+  🔍 SEO AUDIT
+    audit               Run comprehensive SEO audit
+      -u, --url         URL to audit (required)
+      -o, --output      Output file path
+      -f, --format      Output format (json|html|md)
+      -t, --threshold   Minimum score threshold (default: 70)
+      --fix             Generate fix recommendations
+
+    audit-batch         Audit multiple URLs
+      -u, --urls        URLs file (required)
+      -o, --output      Output directory
+      -f, --format      Output format (default: json)
+      -p, --parallel    Parallel requests (default: 5)
+
+  📊 STRUCTURED DATA
+    schema              Generate structured data (JSON-LD)
+      -t, --type        Schema type (article|product|organization)
+      -d, --data        JSON data file or inline JSON
+      -o, --output      Output file path
+      -v, --validate    Validate schema
+
+  🕷️  BOT DETECTION
+    bot-check           Check if user agent is a bot
+      -u, --user-agent  User agent string (required)
+      -d, --detailed    Show detailed bot info
+
+  ✅ VALIDATION
+    validate            Validate existing meta tags and SEO
+      -u, --url         URL to validate (required)
+      -c, --checks      Specific checks (meta|og|schema|perf)
+      -o, --output      Output file path
+
+  👀 MONITORING
+    watch               Watch URLs for SEO changes
+      -u, --urls        URLs to watch (comma-separated)
+      -i, --interval    Check interval in seconds (default: 300)
+      -n, --notify      Notification method (console|file|webhook)
+
+  🚀 SERVER
+    server              Start REST API server
+      -p, --port        Server port (default: 3100)
+      -h, --host        Server host (default: 0.0.0.0)
+      -k, --api-key     API key for authentication
+      --cors            Enable CORS
+
+EXAMPLES:
+
+  Generate meta tags:
+    m-seo meta -t "My Page" -d "Description" -u "https://example.com"
+
+  Generate sitemap from file:
+    m-seo sitemap -u urls.txt -o sitemap.xml
+
+  Generate sitemap from JSON:
+    m-seo sitemap -u '[{"loc": "https://example.com", "priority": 1.0}]'
+
+  Run SEO audit:
+    m-seo audit -u https://example.com -o report.html -f html
+
+  Batch audit with threshold:
+    m-seo audit-batch -u urls.txt -o ./reports -t 80
+
+  Generate product schema:
+    m-seo schema -t product -d '{"name": "Product", "price": "99.99"}'
+
+  Check bot detection:
+    m-seo bot-check -u "Googlebot/2.1" -d
+
+  Watch URLs:
+    m-seo watch -u "https://example.com,https://example.com/about" -i 60
+
+  Start API server:
+    m-seo server --port 3100 --api-key your_secret_key
+
+For command-specific help:
+  m-seo <command> --help
+
+Documentation:
+  https://github.com/yourusername/m-seo
+
+Report issues:
+  https://github.com/yourusername/m-seo/issues
+`);
+}
+
+/**
+ * Get argument value
+ */
+function getArg(args, longName, shortName) {
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === longName || args[i] === shortName) {
+      return args[i + 1];
+    }
+  }
+  return null;
+}

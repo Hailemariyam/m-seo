@@ -94,6 +94,60 @@ export {
   type ReportFormat
 } from './analytics/SeoReportGenerator.js';
 
+// Integrations (v1.1.1)
+export {
+  CMSPlugins,
+  type CMSPlatform,
+  type CMSConfig,
+  type CMSContent,
+  type CMSSeoData,
+  type CMSIntegrationResult,
+  type WebhookPayload,
+  type BatchOperation,
+  type BatchResult,
+  type CMSAnalytics
+} from './integrations/CMSPlugins-advanced.js';
+
+export {
+  AIContentAnalysis,
+  type AIContentConfig,
+  type ReadabilityScores,
+  type KeywordAnalysis,
+  type ContentQualityMetrics,
+  type SentimentAnalysis,
+  type ToneAnalysis,
+  type PlagiarismResult,
+  type SEORecommendation,
+  type ContentSuggestion,
+  type AdvancedContentAnalysisResult,
+  type BatchAnalysisRequest,
+  type BatchAnalysisResult,
+  type ExportOptions
+} from './integrations/AIContentAnalysis.js';
+
+export {
+  ImageOptimizer,
+  type ImageOptimizationConfig,
+  type ImageAnalysisResult,
+  type OptimizedImage
+} from './integrations/ImageOptimizer.js';
+
+export {
+  VideoSeo,
+  type VideoSeoConfig,
+  type VideoSchemaMarkup,
+  type VideoOptimizationResult
+} from './integrations/VideoSeo.js';
+
+export {
+  SocialPreviewGenerator,
+  type OpenGraphData,
+  type TwitterCardData,
+  type SocialPreviewConfig,
+  type SocialPreviewResult,
+  type PreviewValidation
+} from './integrations/SocialPreviewGenerator.js';
+
 // Adapters
 export {
   NextAdapter,
