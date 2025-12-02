@@ -64,6 +64,7 @@ M-SEO handles the SEO boilerplate so you can focus on building features. Here's 
 | -------------------- | ------------------------------------------------------------------------------ |
 | **Multi-framework**  | Works with React, Vue, Next.js, Express, and vanilla JS                        |
 | **Multi-language**   | SDKs for Python (Django/Flask), PHP (Laravel), Ruby (Rails), Go (NEW v1.1.1)  |
+| **Command Line**     | Full-featured CLI with 10+ commands for SEO operations (NEW v1.1.2)           |
 | **No dependencies**  | Pure TypeScript with zero external packages                                    |
 | **CMS Integration**  | WordPress, Ghost, Drupal, Joomla, Contentful, Strapi support (NEW v1.1.1)     |
 | **AI Content Analysis** | Readability, sentiment, tone, keyword analysis with SEO recommendations (NEW) |
@@ -381,6 +382,59 @@ yarn add m-seo
 # or
 pnpm add m-seo
 ```
+
+### CLI Usage
+
+M-SEO includes a powerful command-line interface for SEO operations:
+
+```bash
+# Install globally for CLI access
+npm install -g m-seo
+
+# Or use with npx (no installation needed)
+npx m-seo --help
+
+# Generate meta tags
+m-seo meta -t "My Page" -d "Page description" -u "https://example.com"
+
+# Run SEO audit
+m-seo audit -u https://example.com -f html -o report.html
+
+# Generate sitemap
+m-seo sitemap -u urls.txt -o sitemap.xml
+
+# Generate robots.txt
+m-seo robots -s https://example.com/sitemap.xml -o robots.txt
+
+# Check bot detection
+m-seo bot-check -u "Googlebot/2.1" -d
+
+# Start REST API server (for multi-language SDKs)
+m-seo server --port 3100 --api-key your_secret_key
+
+# Batch audit multiple URLs
+m-seo audit-batch -u urls.txt -o ./reports -f json
+
+# Watch URLs for SEO changes
+m-seo watch -u "https://example.com,https://example.com/about" -i 60
+
+# Generate structured data
+m-seo schema -t product -d '{"name": "Product", "price": "99.99"}'
+```
+
+**Available Commands:**
+- `meta` - Generate SEO meta tags
+- `sitemap` - Generate XML sitemap
+- `robots` - Generate robots.txt
+- `audit` - Run comprehensive SEO audit
+- `audit-batch` - Audit multiple URLs
+- `schema` - Generate structured data (JSON-LD)
+- `bot-check` - Check if user agent is a bot
+- `validate` - Validate existing meta tags and SEO
+- `watch` - Monitor URLs for SEO changes
+- `server` - Start REST API server (for Python/PHP/Ruby/Go SDKs)
+
+Run `m-seo <command> --help` for command-specific options.
 
 ---
 

@@ -37,7 +37,7 @@ if (args.length === 0 || args[0] === '--help' || args[0] === '-h') {
 }
 
 if (args[0] === '--version' || args[0] === '-v') {
-  console.log('m-seo version 1.1.1');
+  console.log('m-seo version 1.1.2');
   process.exit(0);
 }
 
