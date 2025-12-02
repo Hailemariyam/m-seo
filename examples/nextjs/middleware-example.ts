@@ -3,11 +3,15 @@
  *
  * This middleware automatically applies security and performance headers
  * to all routes in your Next.js application.
+ *
+ * NOTE: This is a standalone example. In a real Next.js app, import your
+ * configured adapter from lib/seo.ts instead:
+ * import { seo } from '@/lib/seo';
  */
 
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { seo } from '@/lib/seo';
+import { advancedSeo as seo } from './setup';
 
 /**
  * Basic Middleware - Apply SEO headers to all routes
@@ -16,10 +20,10 @@ export function middleware(request: NextRequest) {
   const response = NextResponse.next();
 
   // Generate and apply all headers (security, performance, caching)
-  const headers = seo.generateMiddlewareHeaders(request);
+  const headers = seo.generateMiddlewareHeaders();
 
   Object.entries(headers).forEach(([key, value]) => {
-    response.headers.set(key, value);
+    response.headers.set(key, String(value));
   });
 
   return response;
@@ -33,8 +37,8 @@ export function advancedMiddleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Base headers for all routes
-  const baseHeaders = seo.generateMiddlewareHeaders(request);
-  Object.entries(baseHeaders).forEach(([k, v]) => response.headers.set(k, v));
+  const baseHeaders = seo.generateMiddlewareHeaders();
+  Object.entries(baseHeaders).forEach(([k, v]) => response.headers.set(k, String(v)));
 
   // Route-specific optimizations
 
@@ -72,6 +76,9 @@ export function advancedMiddleware(request: NextRequest) {
 
 /**
  * Geographic Middleware - Redirect based on location
+ *
+ * NOTE: request.geo is only available on Vercel Edge Runtime
+ * For other platforms, use headers like CF-IPCountry (Cloudflare) or X-Forwarded-For
  */
 export function geoMiddleware(request: NextRequest) {
   const geoSeo = seo.getGeoSeo();
@@ -80,8 +87,9 @@ export function geoMiddleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Get visitor's country from headers
-  const country = request.geo?.country || 'US';
+  // Get visitor's country from headers (works on Vercel)
+  // @ts-expect-error - geo property is available on Vercel Edge Runtime
+  const country = (request.geo?.country as string | undefined) || 'US';
   const { pathname } = request.nextUrl;
 
   // Redirect to localized version if not already there
@@ -104,8 +112,8 @@ export function geoMiddleware(request: NextRequest) {
   }
 
   const response = NextResponse.next();
-  const headers = seo.generateMiddlewareHeaders(request);
-  Object.entries(headers).forEach(([k, v]) => response.headers.set(k, v));
+  const headers = seo.generateMiddlewareHeaders();
+  Object.entries(headers).forEach(([k, v]) => response.headers.set(k, String(v)));
 
   return response;
 }
@@ -116,12 +124,12 @@ export function geoMiddleware(request: NextRequest) {
 export function securityMiddleware(request: NextRequest) {
   const response = NextResponse.next();
 
-  // Get security headers with strict preset
+  // Get security headers (no preset parameter - uses configured preset)
   const security = seo.getSecurity();
   if (security) {
-    const securityHeaders = security.getHeaders('strict');
+    const securityHeaders = security.getHeaders();
     Object.entries(securityHeaders).forEach(([k, v]) => {
-      response.headers.set(k, v);
+      response.headers.set(k, String(v));
     });
   }
 
@@ -163,16 +171,16 @@ export function envAwareMiddleware(request: NextRequest) {
 
   if (isProd) {
     // Production: strict security
-    const headers = seo.generateMiddlewareHeaders(request);
-    Object.entries(headers).forEach(([k, v]) => response.headers.set(k, v));
+    const headers = seo.generateMiddlewareHeaders();
+    Object.entries(headers).forEach(([k, v]) => response.headers.set(k, String(v)));
   } else {
     // Development: relaxed for debugging
     response.headers.set('X-Development-Mode', 'true');
     // Still apply basic security
     const security = seo.getSecurity();
     if (security) {
-      const devHeaders = security.getHeaders('relaxed');
-      Object.entries(devHeaders).forEach(([k, v]) => response.headers.set(k, v));
+      const devHeaders = security.getHeaders();
+      Object.entries(devHeaders).forEach(([k, v]) => response.headers.set(k, String(v)));
     }
   }
 

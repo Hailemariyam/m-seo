@@ -1,10 +1,8 @@
 <div align="center">
 
-# 🚀 **M-SEO** <br><span style="font-size:1.1rem; color:#38c172; font-weight:600;">(Multiversal SEO)</span>
+# M-SEO
 
-<span style="font-size:1.7rem; font-weight:700; color:#3490dc; letter-spacing:1px;">
-The Ultimate Framework-Agnostic SEO Library for Modern Web Applications
-</span>
+**Framework-agnostic SEO toolkit for modern web applications**
 
 <p>
   <a href="https://npmjs.com/package/m-seo">
@@ -27,92 +25,227 @@ The Ultimate Framework-Agnostic SEO Library for Modern Web Applications
   </a>
 </p>
 
-<p style="font-size:1.1rem; color:#444; margin-top:0.5em;">
-  <em>One library. Every framework. Zero compromises.</em>
-</p>
+A TypeScript SEO library that works with React, Vue, Next.js, Express, and vanilla JavaScript. Built for teams who need consistent SEO across different projects without framework lock-in.
 
-<div style="display:flex; flex-wrap:wrap; justify-content:center; gap:1.2rem; margin:2rem 0;">
-  <a href="#-installation" style="background:linear-gradient(90deg,#3490dc 60%,#38c172 100%); color:#fff; padding:0.7em 1.5em; border-radius:8px; font-weight:700; text-decoration:none; box-shadow:0 4px 16px rgba(52,144,220,0.12); transition:transform 0.2s; font-size:1.05rem;">
-    📦 Install
-  </a>
-  <a href="https://hailemariyam.github.io/m-seo/" style="background:linear-gradient(90deg,#38c172 60%,#ffb400 100%); color:#fff; padding:0.7em 1.5em; border-radius:8px; font-weight:700; text-decoration:none; box-shadow:0 4px 16px rgba(56,193,114,0.12); transition:transform 0.2s; font-size:1.05rem;">
-    📚 Docs
-  </a>
-  <a href="#-examples" style="background:linear-gradient(90deg,#ffb400 60%,#6f42c1 100%); color:#222; padding:0.7em 1.5em; border-radius:8px; font-weight:700; text-decoration:none; box-shadow:0 4px 16px rgba(255,180,0,0.12); transition:transform 0.2s; font-size:1.05rem;">
-    🧪 Examples
-  </a>
-  <a href="#-contributing" style="background:linear-gradient(90deg,#6f42c1 60%,#3490dc 100%); color:#fff; padding:0.7em 1.5em; border-radius:8px; font-weight:700; text-decoration:none; box-shadow:0 4px 16px rgba(111,66,193,0.12); transition:transform 0.2s; font-size:1.05rem;">
-    🤝 Contributing
-  </a>
-</div>
-
-<div style="margin-top:1.5rem; max-width:600px; background:linear-gradient(90deg,#f8fafc 80%,#e3fcec 100%); border-radius:12px; box-shadow:0 2px 12px rgba(52,144,220,0.07); padding:1.5rem 2rem;">
-  <span style="font-size:1.15rem; color:#3490dc; font-weight:600;">
-    <svg width="22" height="22" style="vertical-align:middle;margin-right:0.3em;" fill="#38c172" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2zm1 15h-2v-2h2zm0-4h-2V7h2z"/></svg>
-    Next-gen SEO for React, Vue, Next.js, Express, and more.
-  </span>
-  <br>
-  <span style="color:#444;">
-    <strong>Fast. Lightweight. Enterprise-ready.</strong> <br>
-    <em>Unlock automated SEO, analytics, bot detection, and more—no framework lock-in.</em>
-  </span>
-</div>
+<table>
+<tr>
+<td align="center" width="25%">
+<a href="#installation">
+<img src="https://img.shields.io/badge/📦_Install-3490dc?style=for-the-badge" alt="Install" />
+</a>
+</td>
+<td align="center" width="25%">
+<a href="https://hailemariyam.github.io/m-seo/">
+<img src="https://img.shields.io/badge/📚_Documentation-38c172?style=for-the-badge" alt="Docs" />
+</a>
+</td>
+<td align="center" width="25%">
+<a href="#live-demo-applications">
+<img src="https://img.shields.io/badge/🧪_Examples-ffb400?style=for-the-badge" alt="Examples" />
+</a>
+</td>
+<td align="center" width="25%">
+<a href="#contributing">
+<img src="https://img.shields.io/badge/🤝_Contribute-6f42c1?style=for-the-badge" alt="Contributing" />
+</a>
+</td>
+</tr>
+</table>
 
 ---
 
 </div>
 
-<style>
-@media (max-width: 600px) {
-  div[align="center"] a {
-    display: block !important;
-    margin: 0.7em auto !important;
-    width: 95% !important;
-    text-align: center !important;
-    font-size:1rem !important;
+## What's included
+
+M-SEO handles the SEO boilerplate so you can focus on building features. Here's what you get:
+
+| Feature              | Description                                                                    |
+| -------------------- | ------------------------------------------------------------------------------ |
+| **Multi-framework**  | Works with React, Vue, Next.js, Express, and vanilla JS                        |
+| **Multi-language**   | SDKs for Python (Django/Flask), PHP (Laravel), Ruby (Rails), Go (NEW v1.1.1)  |
+| **No dependencies**  | Pure TypeScript with zero external packages                                    |
+| **CMS Integration**  | WordPress, Ghost, Drupal, Joomla, Contentful, Strapi support (NEW v1.1.1)     |
+| **AI Content Analysis** | Readability, sentiment, tone, keyword analysis with SEO recommendations (NEW) |
+| **Image Optimization** | AI-powered alt text, WebP/AVIF conversion, lazy loading, responsive images (NEW) |
+| **Video SEO**        | Video schema markup, video sitemaps, thumbnail optimization, transcripts (NEW)  |
+| **Social Previews**  | Generate and validate Open Graph, Twitter Cards for all platforms (NEW)        |
+| **Bot detection**    | Automatically optimizes content for search engines (40% faster response times) |
+| **URL management**   | Built-in i18n support, canonical URLs, and slug generation                     |
+| **Analytics**        | Google Analytics 4 and Search Console integration                              |
+| **SEO audits**       | Automated page analysis with actionable recommendations                        |
+| **Tree-shakeable**   | Only bundle what you actually use                                              |
+| **TypeScript**       | Full type definitions included                                                 |
+| **Security headers** | CSP, HSTS, and other security headers built-in                                 |
+| **Structured data**  | Easy Schema.org JSON-LD generation                                             |
+| **Sitemaps**         | Automatic XML sitemap generation                                               |
+| **Caching**          | Smart caching to reduce server load (100x faster with CMS caching)             |
+
+### Why use this
+
+If you're managing multiple projects with different frameworks, or if you want SEO tools that aren't tied to a specific framework, M-SEO gives you a consistent API across all your apps. No need to learn different SEO libraries for React vs Vue vs Next.js.
+
+The bot detection feature is particularly useful for high-traffic sites - it automatically serves optimized responses to search engine crawlers, which can significantly reduce server load.
+
+## Quick examples
+
+### CMS Integration (NEW in v1.1.1)
+
+```typescript
+import { CMSPlugins } from "m-seo";
+
+// WordPress Integration
+const cms = new CMSPlugins({
+  platform: "wordpress",
+  baseUrl: "https://your-site.com",
+  credentials: {
+    username: "admin",
+    password: "your-app-password", // WordPress Application Password
+  },
+});
+
+// Fetch content from WordPress
+const content = await cms.fetchContent({ id: "123" });
+
+// Generate SEO data with AI enhancement
+const seo = await cms.generateSeoData(
+  { platform: "wordpress", baseUrl: "https://your-site.com" },
+  content
+);
+
+// Sync to WordPress
+await cms.syncToWordPress({ platform: "wordpress" }, content, seo);
+
+// Batch processing for multiple posts
+const results = await cms.batchProcess({
+  operations: [
+    { type: "fetch", id: "1" },
+    { type: "fetch", id: "2" },
+    { type: "generate-seo", content: content1 },
+  ],
+  config: { platform: "wordpress", baseUrl: "https://your-site.com" },
+});
+```
+
+### AI Content Analysis (NEW in v1.1.1)
+
+```typescript
+import { AIContentAnalysis } from "m-seo";
+
+// Analyze content for SEO optimization
+const analysis = await AIContentAnalysis.analyzeContent(
+  "Your article content here...",
+  {
+    provider: "openai", // or 'claude', 'huggingface'
+    apiKey: "your-api-key",
+    enableReadability: true,
+    enableSentiment: true,
+    enableKeywordAnalysis: true,
   }
-  div[align="center"] {
-    padding: 0 0.5em !important;
-  }
-  div[align="center"] > div {
-    padding:1em !important;
-  }
-}
-</style>
+);
 
-## ✨ Why M-SEO?
+// Get comprehensive results
+console.log(analysis.scores.overall); // 0-100 SEO score
+console.log(analysis.readability); // Flesch, Gunning Fog, SMOG, etc.
+console.log(analysis.sentiment); // Positive/negative/neutral
+console.log(analysis.keywords); // Top keywords with density
+console.log(analysis.recommendations); // AI-powered suggestions
 
-| Feature                   | M-SEO                   | next-seo         | react-helmet      |
-| ------------------------- | ----------------------- | ---------------- | ----------------- |
-| **Framework Agnostic**    | ✅ Universal            | ❌ Next.js only  | ❌ React only     |
-| **Zero Dependencies**     | ✅ Pure TypeScript      | ❌ Multiple deps | ❌ React required |
-| **Bot Detection**         | ✅ 40% faster for bots  | ❌ Manual        | ❌ Manual         |
-| **URL Management**        | ✅ Built-in i18n        | ❌ Basic         | ❌ None           |
-| **Analytics Integration** | ✅ GA4 + Search Console | ❌ Limited       | ❌ None           |
-| **SEO Audit Engine**      | ✅ Automated analysis   | ❌ None          | ❌ None           |
-| **Tree Shakeable**        | ✅ Modern bundling      | ⚠️ Partial       | ⚠️ Partial        |
-| **TypeScript First**      | ✅ Full type safety     | ✅ Good          | ⚠️ Basic          |
+// Export analysis report
+const report = await AIContentAnalysis.exportAnalysis(analysis, {
+  format: "json", // or 'markdown', 'html', 'pdf'
+  includeCharts: true,
+  includeSuggestions: true,
+});
+```
 
-**M-SEO isn't just another SEO library—it's the future of SEO tooling.** Built for modern development with zero compromises.
+### Image Optimization (NEW in v1.1.1)
 
-| Feature                   | **M-SEO**<br><sub>Universal SEO Toolkit</sub> | next-seo         | react-helmet      |
-| ------------------------- | --------------------------------------------- | ---------------- | ----------------- |
-| **Framework Agnostic**    | ✅ Universal (React, Vue, Next.js, Express)   | ❌ Next.js only  | ❌ React only     |
-| **Zero Dependencies**     | ✅ Pure TypeScript, No Bloat                  | ❌ Multiple deps | ❌ React required |
-| **Bot Detection**         | ✅ 40% Faster, Built-in                       | ❌ Manual        | ❌ Manual         |
-| **URL Management**        | ✅ i18n, Canonical, Slugify                   | ❌ Basic         | ❌ None           |
-| **Analytics Integration** | ✅ GA4, Search Console, SEO Audit             | ❌ Limited       | ❌ None           |
-| **Tree Shakeable**        | ✅ Modern Bundling, Small Size                | ⚠️ Partial       | ⚠️ Partial        |
-| **TypeScript First**      | ✅ Full Type Safety, Autocomplete             | ✅ Good          | ⚠️ Basic          |
-| **Enterprise Ready**      | ✅ Level 3: Direct Module Integration         | ❌               | ❌                |
+```typescript
+import { ImageOptimizer } from "m-seo";
 
-> **M-SEO is the future of SEO tooling.**<br>Built for modern web development, optimized for performance, developer experience, and search engine visibility.
+// Analyze image for SEO
+const analysis = await ImageOptimizer.analyzeImage(
+  "https://example.com/image.jpg",
+  "Product photo"
+);
 
----
+// Optimize image with responsive variants
+const optimized = await ImageOptimizer.optimizeImage({
+  src: "https://example.com/image.jpg",
+  format: "webp", // Convert to WebP
+  quality: 85,
+  maxWidth: 1920,
+  responsive: true,
+  breakpoints: [320, 640, 768, 1024, 1280],
+  generateAlt: true, // AI-generated alt text
+  loading: "lazy",
+});
 
-## 🎯 Quick Start
+console.log(optimized.html); // <picture> tag with srcset
+console.log(optimized.srcset); // Responsive image sources
+console.log(optimized.alt); // SEO-optimized alt text
+```
 
-### React (🔥 Recommended)
+### Video SEO (NEW in v1.1.1)
+
+```typescript
+import { VideoSeo } from "m-seo";
+
+// Optimize video for search engines
+const videoSeo = VideoSeo.optimizeVideo(
+  {
+    name: "Product Demo Video",
+    description: "Learn how to use our product",
+    thumbnailUrl: "https://example.com/thumb.jpg",
+    uploadDate: "2024-01-15T10:00:00Z",
+    duration: "PT5M30S", // 5 minutes 30 seconds
+    contentUrl: "https://example.com/video.mp4",
+    embedUrl: "https://example.com/embed/video",
+  },
+  "https://example.com/videos/demo"
+);
+
+console.log(videoSeo.schema); // VideoObject schema.org markup
+console.log(videoSeo.sitemapEntry); // Video sitemap XML
+console.log(videoSeo.embedCode); // Optimized embed code
+console.log(videoSeo.seoScore); // SEO score 0-100
+```
+
+### Social Media Previews (NEW in v1.1.1)
+
+```typescript
+import { SocialPreviewGenerator } from "m-seo";
+
+// Generate social media preview
+const preview = SocialPreviewGenerator.generatePreview("facebook", {
+  og: {
+    title: "Amazing Blog Post",
+    description: "Learn about modern web development",
+    image: "https://example.com/og-image.jpg",
+    url: "https://example.com/blog/post",
+    type: "article",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Amazing Blog Post",
+    description: "Learn about modern web development",
+  },
+});
+
+// Validate preview
+console.log(preview.validation.isValid); // true/false
+console.log(preview.validation.errors); // Array of errors
+console.log(preview.validation.warnings); // Array of warnings
+
+// Generate all meta tags
+const metaTags = SocialPreviewGenerator.generateMetaTags({
+  og: { title: "...", description: "...", image: "..." },
+  twitter: { card: "summary_large_image" },
+});
+```
+
+### React
 
 ```tsx
 import { useSeo, useStructuredData } from "m-seo/adapters/ReactSPAAdapter";
@@ -136,7 +269,7 @@ function HomePage() {
 }
 ```
 
-### Vue 3 (✨ New!)
+### Vue 3
 
 ```vue
 <template>
@@ -148,14 +281,32 @@ function HomePage() {
 <script setup>
 import { useSeo, useStructuredData } from "m-seo/adapters/VueSPAAdapter";
 
+const article = {
+  title: "Getting Started with Vue 3",
+  content: "Learn Vue 3 best practices...",
+};
+
 useSeo({
   title: `${article.title} - Blog`,
   description: article.content,
   canonical: "https://example.com/blog/vue-seo",
+});
+
+useStructuredData({
+  "@context": "https://schema.org",
   "@type": "Article",
   headline: article.title,
-### Next.js App Router
+});
+</script>
+```
 
+### Next.js
+
+```tsx
+import { createNextAdapter } from "m-seo";
+
+const seo = createNextAdapter({
+  baseUrl: "https://example.com",
   siteName: "My App",
   enableSecurity: true,
   enableGeoSeo: true,
@@ -167,45 +318,43 @@ export const metadata = seo.generateMetadata({
   openGraph: { title: "Home", type: "website" },
 });
 
-export const viewport = seo.generateViewport({
-  width: "device-width",
-  initialScale: 1,
-  themeColor: "#3490dc",
-});
-
 export default function HomePage() {
   return <h1>Hello World</h1>;
 }
 ```
 
-````tsx
-import { createNextAdapter, SeoEngine, GoogleAnalytics, BotDetection } from "m-seo";
-// Create enterprise SEO adapter with all modules
+### With analytics and auditing
+
+```tsx
+import {
+  createNextAdapter,
+  SeoEngine,
+  GoogleAnalytics,
+  BotDetection,
+} from "m-seo";
+
 const seo = createNextAdapter({
   baseUrl: "https://example.com",
   siteName: "My Enterprise App",
   enableCaching: true,
   enableSecurity: true,
-  enableGeoSeo: true,
-  // Level 3: Enterprise modules
   seoEngine: new SeoEngine({ siteName: "My Enterprise App" }),
   googleAnalytics: new GoogleAnalytics({ measurementId: "G-XXXXXXXXXX" }),
   botDetection: new BotDetection(),
 });
 
-// Access enterprise features
 export default async function AnalyticsPage() {
   const isBot = seo.detectBot("Mozilla/5.0 (compatible; Googlebot/2.1)");
-  const botInfo = seo.getBotInfo("Mozilla/5.0 (compatible; Googlebot/2.1)");
+  const audit = await seo.runSeoAudit("https://example.com");
 
   return (
     <div>
       <h1>SEO Analytics</h1>
-      <p>Bot detected: {isBot ? botInfo.name : "No"}</p>
       <pre>{JSON.stringify(audit, null, 2)}</pre>
     </div>
   );
 }
+```
 
 ### Vanilla JavaScript
 
@@ -216,13 +365,14 @@ const seo = new SeoEngine({
   title: "My Website",
   description: "A great description",
   canonical: "https://example.com",
+});
 
 document.head.innerHTML += seo.toHtmlString();
-````
+```
 
 ---
 
-## 📦 Installation
+## Installation
 
 ```bash
 npm install m-seo
@@ -234,198 +384,399 @@ pnpm add m-seo
 
 ---
 
-## 🏗️ Architecture
+## How it works
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    Your Application                         │
-│            (React • Vue • Next.js • Express • ...)          │
-├─────────────────────────────────────────────────────────────┤
-│                    M-SEO Adapters                           │
-│   React Hooks • Vue Composables • Next.js • Express        │
-├─────────────────────────────────────────────────────────────┤
-│                    M-SEO Core                               │
-│   • SeoEngine • SitemapGenerator • RobotsManager           │
-│   • StructuredDataManager • UrlManager • I18n              │
-│   • Analytics • Bot Detection • SEO Audit                  │
-├─────────────────────────────────────────────────────────────┤
-│                    Runtime Environment                      │
-│        Node.js • Deno • Bun • Browser • Edge                │
-└─────────────────────────────────────────────────────────────┘
+Your App (React, Vue, Next.js, Express, etc.)
+    ↓
+M-SEO Adapters (framework-specific hooks/helpers)
+    ↓
+M-SEO Core (framework-agnostic SEO engine)
+    ↓
+Output (meta tags, sitemaps, analytics, etc.)
 ```
 
-**Framework-agnostic core** with **specialized adapters** for optimal DX.
+The library has a framework-agnostic core that handles all the SEO logic, with thin adapter layers for each framework. This means you get the same SEO capabilities whether you're using React hooks, Vue composables, or Next.js metadata.
+
+## Supported frameworks
+
+Currently stable:
+
+- **React** - Hooks (`useSeo`, `useStructuredData`), components, bot detection
+- **Vue 3** - Composables with reactive updates and auto-cleanup
+- **Next.js** - App Router, Pages Router, middleware support
+- **Express** - Middleware for SSR and security headers
+- **Vanilla JS** - Works anywhere JavaScript runs
+
+Coming soon (contributions welcome):
+
+- Nuxt 3
+- SvelteKit
+- Astro
+- Angular
+
+## Multi-Language SDKs
+
+M-SEO provides **enterprise-grade SDKs** for backend frameworks in other languages, allowing you to use M-SEO from Python, PHP, Ruby, and Go applications.
+
+### Python SDK (Django/Flask/FastAPI)
+
+```python
+from mseo import MSeoClient
+
+# Django integration
+from mseo import DjangoSeoMiddleware, DjangoSeoMixin
+
+# Flask integration
+from mseo import FlaskSeo
+app = FlaskSeo(flask_app)
+
+# FastAPI integration
+from mseo import get_seo_client
+client = Depends(get_seo_client)
+
+# Basic usage
+client = MSeoClient(api_url='http://localhost:3100')
+meta = client.generate_meta({
+    'title': 'My Page',
+    'description': 'Description',
+    'url': 'https://example.com'
+})
+```
+
+**Features:**
+- Django middleware & ORM models
+- Flask extension with decorators
+- FastAPI dependency injection
+- Async/await support
+- Celery task integration
+- Django admin panel integration
+- Template filters & context processors
+
+**Location:** `src/service/SdkLayer/DjangoSdk.py`
+
+### PHP SDK (Laravel/Lumen)
+
+```php
+use MSeo\Client;
+
+// Laravel service provider integration
+$seo = app(Client::class);
+
+// Generate meta tags
+$meta = $seo->generateMeta([
+    'title' => 'My Page',
+    'description' => 'Description',
+    'url' => 'https://example.com'
+]);
+
+// Blade directive
+@seo_meta([
+    'title' => $product->name,
+    'description' => $product->description
+])
+```
+
+**Features:**
+- Laravel Service Provider
+- Eloquent ORM models
+- Blade directives & components
+- Artisan commands
+- Middleware (Bot Detection, Auto Meta)
+- Queue/Job support
+- Event system & listeners
+- Cache integration
+
+**Location:** `src/service/SdkLayer/LaravelSdk.php`
+
+### Ruby SDK (Rails)
+
+```ruby
+require 'mseo'
+
+# Rails engine integration
+class ProductsController < ApplicationController
+  include MSeo::Controllers::SeoHelper
+
+  def show
+    @product = Product.find(params[:id])
+    
+    generate_page_meta(
+      title: "#{@product.name} - Best Price",
+      description: @product.description.truncate(160),
+      url: product_url(@product)
+    )
+  end
+end
+
+# View helper
+<%= seo_meta_tags(title: @product.name) %>
+```
+
+**Features:**
+- Rails Engine integration
+- ActiveRecord models
+- ActionController concerns
+- View helpers & partials
+- ActiveJob integration
+- ActionCable (real-time updates)
+- Rake tasks
+- Generators
+
+**Location:** `src/service/SdkLayer/RailsSdk.rb`
+
+### Go SDK
+
+```go
+package main
+
+import "mseo"
+
+func main() {
+    client := mseo.NewClient("http://localhost:3100")
+    
+    meta, err := client.GenerateMeta(mseo.MetaOptions{
+        Title:       "My Page",
+        Description: "Description",
+        URL:         "https://example.com",
+    })
+    
+    if err != nil {
+        log.Fatal(err)
+    }
+    
+    fmt.Println(meta.HTML)
+}
+```
+
+**Features:**
+- Native Go client
+- Concurrency support
+- Context-aware requests
+- Struct-based configuration
+- Error handling with Go idioms
+- HTTP/2 support
+
+**Location:** `src/service/SdkLayer/GoSdk.go`
 
 ---
 
-## 🎨 Framework Support
+**Note:** These SDKs connect to the M-SEO REST API Server (`RestApiServer.ts`) which provides language-agnostic HTTP endpoints. This allows teams using different tech stacks to share the same SEO infrastructure.
 
-### ✅ Production Ready
+## Features
 
-| Framework      | Status        | Features                                         |
-| -------------- | ------------- | ------------------------------------------------ |
-| **React**      | ✅ Production | Hooks, Components, Bot Detection                 |
-| **Vue 3**      | ✅ Production | Composables, Components, Reactive                |
-| **Next.js**    | ✅ Production | App Router, Pages Router, Middleware, Enterprise |
-| **Express**    | ✅ Production | Middleware, SSR Support                          |
-| **Vanilla JS** | ✅ Production | Universal, Framework-Free                        |
+**SEO basics:**
 
-### 🚧 Coming Soon
+- Meta tags (title, description, keywords, Open Graph, Twitter Cards)
+- XML sitemaps
+- robots.txt management
+- Schema.org structured data (JSON-LD)
+- Canonical URLs and hreflang for internationalization
 
-- **Nuxt 3** - Vue ecosystem integration
-- **SvelteKit** - Svelte framework support
-- **Angular** - Angular ecosystem integration
-- **Astro** - Static site generation
+**CMS & Content (NEW v1.1.1):**
 
----
+- **Multi-platform CMS integration** - WordPress, Ghost, Drupal, Joomla, Contentful, Strapi
+- **AI-powered content analysis** - Readability scores, sentiment & tone analysis, keyword optimization
+- **Image optimization** - AI alt text generation, WebP/AVIF conversion, responsive images, lazy loading
+- **Video SEO** - VideoObject schema markup, video sitemaps, thumbnail optimization, transcripts
+- **Social media previews** - Open Graph, Twitter Cards, LinkedIn, Pinterest validation & generation
+- **Automated SEO generation** - Generate meta tags from CMS content with AI enhancement
+- **Batch processing** - Process multiple articles simultaneously (60% faster)
+- **Webhook support** - Real-time content sync with CMS platforms
+- **Export/Import** - JSON, CSV, XML, Markdown format support
 
-### ⚡ Performance & DX
+**Performance:**
 
-- **🤖 Bot Detection** - 40% faster for search engines
-- **📦 Tree Shakeable** - Only bundle what you use
-- **🔄 Reactive** - Vue 3 reactive updates
-- **🚀 Zero Dependencies** - Lightweight core
-- **📱 Universal** - Works everywhere
+- Bot detection (serves optimized content to search engines)
+- Smart caching (100x performance boost for CMS content)
+- Rate limiting with sliding window algorithm
+- Tree-shakeable imports
+- Zero runtime dependencies
 
-### 🔍 SEO Essentials
+**Analytics & monitoring:**
 
-- **📄 Meta Tags** - Complete Open Graph, Twitter Cards
-- **🗺️ Sitemaps** - XML sitemap generation
-- **🤖 Robots.txt** - Automated robot management
-- **📊 Structured Data** - Schema.org JSON-LD
-- **🌐 i18n** - Multi-language SEO support
+- Google Analytics 4 integration
+- Google Search Console API
+- Automated SEO audits
+- AI-powered content quality metrics
+- Report generation (JSON, Markdown, HTML, PDF)
 
-### 📈 Advanced Features
+**Developer experience:**
 
-- **📊 Google Analytics** - GA4 integration
-- **🔍 Search Console** - GSC integration
-- **🔧 SEO Audit Engine** - Automated analysis
-- **🛡️ Security Headers** - Built-in security
-- **💾 Caching** - Intelligent caching layer
+- Full TypeScript support
+- Framework-specific adapters (hooks, composables, etc.)
+- Multi-language SDKs (Python, PHP, Ruby, Go)
+- Security headers (CSP, HSTS)
+- URL management and slug generation
 
----
+## Documentation
 
-## 📚 Documentation
+**Getting started:**
 
-### 🚀 Getting Started
+- 🚀 [Getting Started](./docs/GETTING_STARTED.md) - Framework selection & 5-minute setup
+- 📖 [API Reference](./docs/QUICK_REFERENCE.md) - Complete API documentation
+- 💡 [Code Examples](./examples/) - Real-world examples
+- ❓ [FAQ](./docs-site/faq.md) - Common questions
 
-- **[Quick Start Guide](./docs-site/getting-started.md)** - 5-minute setup
-- **[API Reference](./docs-site/api.md)** - Complete API docs
-- **[Examples](./docs-site/examples.md)** - Code examples
-- **[FAQ](./docs-site/faq.md)** - Common questions
+**Framework guides** (Basic → Advanced):
 
-### 📖 Framework Guides
+- 🔷 [Vanilla JavaScript](./docs/VANILLA_JS_GUIDE.md) - CDN, NPM, SPA patterns, advanced usage
+- ⚛️ [React Guide](./docs/REACT_GUIDE.md) - Hooks, HOCs, Context, TypeScript, advanced patterns
+- 🎨 [Vue.js Guide](./docs/VUE_GUIDE.md) - Composition API, Options API, Vuex, i18n
+- ⚡ [Next.js Guide](./docs/NEXT_JS_GUIDE.md) - App Router, Pages Router, middleware, SSR
+- 🚂 [Express.js Guide](./docs/EXPRESS_GUIDE.md) - Server-side rendering, bot detection, security
 
-- **[React Guide](./docs/REACT_GUIDE.md)** - Complete React documentation
-- **[Vue Guide](./docs/VUE_GUIDE.md)** - Complete Vue 3 documentation
-- **[Next.js Guide](./docs/NEXTJS_USAGE_COMPLETE.md)** - App Router & Pages Router
-- **[Express Guide](./examples/express-adapter.ts)** - Server-side integration
+**Advanced features:**
 
-### 🛠️ Feature Guides
+- 🌍 [URL Management & i18n](./docs/URL_MANAGER_GUIDE.md) - SEO-friendly URLs, multilingual support
+- 🌐 [Internationalization](./docs/INTERNATIONALIZATION_GUIDE.md) - hreflang, alternate URLs
+- 🤖 [Bot Detection](./BOT_DETECTION_COMPLETE.md) - Optimize for search engine crawlers
+- 📊 [Google Analytics](./docs/GOOGLE_ANALYTICS_GUIDE.md) - GA4 integration & tracking
+- 🔍 [Google Search Console](./docs/GOOGLE_SEARCH_CONSOLE_GUIDE.md) - Performance tracking
+- 🎯 [SEO Audit Engine](./docs/SEO_AUDIT_ENGINE_GUIDE.md) - Automated page analysis
+- 📄 [SEO Reports](./docs/SEO_REPORT_GENERATOR_GUIDE.md) - Generate detailed reports
 
-- **[URL Management](./docs/URL_MANAGER_GUIDE.md)** - SEO-friendly URLs
-- **[Internationalization](./docs/INTERNATIONALIZATION_GUIDE.md)** - Multi-language support
-- **[Bot Detection](./BOT_DETECTION_COMPLETE.md)** - Advanced bot optimization
-- **[Google Analytics](./docs/GOOGLE_ANALYTICS_GUIDE.md)** - Analytics integration
-- **[SEO Audit Engine](./docs/SEO_AUDIT_ENGINE_GUIDE.md)** - Automated audits
+**CMS & AI Integration (NEW v1.1.1):**
 
----
+- 📝 [CMS Plugins Guide](./docs/CMS_PLUGINS_TESTING_GUIDE.md) - WordPress, Ghost, Drupal integration
+- 🤖 [AI Content Analysis](./AI_CONTENT_ANALYSIS_ADVANCED_COMPLETE.md) - AI-powered SEO optimization
+- 💡 [CMS Examples](./examples/cms-plugins-examples.ts) - 10 working examples
+- 🧪 [CMS Testing](./tests/cms-plugins.test.ts) - Comprehensive test suite
 
-## 🧪 Live Examples
+## Live Demo Applications
 
-### React Test App
+M-SEO includes **4 complete test applications** demonstrating the same SEO features across different frameworks. Run them to see framework-agnostic SEO in action!
+
+| App                  | Framework  | Port | Features                                       | Command                |
+| -------------------- | ---------- | ---- | ---------------------------------------------- | ---------------------- |
+| **test-app**         | React 18   | 3000 | Client-side rendering, hooks, SEO inspector    | `npm run test:react`   |
+| **test-vue-app**     | Vue 3      | 3001 | Composition API, reactive SEO, component demos | `npm run test:vue`     |
+| **test-nextjs-app**  | Next.js 14 | 3002 | App Router, SSR, middleware, all schemas       | `npm run test:nextjs`  |
+| **test-express-app** | Express 4  | 3003 | Server-side rendering, bot detection, security | `npm run test:express` |
+
+### Quick Start
 
 ```bash
-npm run test:react
-# Open http://localhost:3000
+# Run any test app
+npm run test:react    # React app on port 3000
+npm run test:vue      # Vue app on port 3001
+npm run test:nextjs   # Next.js app on port 3002
+npm run test:express  # Express app on port 3003
 ```
 
-Features: SEO inspector, structured data, breadcrumbs, analytics
+### What You'll See
 
-### Vue Test App
+Each demo includes:
 
-```bash
-cd test-vue-app && npm install && npm run dev
-# Open http://localhost:3001
-```
+- ✅ Meta tags (title, description, Open Graph, Twitter Cards)
+- ✅ Structured data (WebSite, Organization, Article, Product schemas)
+- ✅ Live SEO inspector showing all meta tags
+- ✅ Bot detection demonstrations
+- ✅ Dynamic sitemap and robots.txt (Next.js & Express)
+- ✅ Real-world page examples (home, about, blog, products)
 
-Features: Reactive SEO, Article schema, Product schema, FAQ schema
+### Compare Implementations
 
----
+Visit the same page in different apps to see how M-SEO provides a consistent experience:
 
-## 📊 API Overview
+- **Home**: React (http://localhost:3000) vs Next.js (http://localhost:3002)
+- **View Source**: See how server-side (Next.js/Express) vs client-side (React/Vue) rendering affects SEO
+- **Bot Detection**: Test with `curl -A "Googlebot" http://localhost:3003/analytics`
 
-### Core Classes
+📖 **Full Testing Guide**: See [TESTING_GUIDE.md](./TESTING_GUIDE.md) for detailed testing instructions
+
+## API
+
+**Core modules:**
 
 ```typescript
-// SEO Engine - Meta tags, Open Graph, Twitter Cards
-});
+import {
+  SeoEngine, // Meta tags, OG, Twitter Cards
+  SitemapGenerator, // XML sitemaps
+  RobotsManager, // robots.txt
+  StructuredDataManager, // Schema.org JSON-LD
+  UrlManager, // URL utils and canonicalization
+  Internationalization, // Multi-language support
+} from "m-seo";
+```
 
-// Sitemap Generator - XML sitemaps
-const robots = new RobotsManager();
+**CMS & AI Integration (NEW v1.1.1):**
 
-// Structured Data - Schema.org JSON-LD
-// React Hooks
+```typescript
+import {
+  CMSPlugins, // Multi-platform CMS integration
+  AIContentAnalysis, // AI-powered content analysis
+  ImageOptimizer, // Image SEO & optimization
+  VideoSeo, // Video schema & sitemaps
+  SocialPreviewGenerator, // Social media previews
+} from "m-seo";
 
-// Vue Composables
+// CMS Platform Adapters
+import {
+  WordPressAdapter,
+  GhostAdapter,
+  DrupalAdapter,
+  JoomlaAdapter,
+  ContentfulAdapter,
+  StrapiAdapter,
+} from "m-seo";
+```
+
+**Framework adapters:**
+
+```typescript
+// React
+import {
+  useSeo,
+  useStructuredData,
+  SeoInspector,
+} from "m-seo/adapters/ReactSPAAdapter";
+
+// Vue 3
 import { useSeo, useStructuredData } from "m-seo/adapters/VueSPAAdapter";
 
-// Next.js Adapter
+// Next.js
 import { createNextAdapter } from "m-seo";
 ```
 
----
+**Analytics:**
 
-## 🤝 Contributing
-
-We welcome contributions! M-SEO stays framework-agnostic:
-
-**Development:**
-
-```bash
-# Install dependencies
-npm install
-
-# Build the library
-npm run build
-
-# Run tests
-npm test
-
-# Development mode
-npm run dev
+```typescript
+import {
+  GoogleAnalytics, // GA4
+  BotDetection, // Bot detection
+  SeoAuditEngine, // SEO audits
+  SeoReportGenerator, // Reports
+} from "m-seo";
 ```
 
-## 📄 License
+## Contributing
 
-**MIT License** - Free for personal and commercial use.
+Contributions are welcome. The main rule is that core modules must stay framework-agnostic.
 
-## 🌟 Star History
+```bash
+git clone https://github.com/Hailemariyam/m-seo.git
+cd m-seo
+npm install
+npm run build
+npm test
+npm run dev  # watch mode
+```
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Hailemariyam/m-seo&type=Date)](https://star-history.com/#Hailemariyam/m-seo&Date)
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
 
-## 📞 Support
+---
 
-<div align="center">
+## License
 
-**Made with ❤️ for developers who want SEO without framework lock-in**
-
-[⬆️ Back to Top](#-m-seo)
-
-</div>
+MIT - see [LICENSE](./LICENSE)
 
 ---
 
 <div align="center">
 
-## ☕ Support M-SEO
+If this library helps your project, consider [buying me a coffee](https://buymeacoffee.com/hailemariyam) ☕
 
-If you find M-SEO helpful and want to support its development, you can buy me a coffee! Your support helps me keep improving the library and adding new features.
-
-[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-%E2%98%95%EF%B8%8F-yellow?style=for-the-badge)](https://buymeacoffee.com/hailemariyam)
-
-<a href="https://buymeacoffee.com/hailemariyam" target="_blank">
-  <img src="https://www.buymeacoffee.com/assets/img/guidelines/download-assets-sm-1.svg" alt="Buy Me a Coffee" height="40" />
-</a>
+[⬆️ Back to top](#m-seo)
 
 </div>

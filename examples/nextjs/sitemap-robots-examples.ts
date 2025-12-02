@@ -2,9 +2,13 @@
  * M-SEO Next.js Sitemap & Robots.txt Examples
  *
  * Examples of automatic sitemap and robots.txt generation
+ *
+ * NOTE: This is a standalone example. In a real Next.js app, import your
+ * configured adapter from lib/seo.ts instead:
+ * import { seo } from '@/lib/seo';
  */
 
-import { seo } from '@/lib/seo';
+import { advancedSeo as seo } from './setup';
 import { type MetadataRoute } from 'next';
 
 /**

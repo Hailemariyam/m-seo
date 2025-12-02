@@ -1,0 +1,23 @@
+{
+  "name": "m-seo-express-test",
+  "version": "1.0.0",
+  "description": "M-SEO Express.js test application",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node --watch server.js",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "m-seo",
+    "express",
+    "seo",
+    "test"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "m-seo": "file:.."
+  }
+}

@@ -4,7 +4,7 @@ layout: home
 hero:
   name: m-seo
   text: Multiversal SEO Utility
-  tagline: Framework-agnostic SEO for every web app. Works with Next.js, Nuxt.js, React, Vue, Svelte, Express, and more.
+  tagline: Framework-agnostic SEO for every web app. Now with CMS integration, AI analysis & multi-language SDKs. Works with Next.js, React, Vue, WordPress, Django, Laravel, Rails, and more.
   actions:
     - theme: brand
       text: Get Started
@@ -20,6 +20,26 @@ features:
   - icon: 🚀
     title: Universal SEO Tags
     details: Generate title, meta description, keywords, Open Graph, Twitter cards, canonical, robots, and schema.org JSON-LD.
+
+  - icon: 🌍
+    title: Multi-Language SDKs (NEW v1.1.1)
+    details: Enterprise SDKs for Python (Django/Flask/FastAPI), PHP (Laravel), Ruby (Rails), and Go. Connect any backend.
+
+  - icon: 📝
+    title: CMS Integration (NEW v1.1.1)
+    details: Connect to WordPress, Ghost, Drupal, Joomla, Contentful, Strapi. Automated SEO generation from CMS content.
+
+  - icon: 🤖
+    title: AI Content Analysis (NEW v1.1.1)
+    details: Readability scores, sentiment analysis, keyword optimization, and AI-powered SEO recommendations.
+
+  - icon: 🖼️
+    title: Image & Video SEO (NEW v1.1.1)
+    details: AI alt text generation, WebP/AVIF conversion, video schema markup, responsive images, lazy loading.
+
+  - icon: 📱
+    title: Social Media Optimization (NEW v1.1.1)
+    details: Generate and validate Open Graph, Twitter Cards, LinkedIn previews for perfect social sharing.
 
   - icon: 🎯
     title: Simple & Advanced API
@@ -39,7 +59,7 @@ features:
 
   - icon: ⚡
     title: Performance First
-    details: Lightweight core, optimized bundles, no bloat. Perfect for modern web performance.
+    details: Lightweight core, optimized bundles, 100x faster caching. Perfect for modern web performance.
 ---
 
 ## 🚀 Quick Start
@@ -67,6 +87,41 @@ console.log(seo.html);
 
 // Output as JSON-LD
 console.log(seo.jsonLd);
+```
+
+### NEW: CMS Integration (v1.1.1)
+
+```typescript
+import { CMSPlugins } from "m-seo";
+
+// Connect to WordPress
+const cms = new CMSPlugins({
+  platform: "wordpress",
+  baseUrl: "https://your-site.com",
+  credentials: { username: "admin", password: "app-password" },
+});
+
+// Fetch content and generate SEO
+const content = await cms.fetchContent({ id: "123" });
+const seo = await cms.generateSeoData(config, content);
+```
+
+### NEW: AI Content Analysis (v1.1.1)
+
+```typescript
+import { AIContentAnalysis } from "m-seo";
+
+// Analyze content for SEO optimization
+const analysis = await AIContentAnalysis.analyzeContent(articleText, {
+  provider: "openai",
+  enableReadability: true,
+  enableSentiment: true,
+  enableKeywordAnalysis: true,
+});
+
+// Get SEO score, readability, keywords, and recommendations
+console.log(analysis.scores.overall); // 0-100
+console.log(analysis.recommendations); // AI-powered suggestions
 ```
 
 ### Framework-Specific Examples
