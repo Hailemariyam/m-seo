@@ -35,7 +35,6 @@ export const advancedSeo = createNextAdapter({
   // Cache Configuration
   cacheOptions: {
     defaultTtl: 3600, // 1 hour
-    maxSize: 100,     // Maximum cached items
     namespace: 'next-seo',
   },
 

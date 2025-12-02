@@ -1,12 +1,15 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
   "name": "m-seo",
-    "version": "1.1.1",
+  "version": "1.1.1",
   "description": "Framework-agnostic SEO library for modern web applications with URL management and internationalization",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "bin": {
+    "m-seo": "./bin/m-seo"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -23,6 +26,7 @@
   },
   "files": [
     "dist",
+    "bin",
     "README.md",
     "LICENSE"
   ],
@@ -34,6 +38,9 @@
     "prepack": "npm run build",
     "test": "node examples/test-vanilla.js",
     "test:react": "npx serve test-app -p 3000",
+    "test:vue": "cd test-vue-app && npm install && npm run dev",
+    "test:nextjs": "cd test-nextjs-app && npm install && npm run dev",
+    "test:express": "cd test-express-app && npm install && npm run dev",
     "serve": "npx serve test-app -p 3000",
     "docs:dev": "vitepress dev docs-site",
     "docs:build": "vitepress build docs-site",
@@ -87,7 +94,8 @@
     "axios": "^1.7.2",
     "express": "^4.19.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "vitest": "^4.0.15"
   },
   "dependencies": {
     "next": "^16.0.4",
