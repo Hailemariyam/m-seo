@@ -60,27 +60,27 @@ A TypeScript SEO library that works with React, Vue, Next.js, Express, and vanil
 
 M-SEO handles the SEO boilerplate so you can focus on building features. Here's what you get:
 
-| Feature              | Description                                                                    |
-| -------------------- | ------------------------------------------------------------------------------ |
-| **Multi-framework**  | Works with React, Vue, Next.js, Express, and vanilla JS                        |
-| **Multi-language**   | SDKs for Python (Django/Flask), PHP (Laravel), Ruby (Rails), Go (NEW v1.1.1)  |
-| **Command Line**     | Full-featured CLI with 10+ commands for SEO operations (NEW v1.1.2)           |
-| **No dependencies**  | Pure TypeScript with zero external packages                                    |
-| **CMS Integration**  | WordPress, Ghost, Drupal, Joomla, Contentful, Strapi support (NEW v1.1.1)     |
-| **AI Content Analysis** | Readability, sentiment, tone, keyword analysis with SEO recommendations (NEW) |
-| **Image Optimization** | AI-powered alt text, WebP/AVIF conversion, lazy loading, responsive images (NEW) |
-| **Video SEO**        | Video schema markup, video sitemaps, thumbnail optimization, transcripts (NEW)  |
-| **Social Previews**  | Generate and validate Open Graph, Twitter Cards for all platforms (NEW)        |
-| **Bot detection**    | Automatically optimizes content for search engines (40% faster response times) |
-| **URL management**   | Built-in i18n support, canonical URLs, and slug generation                     |
-| **Analytics**        | Google Analytics 4 and Search Console integration                              |
-| **SEO audits**       | Automated page analysis with actionable recommendations                        |
-| **Tree-shakeable**   | Only bundle what you actually use                                              |
-| **TypeScript**       | Full type definitions included                                                 |
-| **Security headers** | CSP, HSTS, and other security headers built-in                                 |
-| **Structured data**  | Easy Schema.org JSON-LD generation                                             |
-| **Sitemaps**         | Automatic XML sitemap generation                                               |
-| **Caching**          | Smart caching to reduce server load (100x faster with CMS caching)             |
+| Feature                 | Description                                                                      |
+| ----------------------- | -------------------------------------------------------------------------------- |
+| **Multi-framework**     | Works with React, Vue, Next.js, Express, and vanilla JS                          |
+| **Multi-language**      | SDKs for Python (Django/Flask), PHP (Laravel), Ruby (Rails), Go (NEW v1.1.1)     |
+| **Command Line**        | Full-featured CLI with 10+ commands for SEO operations (NEW v1.1.2)              |
+| **No dependencies**     | Pure TypeScript with zero external packages                                      |
+| **CMS Integration**     | WordPress, Ghost, Drupal, Joomla, Contentful, Strapi support (NEW v1.1.1)        |
+| **AI Content Analysis** | Readability, sentiment, tone, keyword analysis with SEO recommendations (NEW)    |
+| **Image Optimization**  | AI-powered alt text, WebP/AVIF conversion, lazy loading, responsive images (NEW) |
+| **Video SEO**           | Video schema markup, video sitemaps, thumbnail optimization, transcripts (NEW)   |
+| **Social Previews**     | Generate and validate Open Graph, Twitter Cards for all platforms (NEW)          |
+| **Bot detection**       | Automatically optimizes content for search engines (40% faster response times)   |
+| **URL management**      | Built-in i18n support, canonical URLs, and slug generation                       |
+| **Analytics**           | Google Analytics 4 and Search Console integration                                |
+| **SEO audits**          | Automated page analysis with actionable recommendations                          |
+| **Tree-shakeable**      | Only bundle what you actually use                                                |
+| **TypeScript**          | Full type definitions included                                                   |
+| **Security headers**    | CSP, HSTS, and other security headers built-in                                   |
+| **Structured data**     | Easy Schema.org JSON-LD generation                                               |
+| **Sitemaps**            | Automatic XML sitemap generation                                                 |
+| **Caching**             | Smart caching to reduce server load (100x faster with CMS caching)               |
 
 ### Why use this
 
@@ -423,6 +423,7 @@ m-seo schema -t product -d '{"name": "Product", "price": "99.99"}'
 ```
 
 **Available Commands:**
+
 - `meta` - Generate SEO meta tags
 - `sitemap` - Generate XML sitemap
 - `robots` - Generate robots.txt
@@ -499,6 +500,7 @@ meta = client.generate_meta({
 ```
 
 **Features:**
+
 - Django middleware & ORM models
 - Flask extension with decorators
 - FastAPI dependency injection
@@ -532,6 +534,7 @@ $meta = $seo->generateMeta([
 ```
 
 **Features:**
+
 - Laravel Service Provider
 - Eloquent ORM models
 - Blade directives & components
@@ -554,7 +557,7 @@ class ProductsController < ApplicationController
 
   def show
     @product = Product.find(params[:id])
-    
+
     generate_page_meta(
       title: "#{@product.name} - Best Price",
       description: @product.description.truncate(160),
@@ -568,6 +571,7 @@ end
 ```
 
 **Features:**
+
 - Rails Engine integration
 - ActiveRecord models
 - ActionController concerns
@@ -588,22 +592,23 @@ import "mseo"
 
 func main() {
     client := mseo.NewClient("http://localhost:3100")
-    
+
     meta, err := client.GenerateMeta(mseo.MetaOptions{
         Title:       "My Page",
         Description: "Description",
         URL:         "https://example.com",
     })
-    
+
     if err != nil {
         log.Fatal(err)
     }
-    
+
     fmt.Println(meta.HTML)
 }
 ```
 
 **Features:**
+
 - Native Go client
 - Concurrency support
 - Context-aware requests
@@ -829,8 +834,14 @@ MIT - see [LICENSE](./LICENSE)
 
 <div align="center">
 
-If this library helps your project, consider [buying me a coffee](https://buymeacoffee.com/hailemariyam) ☕
+## ☕ Support M-SEO
 
-[⬆️ Back to top](#m-seo)
+If you find M-SEO helpful and want to support its development, you can buy me a coffee! Your support helps me keep improving the library and adding new features.
+
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-%E2%98%95%EF%B8%8F-yellow?style=for-the-badge)](https://buymeacoffee.com/hailemariyam)
+
+<a href="https://buymeacoffee.com/hailemariyam" target="_blank">
+  <img src="https://www.buymeacoffee.com/assets/img/guidelines/download-assets-sm-1.svg" alt="Buy Me a Coffee" height="40" />
+</a>
 
 </div>
