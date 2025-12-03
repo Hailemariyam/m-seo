@@ -164,18 +164,18 @@ m-seo validate -u https://example.com -c meta,og,schema,perf
 
 ### All Available Commands
 
-| Command | Description | Options |
-|---------|-------------|---------|
-| `meta` | Generate SEO meta tags | `-t`, `-d`, `-u`, `-k`, `-i`, `-o`, `-f` |
-| `sitemap` | Generate XML sitemap | `-u`, `-o`, `--changefreq`, `--priority`, `-c` |
-| `robots` | Generate robots.txt | `-s`, `-o`, `-d`, `-u` |
-| `audit` | Run SEO audit | `-u`, `-o`, `-f`, `-t`, `--fix` |
-| `audit-batch` | Audit multiple URLs | `-u`, `-o`, `-f`, `-p` |
-| `schema` | Generate structured data | `-t`, `-d`, `-o`, `-v` |
-| `bot-check` | Check bot detection | `-u`, `-d` |
-| `validate` | Validate existing SEO | `-u`, `-c`, `-o` |
-| `watch` | Monitor URL changes | `-u`, `-i`, `-n` |
-| `server` | Start REST API server | `-p`, `-h`, `-k`, `--cors` |
+| Command       | Description              | Options                                        |
+| ------------- | ------------------------ | ---------------------------------------------- |
+| `meta`        | Generate SEO meta tags   | `-t`, `-d`, `-u`, `-k`, `-i`, `-o`, `-f`       |
+| `sitemap`     | Generate XML sitemap     | `-u`, `-o`, `--changefreq`, `--priority`, `-c` |
+| `robots`      | Generate robots.txt      | `-s`, `-o`, `-d`, `-u`                         |
+| `audit`       | Run SEO audit            | `-u`, `-o`, `-f`, `-t`, `--fix`                |
+| `audit-batch` | Audit multiple URLs      | `-u`, `-o`, `-f`, `-p`                         |
+| `schema`      | Generate structured data | `-t`, `-d`, `-o`, `-v`                         |
+| `bot-check`   | Check bot detection      | `-u`, `-d`                                     |
+| `validate`    | Validate existing SEO    | `-u`, `-c`, `-o`                               |
+| `watch`       | Monitor URL changes      | `-u`, `-i`, `-n`                               |
+| `server`      | Start REST API server    | `-p`, `-h`, `-k`, `--cors`                     |
 
 ### Command Help
 
@@ -629,11 +629,9 @@ const exported = await cms.exportContent(
 );
 
 // Import from external sources
-const imported = await cms.importContent(
-  externalData,
-  "json",
-  { platform: "wordpress" }
-);
+const imported = await cms.importContent(externalData, "json", {
+  platform: "wordpress",
+});
 ```
 
 ## AI Content Analysis (NEW v1.1.1)
@@ -927,14 +925,14 @@ from mseo import get_seo_client
 def blog_post(request, slug):
     client = get_seo_client()
     post = Post.objects.get(slug=slug)
-    
+
     seo = client.create_seo({
         'title': post.title,
         'description': post.excerpt,
         'image': post.featured_image,
         'url': request.build_absolute_uri()
     })
-    
+
     return render(request, 'blog/post.html', {
         'post': post,
         'seo_tags': seo.html
@@ -950,7 +948,7 @@ seo = FlaskSeo(app)
 @app.route('/product/<id>')
 def product(id):
     product = get_product(id)
-    return seo.render('product.html', 
+    return seo.render('product.html',
         title=product.name,
         description=product.description,
         image=product.image
@@ -972,6 +970,7 @@ async def get_seo(page: str, seo = Depends(get_seo_client)):
 ```
 
 **Features:**
+
 - Django middleware & ORM models
 - Flask extension with template integration
 - FastAPI dependency injection
@@ -996,14 +995,14 @@ use MSeo\Facades\Seo;
 // routes/web.php
 Route::get('/blog/{slug}', function ($slug) {
     $post = Post::where('slug', $slug)->first();
-    
+
     $seo = Seo::create([
         'title' => $post->title,
         'description' => $post->excerpt,
         'image' => $post->featured_image,
         'url' => url()->current()
     ]);
-    
+
     return view('blog.post', compact('post', 'seo'));
 });
 
@@ -1023,6 +1022,7 @@ php artisan seo:generate --cms=wordpress --batch=100
 ```
 
 **Features:**
+
 - Laravel Service Provider
 - Eloquent models for SEO data
 - Blade directives (`@seo`, `@jsonLd`)
@@ -1043,10 +1043,10 @@ gem 'm-seo'  # (when published to RubyGems)
 # app/controllers/posts_controller.rb
 class PostsController < ApplicationController
   include MSeo::SeoHelper
-  
+
   def show
     @post = Post.find(params[:id])
-    
+
     @seo = mseo_client.create_seo(
       title: @post.title,
       description: @post.excerpt,
@@ -1071,7 +1071,7 @@ end
 # Background Job
 class SeoGeneratorJob < ApplicationJob
   queue_as :default
-  
+
   def perform(post_id)
     post = Post.find(post_id)
     seo = MSeo::Client.new.create_seo(
@@ -1084,6 +1084,7 @@ end
 ```
 
 **Features:**
+
 - Rails Engine integration
 - ActiveRecord models and concerns
 - ActionController helpers
@@ -1104,7 +1105,7 @@ import (
     "context"
     "fmt"
     "log"
-    
+
     "github.com/yourusername/m-seo-go"  // (when published)
 )
 
@@ -1117,7 +1118,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    
+
     // Create SEO tags
     ctx := context.Background()
     seo, err := client.CreateSEO(ctx, mseo.SEORequest{
@@ -1130,10 +1131,10 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    
+
     fmt.Println("HTML Tags:", seo.HTML)
     fmt.Println("JSON-LD:", seo.JSONLD)
-    
+
     // Generate sitemap
     sitemap, err := client.GenerateSitemap(ctx, []mseo.SitemapURL{
         {Loc: "https://example.com", Priority: 1.0},
@@ -1142,12 +1143,13 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    
+
     fmt.Println("Sitemap:", sitemap.XML)
 }
 ```
 
 **Features:**
+
 - Native Go client (no Node.js required)
 - Concurrency support with goroutines
 - Context-aware requests
