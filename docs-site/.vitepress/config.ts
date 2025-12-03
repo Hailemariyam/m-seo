@@ -8,6 +8,7 @@ export default defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Getting Started', link: '/getting-started' },
+      { text: 'CLI', link: '/cli' },
       { text: 'API', link: '/api' },
       { text: 'Examples', link: '/examples' },
       { text: 'FAQ', link: '/faq' },
@@ -16,6 +17,7 @@ export default defineConfig({
     sidebar: [
       { text: 'Introduction', link: '/' },
       { text: 'Getting Started', link: '/getting-started' },
+      { text: 'Command Line Interface', link: '/cli' },
       { text: 'API Reference', link: '/api' },
       { text: 'Examples', link: '/examples' },
       { text: 'FAQ', link: '/faq' },
