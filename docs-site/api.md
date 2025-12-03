@@ -24,7 +24,14 @@ Multi-platform CMS integration for WordPress, Ghost, Drupal, Joomla, Contentful,
 import { CMSPlugins, CMSConfig } from "m-seo";
 
 interface CMSConfig {
-  platform: "wordpress" | "ghost" | "drupal" | "joomla" | "contentful" | "strapi" | "custom";
+  platform:
+    | "wordpress"
+    | "ghost"
+    | "drupal"
+    | "joomla"
+    | "contentful"
+    | "strapi"
+    | "custom";
   baseUrl: string;
   credentials?: {
     username?: string;
@@ -46,6 +53,7 @@ const cms = new CMSPlugins(config);
 #### Methods
 
 **fetchContent()**
+
 ```typescript
 async fetchContent(options: { id: string; type?: string }): Promise<CMSContent>
 
@@ -65,6 +73,7 @@ interface CMSContent {
 ```
 
 **generateSeoData()**
+
 ```typescript
 async generateSeoData(config: CMSConfig, content: CMSContent): Promise<SeoData>
 
@@ -79,6 +88,7 @@ interface SeoData {
 ```
 
 **batchProcess()**
+
 ```typescript
 async batchProcess(options: BatchOptions): Promise<BatchResult[]>
 
@@ -97,6 +107,7 @@ interface BatchOperation {
 ```
 
 **exportContent()**
+
 ```typescript
 async exportContent(
   contents: CMSContent[],
@@ -105,6 +116,7 @@ async exportContent(
 ```
 
 **importContent()**
+
 ```typescript
 async importContent(
   data: string,

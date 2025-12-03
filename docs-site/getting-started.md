@@ -20,6 +20,176 @@ pnpm add m-seo
 
 :::
 
+## CLI Usage
+
+M-SEO provides a comprehensive command-line interface for SEO operations. Install globally or use with `npx`:
+
+::: code-group
+
+```bash [Global Install]
+# Install globally
+npm install -g m-seo
+
+# Use anywhere
+m-seo --help
+m-seo --version
+```
+
+```bash [npx (No Install)]
+# Use directly without installation
+npx m-seo --help
+npx m-seo audit -u https://example.com
+```
+
+:::
+
+### Common Commands
+
+#### Generate Meta Tags
+
+```bash
+m-seo meta \
+  -t "My Awesome Page" \
+  -d "Comprehensive guide to web development" \
+  -u "https://example.com" \
+  -k "web,development,seo" \
+  -i "https://example.com/og-image.jpg" \
+  -o meta-tags.html
+```
+
+#### Run SEO Audit
+
+```bash
+# HTML report
+m-seo audit -u https://example.com -f html -o report.html
+
+# JSON output
+m-seo audit -u https://example.com -f json -o audit.json
+
+# With score threshold
+m-seo audit -u https://example.com -t 80 --fix
+```
+
+#### Batch Audit Multiple URLs
+
+```bash
+# Create urls.txt with one URL per line
+echo "https://example.com
+https://example.com/about
+https://example.com/contact" > urls.txt
+
+# Run batch audit
+m-seo audit-batch -u urls.txt -o ./reports -f json -p 5
+```
+
+#### Generate Sitemap
+
+```bash
+# From URLs file
+m-seo sitemap -u urls.txt -o sitemap.xml
+
+# From JSON
+m-seo sitemap -u '[
+  {"loc": "https://example.com", "priority": 1.0},
+  {"loc": "https://example.com/about", "priority": 0.8}
+]' -o sitemap.xml
+
+# With compression
+m-seo sitemap -u urls.txt -o sitemap.xml -c
+```
+
+#### Generate Robots.txt
+
+```bash
+m-seo robots \
+  -s https://example.com/sitemap.xml \
+  -d "/admin,/private,/api" \
+  -o robots.txt
+```
+
+#### Bot Detection
+
+```bash
+# Check if user agent is a bot
+m-seo bot-check -u "Googlebot/2.1" -d
+
+# Output:
+# ✓ Bot detected: Googlebot
+# Type: Search Engine
+# Category: Major Search Engine
+```
+
+#### Generate Structured Data
+
+```bash
+# Product schema
+m-seo schema -t product -d '{
+  "name": "Premium Widget",
+  "price": "99.99",
+  "currency": "USD",
+  "description": "High-quality widget"
+}' -o product-schema.json
+
+# Article schema
+m-seo schema -t article -d article-data.json -v
+```
+
+#### Start REST API Server
+
+```bash
+# Start server for multi-language SDKs (Python, PHP, Ruby, Go)
+m-seo server --port 3100 --api-key your_secret_key --cors
+
+# Server endpoints:
+# POST /api/meta - Generate meta tags
+# POST /api/sitemap - Generate sitemap
+# POST /api/audit - Run SEO audit
+# GET /health - Health check
+```
+
+#### Watch URLs for Changes
+
+```bash
+m-seo watch \
+  -u "https://example.com,https://example.com/blog" \
+  -i 300 \
+  -n console
+```
+
+#### Validate Existing SEO
+
+```bash
+m-seo validate -u https://example.com -c meta,og,schema,perf
+```
+
+### All Available Commands
+
+| Command       | Description              | Options                                        |
+| ------------- | ------------------------ | ---------------------------------------------- |
+| `meta`        | Generate SEO meta tags   | `-t`, `-d`, `-u`, `-k`, `-i`, `-o`, `-f`       |
+| `sitemap`     | Generate XML sitemap     | `-u`, `-o`, `--changefreq`, `--priority`, `-c` |
+| `robots`      | Generate robots.txt      | `-s`, `-o`, `-d`, `-u`                         |
+| `audit`       | Run SEO audit            | `-u`, `-o`, `-f`, `-t`, `--fix`                |
+| `audit-batch` | Audit multiple URLs      | `-u`, `-o`, `-f`, `-p`                         |
+| `schema`      | Generate structured data | `-t`, `-d`, `-o`, `-v`                         |
+| `bot-check`   | Check bot detection      | `-u`, `-d`                                     |
+| `validate`    | Validate existing SEO    | `-u`, `-c`, `-o`                               |
+| `watch`       | Monitor URL changes      | `-u`, `-i`, `-n`                               |
+| `server`      | Start REST API server    | `-p`, `-h`, `-k`, `--cors`                     |
+
+### Command Help
+
+Get detailed help for any command:
+
+```bash
+m-seo <command> --help
+
+# Examples:
+m-seo meta --help
+m-seo audit --help
+m-seo server --help
+```
+
 ## Requirements
 
 - **Node.js** ≥ 16.0.0
@@ -459,11 +629,9 @@ const exported = await cms.exportContent(
 );
 
 // Import from external sources
-const imported = await cms.importContent(
-  externalData,
-  "json",
-  { platform: "wordpress" }
-);
+const imported = await cms.importContent(externalData, "json", {
+  platform: "wordpress",
+});
 ```
 
 ## AI Content Analysis (NEW v1.1.1)
@@ -757,14 +925,14 @@ from mseo import get_seo_client
 def blog_post(request, slug):
     client = get_seo_client()
     post = Post.objects.get(slug=slug)
-    
+
     seo = client.create_seo({
         'title': post.title,
         'description': post.excerpt,
         'image': post.featured_image,
         'url': request.build_absolute_uri()
     })
-    
+
     return render(request, 'blog/post.html', {
         'post': post,
         'seo_tags': seo.html
@@ -780,7 +948,7 @@ seo = FlaskSeo(app)
 @app.route('/product/<id>')
 def product(id):
     product = get_product(id)
-    return seo.render('product.html', 
+    return seo.render('product.html',
         title=product.name,
         description=product.description,
         image=product.image
@@ -802,6 +970,7 @@ async def get_seo(page: str, seo = Depends(get_seo_client)):
 ```
 
 **Features:**
+
 - Django middleware & ORM models
 - Flask extension with template integration
 - FastAPI dependency injection
@@ -826,14 +995,14 @@ use MSeo\Facades\Seo;
 // routes/web.php
 Route::get('/blog/{slug}', function ($slug) {
     $post = Post::where('slug', $slug)->first();
-    
+
     $seo = Seo::create([
         'title' => $post->title,
         'description' => $post->excerpt,
         'image' => $post->featured_image,
         'url' => url()->current()
     ]);
-    
+
     return view('blog.post', compact('post', 'seo'));
 });
 
@@ -853,6 +1022,7 @@ php artisan seo:generate --cms=wordpress --batch=100
 ```
 
 **Features:**
+
 - Laravel Service Provider
 - Eloquent models for SEO data
 - Blade directives (`@seo`, `@jsonLd`)
@@ -873,10 +1043,10 @@ gem 'm-seo'  # (when published to RubyGems)
 # app/controllers/posts_controller.rb
 class PostsController < ApplicationController
   include MSeo::SeoHelper
-  
+
   def show
     @post = Post.find(params[:id])
-    
+
     @seo = mseo_client.create_seo(
       title: @post.title,
       description: @post.excerpt,
@@ -901,7 +1071,7 @@ end
 # Background Job
 class SeoGeneratorJob < ApplicationJob
   queue_as :default
-  
+
   def perform(post_id)
     post = Post.find(post_id)
     seo = MSeo::Client.new.create_seo(
@@ -914,6 +1084,7 @@ end
 ```
 
 **Features:**
+
 - Rails Engine integration
 - ActiveRecord models and concerns
 - ActionController helpers
@@ -934,7 +1105,7 @@ import (
     "context"
     "fmt"
     "log"
-    
+
     "github.com/yourusername/m-seo-go"  // (when published)
 )
 
@@ -947,7 +1118,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    
+
     // Create SEO tags
     ctx := context.Background()
     seo, err := client.CreateSEO(ctx, mseo.SEORequest{
@@ -960,10 +1131,10 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    
+
     fmt.Println("HTML Tags:", seo.HTML)
     fmt.Println("JSON-LD:", seo.JSONLD)
-    
+
     // Generate sitemap
     sitemap, err := client.GenerateSitemap(ctx, []mseo.SitemapURL{
         {Loc: "https://example.com", Priority: 1.0},
@@ -972,12 +1143,13 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    
+
     fmt.Println("Sitemap:", sitemap.XML)
 }
 ```
 
 **Features:**
+
 - Native Go client (no Node.js required)
 - Concurrency support with goroutines
 - Context-aware requests

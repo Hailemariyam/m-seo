@@ -21,6 +21,10 @@ features:
     title: Universal SEO Tags
     details: Generate title, meta description, keywords, Open Graph, Twitter cards, canonical, robots, and schema.org JSON-LD.
 
+  - icon: ⌨️
+    title: Command Line Interface (NEW v1.1.2)
+    details: Full-featured CLI with 10+ commands. Audit, generate sitemaps, meta tags, start API server, and more.
+
   - icon: 🌍
     title: Multi-Language SDKs (NEW v1.1.1)
     details: Enterprise SDKs for Python (Django/Flask/FastAPI), PHP (Laravel), Ruby (Rails), and Go. Connect any backend.
