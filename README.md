@@ -2,7 +2,7 @@
 
 # M-SEO
 
-**Framework-agnostic SEO toolkit for modern web applications**
+**Framework & Language-Agnostic SEO Toolkit for Modern Web Applications**
 
 <p>
   <a href="https://npmjs.com/package/m-seo">
@@ -10,6 +10,9 @@
   </a>
   <a href="https://npmjs.com/package/m-seo">
     <img src="https://img.shields.io/npm/dm/m-seo.svg?style=for-the-badge&color=38c172" alt="npm downloads" />
+  </a>
+  <a href="https://npmjs.com/package/m-seo">
+    <img src="https://img.shields.io/npm/dy/m-seo.svg?style=for-the-badge&color=38c172" alt="npm yearly downloads" />
   </a>
   <a href="https://opensource.org/licenses/MIT">
     <img src="https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge" alt="MIT License" />
@@ -23,9 +26,16 @@
   <a href="https://npmjs.com/package/m-seo">
     <img src="https://img.shields.io/badge/tree--shakeable-✅-blue.svg?style=for-the-badge" alt="Tree Shakeable" />
   </a>
+  <a href="https://github.com/Hailemariyam/m-seo">
+    <img src="https://img.shields.io/github/stars/Hailemariyam/m-seo?style=for-the-badge&color=ffb400" alt="GitHub Stars" />
+  </a>
 </p>
 
-A TypeScript SEO library that works with React, Vue, Next.js, Express, and vanilla JavaScript. Built for teams who need consistent SEO across different projects without framework lock-in.
+A comprehensive SEO library that works across **any framework** (React, Vue, Next.js, Express) and **any language** (TypeScript, Python, PHP, Ruby, Go). Built for teams managing diverse tech stacks who need unified SEO without framework or language lock-in.
+
+**Multi-Framework:** React · Vue · Next.js · Express · Vanilla JS
+**Multi-Language:** TypeScript · Python · PHP · Ruby · Go
+**Multi-Platform:** WordPress · Ghost · Drupal · Contentful · Strapi
 
 <table>
 <tr>
